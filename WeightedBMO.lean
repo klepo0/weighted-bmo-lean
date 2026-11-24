@@ -1,2 +1,3 @@
 import WeightedBMO.GoodLambda
 import WeightedBMO.GridJohnNirenberg
+import WeightedBMO.GridExponential

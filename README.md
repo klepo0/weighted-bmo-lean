@@ -8,6 +8,7 @@ This project formalizes estimates from Khoa Lê's
 | Equation (1.1), coefficient `p * c_p` | `WeightedBMO.goodLambdaConstant` |
 | Lemma 2.1 | `WeightedBMO.goodLambda_eLpNorm_le` |
 | Finite-grid (1.8) and (1.9), unit oscillation bound | `WeightedBMO.grid_johnNirenberg` |
+| Single-interval exponential bound on a finite grid | `WeightedBMO.grid_exponential` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
 uses measurable nonnegative real-valued functions and mathlib's extended
@@ -22,12 +23,12 @@ From this directory, with [Elan](https://github.com/leanprover/elan) installed,
 run the following commands. The toolchain and mathlib revision are pinned.
 
 ```sh
-lake exe cache get Mathlib.Probability.Process.Stopping Mathlib.MeasureTheory.Integral.Layercake Mathlib.MeasureTheory.Function.LpSeminorm.Defs Mathlib.Analysis.SpecialFunctions.Pow.Continuity Mathlib.Tactic.Linarith Mathlib.Tactic.Positivity Mathlib.Tactic.Ring
+lake exe cache get Mathlib.Analysis.SpecialFunctions.Exponential Mathlib.Probability.Process.Stopping Mathlib.MeasureTheory.Integral.Layercake Mathlib.MeasureTheory.Function.LpSeminorm.Defs Mathlib.Analysis.SpecialFunctions.Pow.Continuity Mathlib.Tactic.Linarith Mathlib.Tactic.Positivity Mathlib.Tactic.Ring
 lake build
 lake env lean Verify.lean
 ```
 
-The last command checks that both published theorems use only Lean’s standard
+The last command checks that the published estimates use only Lean’s standard
 axioms (`propext`, `Classical.choice`, and `Quot.sound`).
 
 ## Finite-grid estimates
@@ -37,4 +38,8 @@ the two estimates control its maximum and its maximum divided by the running
 weight. Both use the exact coefficient from Lemma 2.1 and hold on every event
 measurable at the initial time. The hypothesis `UnitGridOscillation` expresses
 the unit oscillation bound by integration over events in the stopped σ-algebra.
-The continuous-time theorem and the exponential estimate remain open.
+The single-interval exponential estimate holds on every initial event E for
+rates up to and including exp(−3). Its bound is M times the mass of E, with
+convergence of the series (1.1) proved in `hasSum_exponentialBound`. The
+partition argument using the local oscillation modulus in (1.10) and the
+continuous-time theorem remain open.
