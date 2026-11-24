@@ -6,25 +6,28 @@ open scoped ENNReal
 
 namespace WeightedBMO
 
-private noncomputable def expTerm (n : ℕ) : ℝ :=
-  (Real.exp (-3) * goodLambdaConstant n) ^ n / n.factorial
+private noncomputable def expTerm (b : ℝ) (n : ℕ) : ℝ :=
+  (Real.exp (-b) * goodLambdaConstant n) ^ n / n.factorial
 
 /-- The constant M in (1.1). The term of index zero is one. -/
-noncomputable def exponentialBound : ℝ := ∑' n, expTerm n
+noncomputable def exponentialBound : ℝ := ∑' n, expTerm 3 n
 
 private theorem constant_nonneg (n : ℕ) : 0 ≤ goodLambdaConstant n := by
   unfold goodLambdaConstant
   positivity
 
-private theorem term_nonneg (n : ℕ) : 0 ≤ expTerm n := by
+private theorem term_nonneg (b : ℝ) (n : ℕ) : 0 ≤ expTerm b n := by
   unfold expTerm
   have := constant_nonneg n
   positivity
 
-private theorem summable_expTerm : Summable expTerm := by
+/-- The moment series has room beyond the endpoint exp(-3) in (1.10). -/
+theorem summable_exponential_coefficients {b : ℝ} (hb : 2 < b) :
+    Summable (fun n : ℕ => (Real.exp (-b) * goodLambdaConstant n)^n / n.factorial) := by
   have hg := (summable_pow_mul_geometric_of_norm_lt_one 1
-    (r := Real.exp (-1)) (by rw [Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)];
-                             exact Real.exp_lt_one_iff.mpr (by norm_num))).mul_right (Real.exp 3)
+    (r := Real.exp (2-b)) (by
+      rw [Real.norm_eq_abs, abs_of_pos (Real.exp_pos _)]
+      exact Real.exp_lt_one_iff.mpr (by linarith))).mul_right (Real.exp 3)
   apply Summable.of_norm_bounded_eventually _ hg
   rw [Nat.cofinite_eq_atTop]
   filter_upwards [eventually_ge_atTop 1] with n hn
@@ -43,17 +46,23 @@ private theorem summable_expTerm : Summable expTerm := by
         rw [← Real.exp_mul, Real.exp_le_exp]
         rw [one_div, ← div_eq_inv_mul, div_le_iff₀ hn₀]
         nlinarith
-  rw [Real.norm_eq_abs, abs_of_nonneg (term_nonneg n), expTerm, mul_pow, hpow, pow_one]
+  have hp : 0 ≤ (Real.exp (-b) * goodLambdaConstant n)^n / n.factorial := by
+    have := constant_nonneg n
+    positivity
+  rw [Real.norm_eq_abs, abs_of_nonneg hp, mul_pow, hpow, pow_one]
   calc
     _ = (n : ℝ)^n / n.factorial * (1 + 1 / (n : ℝ)) ^ (((n : ℝ) + 1)^2) *
-        (Real.exp (-3)) ^ n * n := by ring
-    _ ≤ Real.exp n * Real.exp ((n : ℝ) + 3) * Real.exp (-3) ^ n * n := by
+        (Real.exp (-b)) ^ n * n := by ring
+    _ ≤ Real.exp n * Real.exp ((n : ℝ) + 3) * Real.exp (-b) ^ n * n := by
       gcongr
       exact Real.pow_div_factorial_le_exp (n : ℝ) hn₀.le n
     _ = _ := by
       rw [← Real.exp_nat_mul, ← Real.exp_nat_mul, ← Real.exp_add, ← Real.exp_add]
-      rw [show (n : ℝ) + (n + 3) + n * (-3) = n * (-1) + 3 by ring, Real.exp_add]
+      rw [show (n : ℝ) + (n + 3) + n * (-b) = n * (2-b) + 3 by ring, Real.exp_add]
       ring
+
+private theorem summable_expTerm : Summable (expTerm 3) :=
+  summable_exponential_coefficients (b := 3) (by norm_num)
 
 /-- Convergence of the defining series for M, including its constant term. -/
 theorem hasSum_exponentialBound :
@@ -69,19 +78,20 @@ private theorem moment_eq {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
     one_div_mul_cancel hn'.ne', ENNReal.rpow_one]
   simp_rw [Real.enorm_of_nonneg (hZ _), ENNReal.rpow_natCast, ENNReal.ofReal_pow (hZ _)]
 
-private theorem exponential_of_moments {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+/-- Exponential integrability from the integer moment estimates, for every b > 2. -/
+theorem exponential_of_moments {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) {b : ℝ} (hb₂ : 2 < b)
     {Z : Ω → ℝ} (hm : Measurable Z) (hz : ∀ ω, 0 ≤ Z ω)
     (hb : ∀ n : ℕ, 0 < n → eLpNorm Z (ENNReal.ofReal n) μ ≤
       ENNReal.ofReal (goodLambdaConstant n) * eLpNorm (fun _ : Ω => (1 : ℝ)) (ENNReal.ofReal n) μ) :
-    (∫⁻ ω, ENNReal.ofReal (Real.exp (Real.exp (-3) * Z ω)) ∂μ) ≤
-      ENNReal.ofReal exponentialBound * μ univ := by
-  let a (n : ℕ) := Real.exp (-3) ^ n / (n.factorial : ℝ)
+    (∫⁻ ω, ENNReal.ofReal (Real.exp (Real.exp (-b) * Z ω)) ∂μ) ≤
+      ENNReal.ofReal (∑' n : ℕ, (Real.exp (-b) * goodLambdaConstant n)^n / n.factorial) * μ univ := by
+  let a (n : ℕ) := Real.exp (-b) ^ n / (n.factorial : ℝ)
   have ha (n : ℕ) : 0 ≤ a n := by unfold a; positivity
-  have hseries (ω : Ω) : ENNReal.ofReal (Real.exp (Real.exp (-3) * Z ω)) =
+  have hseries (ω : Ω) : ENNReal.ofReal (Real.exp (Real.exp (-b) * Z ω)) =
       ∑' n, ENNReal.ofReal (a n) * ENNReal.ofReal (Z ω ^ n) := by
     have expansion (x : ℝ) : Real.exp x = ∑' n : ℕ, x^n / n.factorial := by
       rw [Real.exp_eq_exp_ℝ, NormedSpace.exp_eq_tsum_div]
-    let x := Real.exp (-3) * Z ω
+    let x := Real.exp (-b) * Z ω
     have hx : 0 ≤ x := mul_nonneg (Real.exp_pos _).le (hz ω)
     rw [expansion x, ENNReal.ofReal_tsum_of_nonneg
       (fun n => div_nonneg (pow_nonneg hx n) (Nat.cast_nonneg n.factorial))
@@ -96,7 +106,8 @@ private theorem exponential_of_moments {Ω : Type*} [MeasurableSpace Ω] (μ : M
     ring
   simp_rw [hseries]
   rw [lintegral_tsum (fun n => (measurable_const.mul ((hm.pow_const n).ennreal_ofReal)).aemeasurable)]
-  rw [exponentialBound, ENNReal.ofReal_tsum_of_nonneg term_nonneg summable_expTerm,
+  change _ ≤ ENNReal.ofReal (∑' n, expTerm b n) * μ univ
+  rw [ENNReal.ofReal_tsum_of_nonneg (term_nonneg b) (summable_exponential_coefficients hb₂),
     ← ENNReal.tsum_mul_right]
   apply ENNReal.tsum_le_tsum
   intro n
@@ -109,7 +120,7 @@ private theorem exponential_of_moments {Ω : Type*} [MeasurableSpace Ω] (μ : M
     have hpower := pow_le_pow_left' (hb n hn) n
     rw [mul_pow, ← moment_eq μ (fun _ => zero_le_one) hn] at hpower
     simp only [one_pow, ENNReal.ofReal_one, lintegral_const, one_mul] at hpower
-    change ENNReal.ofReal (a n) * _ ≤ ENNReal.ofReal (expTerm n) * _
+    change ENNReal.ofReal (a n) * _ ≤ ENNReal.ofReal (expTerm b n) * _
     rw [moment_eq μ hz hn]
     refine (mul_le_mul_left' hpower _).trans_eq ?_
     rw [← mul_assoc, ← ENNReal.ofReal_pow (constant_nonneg n), ← ENNReal.ofReal_mul (ha n)]
@@ -142,7 +153,7 @@ theorem grid_exponential {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measure Ω)
       (le_gridMax (f := fun i => φ i ω) (Nat.zero_le N) le_rfl)
     exact (div_nonneg (abs_nonneg _) hw).trans
       (le_gridMax (f := fun i => |v i ω| / W i ω) (Nat.zero_le N) le_rfl)
-  have he := exponential_of_moments (μ.restrict E) hm hz (fun n hn =>
+  have he := exponential_of_moments (μ.restrict E) (b := 3) (by norm_num) hm hz (fun n hn =>
     (grid_johnNirenberg μ ℱ N v φ hv hφ hv₀ hpos h hE (Nat.cast_pos.mpr hn)).2)
   simp only [Measure.restrict_apply_univ] at he
   exact (lintegral_mono (fun ω => ENNReal.ofReal_le_ofReal

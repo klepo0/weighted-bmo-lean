@@ -8,7 +8,7 @@ namespace WeightedBMO
 
 /-- An event-tested bound also holds after multiplication by any nonnegative
 weight measurable at the start of the block. -/
-private theorem weighted_test {Ω : Type*} [m : MeasurableSpace Ω] {s : MeasurableSpace Ω}
+theorem weighted_test {Ω : Type*} [m : MeasurableSpace Ω] {s : MeasurableSpace Ω}
     (hs : s ≤ m) (μ : @Measure Ω m) {f g : Ω → ℝ≥0∞} (hf : Measurable[m] f)
     (hg : Measurable[s] g) (C : ℝ≥0∞)
     (h : ∀ A, MeasurableSet[s] A → (∫⁻ ω in A, f ω ∂μ) ≤ C * μ A) :

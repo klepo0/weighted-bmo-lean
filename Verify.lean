@@ -23,3 +23,9 @@ info: 'WeightedBMO.grid_partition_exponential' depends on axioms: [propext, Clas
 -/
 #guard_msgs in
 #print axioms WeightedBMO.grid_partition_exponential
+
+/--
+info: 'WeightedBMO.conditional_exponential_of_interval_moments' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.conditional_exponential_of_interval_moments

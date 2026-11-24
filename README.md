@@ -9,6 +9,7 @@ This project formalizes estimates from Khoa Lê's
 | Lemma 2.1 | `WeightedBMO.goodLambda_eLpNorm_le` |
 | Finite-grid (1.8) and (1.9), unit oscillation bound | `WeightedBMO.grid_johnNirenberg` |
 | Partitioned exponential bound on a finite grid | `WeightedBMO.grid_partition_exponential` |
+| Real-time (1.9) ⇒ conditional (1.10) | `WeightedBMO.conditional_exponential_of_interval_moments` |
 | Single-interval exponential bound on a finite grid | `WeightedBMO.grid_exponential` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
@@ -44,5 +45,20 @@ rates up to and including exp(−3). Its bound is M times the mass of E, with
 convergence of the series (1.1) proved in `hasSum_exponentialBound`. For a deterministic partition with K blocks, the bound is M^K times the
 mass of E when the rate times each block’s oscillation bound is at most
 exp(−3). The block hypothesis uses the centered process divided by its
-positive local bound. The continuous-time version of (1.10), including
-partition selection from the small-scale modulus, remains open.
+positive local bound.
+
+## Real-time exponential estimate
+
+For a fixed interval [a,T], `conditional_exponential_of_interval_moments`
+proves that the supremum over all starting times r of the conditional
+essential supremum of exp(λ Z(r,T)) is finite. Its hypotheses specify a
+measurable nonnegative interval maximum Z with the splitting inequality,
+the event-tested integer moments of (1.9), and a locally bounded modulus ρ.
+The small-scale modulus is the infimum of uniform upper bounds valid at
+some positive mesh size. The rate condition includes λκ = exp(−3).
+The proof uses convergence at exp(−5/2) to select a single mesh for every r.
+
+The remaining step for the full weighted BMO theorem is to construct the
+normalized path maximum for a continuous-time càdlàg process and derive
+these hypotheses, in particular (1.9), from its stopping-time oscillation
+bound. The finite-grid theorem proves the moment bound on a finite index set.
