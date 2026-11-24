@@ -8,6 +8,7 @@ This project formalizes estimates from Khoa Lê's
 | Equation (1.1), coefficient `p * c_p` | `WeightedBMO.goodLambdaConstant` |
 | Lemma 2.1 | `WeightedBMO.goodLambda_eLpNorm_le` |
 | Finite-grid (1.8) and (1.9), unit oscillation bound | `WeightedBMO.grid_johnNirenberg` |
+| Partitioned exponential bound on a finite grid | `WeightedBMO.grid_partition_exponential` |
 | Single-interval exponential bound on a finite grid | `WeightedBMO.grid_exponential` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
@@ -40,6 +41,8 @@ measurable at the initial time. The hypothesis `UnitGridOscillation` expresses
 the unit oscillation bound by integration over events in the stopped σ-algebra.
 The single-interval exponential estimate holds on every initial event E for
 rates up to and including exp(−3). Its bound is M times the mass of E, with
-convergence of the series (1.1) proved in `hasSum_exponentialBound`. The
-partition argument using the local oscillation modulus in (1.10) and the
-continuous-time theorem remain open.
+convergence of the series (1.1) proved in `hasSum_exponentialBound`. For a deterministic partition with K blocks, the bound is M^K times the
+mass of E when the rate times each block’s oscillation bound is at most
+exp(−3). The block hypothesis uses the centered process divided by its
+positive local bound. The continuous-time version of (1.10), including
+partition selection from the small-scale modulus, remains open.

@@ -17,3 +17,9 @@ info: 'WeightedBMO.grid_exponential' depends on axioms: [propext, Classical.choi
 -/
 #guard_msgs in
 #print axioms WeightedBMO.grid_exponential
+
+/--
+info: 'WeightedBMO.grid_partition_exponential' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.grid_partition_exponential

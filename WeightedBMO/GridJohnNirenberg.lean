@@ -9,7 +9,7 @@ namespace WeightedBMO
 def gridMax (f : ℕ → ℝ) (i j : ℕ) : ℝ :=
   (insert j (Finset.Icc i j)).sup' ⟨j, Finset.mem_insert_self _ _⟩ f
 
-private theorem gridMax_le {f : ℕ → ℝ} {i j : ℕ} {c : ℝ}
+theorem gridMax_le {f : ℕ → ℝ} {i j : ℕ} {c : ℝ}
     (hj : f j ≤ c) (h : ∀ k, i ≤ k → k ≤ j → f k ≤ c) : gridMax f i j ≤ c := by
   apply Finset.sup'_le
   intro k hk
