@@ -35,3 +35,21 @@ info: 'WeightedBMO.path_exponential_of_interval_moments' depends on axioms: [pro
 -/
 #guard_msgs in
 #print axioms WeightedBMO.path_exponential_of_interval_moments
+
+/--
+info: 'WeightedBMO.real_interval_moments' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.real_interval_moments
+
+/--
+info: 'WeightedBMO.weightedBMO_exponential' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.weightedBMO_exponential
+
+/--
+info: 'WeightedBMO.tendsto_meshOscillation' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.tendsto_meshOscillation

@@ -9,6 +9,8 @@ This project formalizes estimates from Khoa Lê's
 | Lemma 2.1 | `WeightedBMO.goodLambda_eLpNorm_le` |
 | Finite-grid (1.8) and (1.9), unit oscillation bound | `WeightedBMO.grid_johnNirenberg` |
 | Partitioned exponential bound on a finite grid | `WeightedBMO.grid_partition_exponential` |
+| Continuous-time (1.10) from weighted BMO | `WeightedBMO.weightedBMO_exponential` |
+| Continuous-time (1.9) from the stopped oscillation modulus | `WeightedBMO.real_interval_moments` |
 | Real-time (1.9) ⇒ conditional (1.10) | `WeightedBMO.conditional_exponential_of_interval_moments` |
 | Single-interval exponential bound on a finite grid | `WeightedBMO.grid_exponential` |
 
@@ -25,7 +27,7 @@ From this directory, with [Elan](https://github.com/leanprover/elan) installed,
 run the following commands. The toolchain and mathlib revision are pinned.
 
 ```sh
-lake exe cache get Mathlib.Analysis.SpecialFunctions.Exponential Mathlib.Probability.Process.Stopping Mathlib.MeasureTheory.Integral.Layercake Mathlib.MeasureTheory.Function.LpSeminorm.Defs Mathlib.Analysis.SpecialFunctions.Pow.Continuity Mathlib.Tactic.Linarith Mathlib.Tactic.Positivity Mathlib.Tactic.Ring
+lake exe cache get
 lake build
 lake env lean Verify.lean
 ```
@@ -64,6 +66,22 @@ paths and positive weights, Lean proves the splitting law and measurability.
 The measurability proof detects strict crossings at rational times or at the
 right endpoint, so it also covers a jump at that endpoint.
 
-To recover the full theorem from weighted BMO, the remaining stochastic
-estimate is the continuous-time (1.9) from the stopped oscillation bound.
-The finite-grid theorem proves this estimate on a finite index set.
+## Continuous-time weighted BMO theorem
+
+`WeightedBMO.weightedBMO_exponential` proves (1.10) from the weighted BMO
+stopping-time inequality. It fixes an interval [a,T] and takes the supremum
+over r in that interval. The filtration is right-continuous and the paths of
+the process and its positive weight are càdlàg. The conclusion holds for
+λκ ≤ exp(−3), including equality.
+
+`WeightedBMOOn` uses an event-integral formulation of Definition 1.2:
+for every pair of bounded stopping times S ≤ U and every event G known at S,
+the integral of |V(U) − V(S−)| / φ(S) over G is at most B times its mass.
+`oscillationModulus` uses the least such bound with the running weight on
+[S,U] in the denominator. `tendsto_meshOscillation` identifies the
+small-scale infimum with the paper's right-hand limit.
+
+`real_interval_moments` proves (1.9) using first strict crossings in real
+time, including terminal jumps. Their stopped increment controls the tail
+by Lemma 2.1. The exponential estimate then follows by the partition and
+conditional expectation arguments above.

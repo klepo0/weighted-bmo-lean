@@ -12,18 +12,18 @@ noncomputable def intervalSup (f : ℝ → ℝ) (s t : ℝ) := sSup (f '' Icc s 
 noncomputable def normalizedMaximum (v φ : ℝ → ℝ) (s t : ℝ) :=
   intervalSup (fun u => |v u - v s| / intervalSup φ s u) s t
 
-private theorem le_intervalSup {f : ℝ → ℝ} {s t u : ℝ} (hb : BddAbove (f '' Icc s t))
+theorem le_intervalSup {f : ℝ → ℝ} {s t u : ℝ} (hb : BddAbove (f '' Icc s t))
     (hu : u ∈ Icc s t) : f u ≤ intervalSup f s t := le_csSup hb (mem_image_of_mem _ hu)
 
-private theorem intervalSup_le {f : ℝ → ℝ} {s t c : ℝ} (hst : s ≤ t)
+theorem intervalSup_le {f : ℝ → ℝ} {s t c : ℝ} (hst : s ≤ t)
     (h : ∀ u ∈ Icc s t, f u ≤ c) : intervalSup f s t ≤ c :=
   csSup_le ((nonempty_Icc.mpr hst).image _) (by rintro _ ⟨u, hu, rfl⟩; exact h u hu)
 
-private theorem weight_mono {φ : ℝ → ℝ} {a b c d : ℝ} (hab : a ≤ b) (hbc : b ≤ c)
+theorem weight_mono {φ : ℝ → ℝ} {a b c d : ℝ} (hab : a ≤ b) (hbc : b ≤ c)
     (hcd : c ≤ d) (hb : BddAbove (φ '' Icc a d)) : intervalSup φ b c ≤ intervalSup φ a d :=
   intervalSup_le hbc fun _ hu => le_intervalSup hb ⟨hab.trans hu.1, hu.2.trans hcd⟩
 
-private theorem ratio_bounded {v φ : ℝ → ℝ} {s t : ℝ} (hp : 0 < φ s)
+theorem ratio_bounded {v φ : ℝ → ℝ} {s t : ℝ} (hp : 0 < φ s)
     (hv : BddAbove ((fun u => |v u|) '' Icc s t)) (hw : BddAbove (φ '' Icc s t)) :
     BddAbove ((fun u => |v u - v s| / intervalSup φ s u) '' Icc s t) := by
   obtain ⟨B,hB⟩ := hv
