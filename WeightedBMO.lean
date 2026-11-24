@@ -3,3 +3,4 @@ import WeightedBMO.GridJohnNirenberg
 import WeightedBMO.GridExponential
 import WeightedBMO.GridPartition
 import WeightedBMO.ConditionalBound
+import WeightedBMO.PathMaximum

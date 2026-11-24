@@ -29,3 +29,9 @@ info: 'WeightedBMO.conditional_exponential_of_interval_moments' depends on axiom
 -/
 #guard_msgs in
 #print axioms WeightedBMO.conditional_exponential_of_interval_moments
+
+/--
+info: 'WeightedBMO.path_exponential_of_interval_moments' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.path_exponential_of_interval_moments

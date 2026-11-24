@@ -58,7 +58,12 @@ The small-scale modulus is the infimum of uniform upper bounds valid at
 some positive mesh size. The rate condition includes λκ = exp(−3).
 The proof uses convergence at exp(−5/2) to select a single mesh for every r.
 
-The remaining step for the full weighted BMO theorem is to construct the
-normalized path maximum for a continuous-time càdlàg process and derive
-these hypotheses, in particular (1.9), from its stopping-time oscillation
-bound. The finite-grid theorem proves the moment bound on a finite index set.
+The declaration `path_exponential_of_interval_moments` specializes this bound
+to the actual normalized path maximum. For bounded right-continuous adapted
+paths and positive weights, Lean proves the splitting law and measurability.
+The measurability proof detects strict crossings at rational times or at the
+right endpoint, so it also covers a jump at that endpoint.
+
+To recover the full theorem from weighted BMO, the remaining stochastic
+estimate is the continuous-time (1.9) from the stopped oscillation bound.
+The finite-grid theorem proves this estimate on a finite index set.
