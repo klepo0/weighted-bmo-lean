@@ -9,6 +9,9 @@ This project formalizes estimates from Khoa Lê's
 | Lemma 2.1 | `WeightedBMO.goodLambda_eLpNorm_le` |
 | Finite-grid (1.8) and (1.9), unit oscillation bound | `WeightedBMO.grid_johnNirenberg` |
 | Partitioned exponential bound on a finite grid | `WeightedBMO.grid_partition_exponential` |
+| Definition 1.2, equivalence with conditional expectations | `WeightedBMO.weightedBMOOn_iff_condExp` |
+| Continuous-time (1.8) on every initial event | `WeightedBMO.weightedBMO_maximal_moments` |
+| Continuous-time (1.8) in conditional expectation form | `WeightedBMO.weightedBMO_conditional_maximal_moments` |
 | Continuous-time (1.10) from weighted BMO | `WeightedBMO.weightedBMO_exponential` |
 | Continuous-time (1.9) from the stopped oscillation modulus | `WeightedBMO.real_interval_moments` |
 | Real-time (1.9) ⇒ conditional (1.10) | `WeightedBMO.conditional_exponential_of_interval_moments` |
@@ -85,3 +88,15 @@ small-scale infimum with the paper's right-hand limit.
 time, including terminal jumps. Their stopped increment controls the tail
 by Lemma 2.1. The exponential estimate then follows by the partition and
 conditional expectation arguments above.
+
+For (1.8), the first crossings are of the unnormalized increment
+|V(u) − V(r)|. The good-λ inequality uses the running weight over [r,T]
+and the exact oscillation modulus, including the case where it is zero.
+The event formulation allows infinite moments. The conditional
+expectation formulation uses mathlib's real-valued conditional
+expectation and assumes that the weight has a finite p-th moment.
+
+`weightedBMOOn_iff_condExp` allows the conditional-expectation
+hypothesis in Definition 1.2 to be used with these theorems. It states
+explicitly that the stopped weight is measurable at the first stopping
+time and that the absolute stopped increment is measurable and integrable.

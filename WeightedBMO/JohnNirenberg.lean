@@ -175,4 +175,117 @@ theorem weightedBMO_exponential {Ω : Type*} [m : MeasurableSpace Ω] (μ : Meas
     intro s t ha _ ht _
     exact csInf_le ⟨0, fun d hd => hd.1⟩ ⟨hB.1,bound s t ha ht⟩
 
+
+/-- Definition 1.2 in conditional-expectation form, with the measurability
+and integrability of the stopped quantities stated explicitly. -/
+theorem weightedBMOOn_iff_condExp {Ω : Type*} [m : MeasurableSpace Ω]
+    (μ : @Measure Ω m) [IsFiniteMeasure μ] (ℱ : Filtration ℝ m)
+    (v vLeft φ : Ω → ℝ → ℝ) {a T B : ℝ} (hB : 0 ≤ B)
+    (hp : ∀ ω u, u ∈ Icc a T → 0 < φ ω u)
+    (hdata : ∀ (S U : Ω → ℝ) (hS : IsStoppingTime ℱ S), IsStoppingTime ℱ U →
+      (∀ ω, a ≤ S ω) → (∀ ω, S ω ≤ U ω) → (∀ ω, U ω ≤ T) →
+      Measurable[hS.measurableSpace] (fun ω => φ ω (S ω)) ∧
+      Measurable[m] (fun ω => |v ω (U ω) - vLeft ω (S ω)|) ∧
+      Integrable (fun ω => |v ω (U ω) - vLeft ω (S ω)|) μ) :
+    WeightedBMOOn μ ℱ v vLeft φ a T B ↔
+      ∀ (S U : Ω → ℝ) (hS : IsStoppingTime ℱ S), IsStoppingTime ℱ U →
+        (∀ ω, a ≤ S ω) → (∀ ω, S ω ≤ U ω) → (∀ ω, U ω ≤ T) →
+        eLpNorm (fun ω =>
+          (μ[fun x => |v x (U x) - vLeft x (S x)| | hS.measurableSpace]) ω / φ ω (S ω))
+          ⊤ μ ≤ ENNReal.ofReal B := by
+  constructor
+  · intro h S U hS hU ha hSU hT
+    obtain ⟨hw,hm,hi⟩ := hdata S U hS hU ha hSU hT
+    exact (@weighted_condExp_iff_event_tests Ω m _ hS.measurableSpace_le μ _ _ _
+      hm hi (fun _ => abs_nonneg _) hw (fun ω => hp ω _ ⟨ha ω,(hSU ω).trans (hT ω)⟩) B).2
+      (h.2 S U hS hU ha hSU hT)
+  · intro h
+    refine ⟨hB,?_⟩
+    intro S U hS hU ha hSU hT
+    obtain ⟨hw,hm,hi⟩ := hdata S U hS hU ha hSU hT
+    exact (@weighted_condExp_iff_event_tests Ω m _ hS.measurableSpace_le μ _ _ _
+      hm hi (fun _ => abs_nonneg _) hw (fun ω => hp ω _ ⟨ha ω,(hSU ω).trans (hT ω)⟩) B).1
+      (h S U hS hU ha hSU hT)
+
+/-- Equation (1.8) on a real interval, with the oscillation modulus as its
+coefficient. Testing on every initial event expresses the conditional comparison. -/
+theorem weightedBMO_maximal_moments {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measure Ω)
+    [IsFiniteMeasure μ] (ℱ : Filtration ℝ m) (hℱ : RightContinuousFiltration ℱ)
+    (v vLeft φ : Ω → ℝ → ℝ) {r T B p : ℝ} (hr : r ≤ T) (hp : 0 < p)
+    (hB : WeightedBMOOn μ ℱ v vLeft φ r T B)
+    (hφ : ∀ ω u, u ∈ Icc r T → 0 < φ ω u)
+    (mv : ∀ u ∈ Icc r T, Measurable[ℱ u] (fun ω => v ω u))
+    (mw : ∀ u ∈ Icc r T, Measurable[ℱ u] (fun ω => φ ω u))
+    (cv : ∀ ω u, u ∈ Ico r T → ContinuousWithinAt (v ω) (Ici u) u)
+    (cw : ∀ ω u, u ∈ Ico r T → ContinuousWithinAt (φ ω) (Ici u) u)
+    (lv : ∀ ω u, u ∈ Ioc r T → Tendsto (v ω) (𝓝[<] u) (𝓝 (vLeft ω u)))
+    (lw : ∀ ω u, u ∈ Ioc r T → ∃ l, Tendsto (φ ω) (𝓝[<] u) (𝓝 l))
+    {E : Set Ω} (hE : MeasurableSet[ℱ r] E) :
+    eLpNorm (fun ω => intervalSup (fun u => |v ω u - v ω r|) r T) (ENNReal.ofReal p)
+        (μ.restrict E) ≤
+      ENNReal.ofReal (goodLambdaConstant p * oscillationModulus μ ℱ v vLeft φ r T) *
+        eLpNorm (fun ω => intervalSup (φ ω) r T) (ENNReal.ofReal p) (μ.restrict E) := by
+  have hv ω := cadlag_bounded (cv ω) (fun u hu => ⟨_,lv ω u hu⟩)
+  have hw ω : BddAbove (φ ω '' Icc r T) := by
+    obtain ⟨d,hd⟩ := cadlag_bounded (cw ω) (lw ω)
+    refine ⟨d,?_⟩
+    rintro _ ⟨u,hu,rfl⟩
+    exact (le_abs_self _).trans (hd (mem_image_of_mem _ hu))
+  have bound := stoppedBound_of_bmo hB le_rfl le_rfl hφ hw
+  have modulusNonneg : 0 ≤ oscillationModulus μ ℱ v vLeft φ r T :=
+    le_csInf (s := {d | 0 ≤ d ∧ StoppedOscillationBound μ ℱ v vLeft φ r T d})
+      ⟨B,hB.1,bound⟩ (fun _ hd => hd.1)
+  exact real_weighted_maximal_moments μ ℱ hℱ v vLeft φ hr modulusNonneg hp hv hw hφ
+    mv mw cv cw lv (stoppedBound_of_modulus hB.1 bound le_rfl) hE
+
+/-- Conditional expectation form of (1.8) when the terminal weight has
+a finite p-th moment. The estimate on initial events needs no moment assumption. -/
+theorem weightedBMO_conditional_maximal_moments {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measure Ω)
+    [IsFiniteMeasure μ] (ℱ : Filtration ℝ m) (hℱ : RightContinuousFiltration ℱ)
+    (v vLeft φ : Ω → ℝ → ℝ) {r T B p : ℝ} (hr : r ≤ T) (hp : 0 < p)
+    (hB : WeightedBMOOn μ ℱ v vLeft φ r T B)
+    (hφ : ∀ ω u, u ∈ Icc r T → 0 < φ ω u)
+    (mv : ∀ u ∈ Icc r T, Measurable[ℱ u] (fun ω => v ω u))
+    (mw : ∀ u ∈ Icc r T, Measurable[ℱ u] (fun ω => φ ω u))
+    (cv : ∀ ω u, u ∈ Ico r T → ContinuousWithinAt (v ω) (Ici u) u)
+    (cw : ∀ ω u, u ∈ Ico r T → ContinuousWithinAt (φ ω) (Ici u) u)
+    (lv : ∀ ω u, u ∈ Ioc r T → Tendsto (v ω) (𝓝[<] u) (𝓝 (vLeft ω u)))
+    (lw : ∀ ω u, u ∈ Ioc r T → ∃ l, Tendsto (φ ω) (𝓝[<] u) (𝓝 l))
+    (hi : Integrable (fun ω => intervalSup (φ ω) r T ^ p) μ) :
+    (μ[fun ω => intervalSup (fun u => |v ω u - v ω r|) r T ^ p | ℱ r]) ≤ᵐ[μ]
+      (fun ω => (goodLambdaConstant p * oscillationModulus μ ℱ v vLeft φ r T) ^ p *
+        (μ[fun x => intervalSup (φ x) r T ^ p | ℱ r]) ω) := by
+  let F (ω : Ω) (u : ℝ) := |v ω u - v ω r|
+  let Y ω := intervalSup (F ω) r T
+  let W ω := intervalSup (φ ω) r T
+  let C := goodLambdaConstant p * oscillationModulus μ ℱ v vLeft φ r T
+  have hw ω : BddAbove (φ ω '' Icc r T) := by
+    obtain ⟨d,hd⟩ := cadlag_bounded (cw ω) (lw ω)
+    refine ⟨d,?_⟩
+    rintro _ ⟨u,hu,rfl⟩
+    exact (le_abs_self _).trans (hd (mem_image_of_mem _ hu))
+  have hb ω : BddAbove (F ω '' Icc r T) := by
+    obtain ⟨d,hd⟩ := cadlag_bounded (cv ω) (fun u hu => ⟨_,lv ω u hu⟩)
+    refine ⟨d + |v ω r|,?_⟩
+    rintro _ ⟨u,hu,rfl⟩
+    exact (abs_sub _ _).trans (add_le_add_right (hd (mem_image_of_mem _ hu)) _)
+  have ym : Measurable Y := by
+    apply measurable_intervalSup hr hb
+    · intro u hu
+      exact continuous_abs.measurable.comp (((mv u hu).mono (ℱ.le u) le_rfl).sub
+        ((mv r (left_mem_Icc.mpr hr)).mono (ℱ.le r) le_rfl))
+    · exact fun ω u hu => ((cv ω u hu).sub continuousWithinAt_const).abs
+  have cn : 0 ≤ C := by
+    apply mul_nonneg
+    · unfold goodLambdaConstant
+      positivity
+    · exact le_csInf (s := {d | 0 ≤ d ∧ StoppedOscillationBound μ ℱ v vLeft φ r T d})
+        ⟨B,hB.1,stoppedBound_of_bmo hB le_rfl le_rfl hφ hw⟩ (fun _ hd => hd.1)
+  have hcomparison := @condExp_rpow_le_of_event_norms Ω m (ℱ r) (ℱ.le r) μ _ Y W ym
+    (fun ω => (abs_nonneg _).trans (le_intervalSup (hb ω) (left_mem_Icc.mpr hr)))
+    (fun ω => (hφ ω r (left_mem_Icc.mpr hr)).le.trans
+      (le_intervalSup (hw ω) (left_mem_Icc.mpr hr))) p C hp cn hi
+    (fun _ hE => weightedBMO_maximal_moments μ ℱ hℱ v vLeft φ hr hp hB hφ mv mw cv cw lv lw hE)
+  exact hcomparison.trans_eq (condExp_smul (μ := μ) (C ^ p) (fun ω => W ω ^ p) (ℱ r))
+
 end WeightedBMO

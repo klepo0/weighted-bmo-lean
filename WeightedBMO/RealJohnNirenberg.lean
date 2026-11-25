@@ -137,4 +137,123 @@ theorem real_interval_moments {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measur
   rw [eqB,eqH,Measure.restrict_apply hB,Measure.restrict_apply (hS.measurableSpace_le _ hH)]
   exact hfinal.trans le_self_add
 
+
+/-- Continuous-time (1.8) as a moment comparison on each initial event. -/
+theorem real_weighted_maximal_moments {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measure Ω)
+    [IsFiniteMeasure μ] (ℱ : Filtration ℝ m) (hℱ : RightContinuousFiltration ℱ)
+    (v vLeft φ : Ω → ℝ → ℝ) {r T c p : ℝ} (hr : r ≤ T) (hc : 0 ≤ c) (hp : 0 < p)
+    (hv : ∀ ω, BddAbove ((fun u => |v ω u|) '' Icc r T))
+    (hw : ∀ ω, BddAbove (φ ω '' Icc r T)) (hφ : ∀ ω u, u ∈ Icc r T → 0 < φ ω u)
+    (mv : ∀ u ∈ Icc r T, Measurable[ℱ u] (fun ω => v ω u))
+    (mw : ∀ u ∈ Icc r T, Measurable[ℱ u] (fun ω => φ ω u))
+    (cv : ∀ ω u, u ∈ Ico r T → ContinuousWithinAt (v ω) (Ici u) u)
+    (cw : ∀ ω u, u ∈ Ico r T → ContinuousWithinAt (φ ω) (Ici u) u)
+    (hl : ∀ ω u, u ∈ Ioc r T → Tendsto (v ω) (𝓝[<] u) (𝓝 (vLeft ω u)))
+    (hmean : StoppedOscillationBound μ ℱ v vLeft φ r T c)
+    {E : Set Ω} (hE : MeasurableSet[ℱ r] E) :
+    eLpNorm (fun ω => intervalSup (fun u => |v ω u - v ω r|) r T) (ENNReal.ofReal p)
+        (μ.restrict E) ≤
+      ENNReal.ofReal (goodLambdaConstant p * c) *
+        eLpNorm (fun ω => intervalSup (φ ω) r T) (ENNReal.ofReal p) (μ.restrict E) := by
+  let f (ω : Ω) (u : ℝ) := |v ω u - v ω r|
+  let Y ω := intervalSup (f ω) r T
+  let W ω := intervalSup (φ ω) r T
+  have fBound ω : BddAbove (f ω '' Icc r T) := by
+    obtain ⟨d,hd⟩ := hv ω
+    refine ⟨d + |v ω r|,?_⟩
+    rintro _ ⟨u,hu,rfl⟩
+    exact (abs_sub _ _).trans (add_le_add_right (hd (mem_image_of_mem _ hu)) _)
+  have fMeas u (hu : u ∈ Icc r T) : Measurable[ℱ u] (fun ω => f ω u) :=
+    continuous_abs.measurable.comp ((mv u hu).sub
+      ((mv r (left_mem_Icc.mpr hr)).mono (ℱ.mono hu.1) le_rfl))
+  have fRight ω u (hu : u ∈ Ico r T) : ContinuousWithinAt (f ω) (Ici u) u :=
+    ((cv ω u hu).sub continuousWithinAt_const).abs
+  have ym : Measurable Y :=
+    measurable_intervalSup hr fBound (fun u hu => (fMeas u hu).mono (ℱ.le u) le_rfl) fRight
+  have wm : Measurable W :=
+    measurable_intervalSup hr hw (fun u hu => (mw u hu).mono (ℱ.le u) le_rfl) cw
+  have wp ω : 0 < W ω := (hφ ω r (left_mem_Icc.mpr hr)).trans_le
+    (le_intervalSup (hw ω) (left_mem_Icc.mpr hr))
+  have yn ω : 0 ≤ Y ω := (abs_nonneg _).trans (le_intervalSup (fBound ω) (left_mem_Icc.mpr hr))
+  have hnorm := goodLambda_eLpNorm_le (μ.restrict E) (measurable_const.mul wm) ym
+    (fun ω => mul_nonneg hc (wp ω).le) yn hp
+  have htail : ∀ a b θ : ℝ, 0 < a → 0 < b → 0 < θ → θ < 1 →
+      (μ.restrict E) {ω | a+b < Y ω} ≤ ENNReal.ofReal θ * (μ.restrict E) {ω | a < Y ω} +
+        (μ.restrict E) {ω | θ*b < c * W ω} := by
+    intro a b θ ha hb hθ _
+    let S ω := crossingTime (f ω) r T a
+    let U ω := crossingTime (f ω) r T (a+b)
+    have hS : IsStoppingTime ℱ S := isStoppingTime_crossingTime ℱ hℱ hr _ fMeas fRight
+    have hU : IsStoppingTime ℱ U := isStoppingTime_crossingTime ℱ hℱ hr _ fMeas fRight
+    let H := {ω | a < Y ω}
+    let B := {ω | a+b < Y ω ∧ c * W ω ≤ θ*b}
+    have hH : MeasurableSet[hS.measurableSpace] H :=
+      measurableSet_crossing_hit ℱ hr fBound fMeas fRight hS
+    have hB : MeasurableSet B := (measurableSet_lt measurable_const ym).inter
+      (measurableSet_le (measurable_const.mul wm) measurable_const)
+    have sub : B ∩ E ⊆ H ∩ E := fun ω h => ⟨(lt_add_of_pos_right a hb).trans h.1.1,h.2⟩
+    have hSr ω : r ≤ S ω := (crossingTime_mem hr).1
+    have hSU ω : S ω ≤ U ω := crossingTime_mono hr (le_add_of_nonneg_right hb.le)
+    have hUT ω : U ω ≤ T := (crossingTime_mem hr).2
+    let J ω := |v ω (U ω) - vLeft ω (S ω)| / intervalSup (φ ω) (S ω) (U ω)
+    have lower ω (h : ω ∈ B) : b / W ω ≤ J ω := by
+      obtain ⟨_,⟨u,hu,rfl⟩,hfu⟩ := (lt_csSup_iff (fBound ω) ((nonempty_Icc.mpr hr).image _)).1 h.1
+      have start : a ≤ f ω (S ω) := threshold_le_at_crossing hr (fRight ω)
+        ⟨u,hu,(lt_add_of_pos_right a hb).trans hfu⟩
+      have hrs : r < S ω := lt_of_le_of_ne (hSr ω) (by
+        intro eq
+        rw [← eq] at start
+        simp [f, not_le_of_gt ha] at start)
+      have before : |vLeft ω (S ω) - v ω r| ≤ a := by
+        apply le_of_tendsto ((hl ω (S ω) ⟨hrs,(hSU ω).trans (hUT ω)⟩).sub_const (v ω r)).abs
+        filter_upwards [Ioo_mem_nhdsLT hrs] with x hx
+        exact le_threshold_before_crossing (f := f ω) hr ⟨hx.1.le,hx.2.le.trans ((hSU ω).trans (hUT ω))⟩ hx.2
+      have after : a+b ≤ f ω (U ω) :=
+        threshold_le_at_crossing hr (fRight ω) ⟨u,hu,hfu⟩
+      have jump : b ≤ |v ω (U ω) - vLeft ω (S ω)| := by
+        have triangle := abs_sub_le (v ω (U ω)) (vLeft ω (S ω)) (v ω r)
+        dsimp [f] at after
+        linarith
+      have dp := (hφ ω _ ⟨hSr ω,(hSU ω).trans (hUT ω)⟩).trans_le
+        (le_intervalSup ((hw ω).mono (image_mono (Icc_subset_Icc (hSr ω) (hUT ω))))
+          (left_mem_Icc.mpr (hSU ω)))
+      exact (div_le_div_of_nonneg_left hb.le dp
+        (weight_mono (hSr ω) (hSU ω) (hUT ω) (hw ω))).trans (div_le_div_of_nonneg_right jump dp.le)
+    have hInt := hmean S U hS hU hSr hSU hUT (H ∩ E)
+      (hH.inter ((hS.le_measurableSpace_of_const_le hSr) _ hE))
+    rw [← Measure.restrict_apply (hS.measurableSpace_le _ hH)] at hInt
+    have hBE := hB.inter (ℱ.le _ _ hE)
+    have test {g : Ω → ℝ≥0∞} (hg : ∀ ω ∈ B, g ω ≤ ENNReal.ofReal (J ω)) :
+        (∫⁻ ω in B ∩ E, g ω ∂μ) ≤ ENNReal.ofReal c * (μ.restrict E) H :=
+      (lintegral_mono_ae ((ae_restrict_iff' hBE).2 (ae_of_all μ fun ω h => hg ω h.1))).trans
+        ((lintegral_mono_set sub).trans hInt)
+    have small : (μ.restrict E) B ≤ ENNReal.ofReal θ * (μ.restrict E) H := by
+      rcases hc.eq_or_lt with hc0 | hcp
+      · have htest := test (fun ω h => ENNReal.ofReal_le_ofReal (lower ω h))
+        simp only [← hc0, ENNReal.ofReal_zero, zero_mul] at htest
+        have eq := le_antisymm htest (zero_le _)
+        have ae := (lintegral_eq_zero_iff (wm.const_div b).ennreal_ofReal).1 eq
+        have null := (ae_restrict_iff' hBE).1 ae
+        have outside : ∀ᵐ ω ∂μ, ω ∉ B ∩ E := by
+          filter_upwards [null] with ω h hn
+          exact (ENNReal.ofReal_pos.mpr (div_pos hb (wp ω))).ne' (h hn)
+        have hnull : μ (B ∩ E) = 0 := by simpa [ae_iff] using outside
+        simp [Measure.restrict_apply hB, hnull]
+      · have htest := test (g := fun _ => ENNReal.ofReal (c/θ)) fun ω h =>
+          ENNReal.ofReal_le_ofReal (((div_le_div_iff₀ hθ (wp ω)).2 (by simpa [mul_comm θ b] using h.2)).trans (lower ω h))
+        simp only [lintegral_const, Measure.restrict_apply_univ, ← Measure.restrict_apply hB] at htest
+        have scaled := mul_le_mul_left' htest (ENNReal.ofReal (θ/c))
+        rwa [← mul_assoc, ← mul_assoc, ← ENNReal.ofReal_mul (by positivity),
+          ← ENNReal.ofReal_mul (by positivity), show θ/c*(c/θ) = 1 by field_simp,
+          div_mul_cancel₀ _ hcp.ne', ENNReal.ofReal_one, one_mul] at scaled
+    have cover : {ω | a+b < Y ω} ⊆ B ∪ {ω | θ*b < c * W ω} := by
+      intro ω h
+      by_cases hw' : c * W ω ≤ θ*b
+      · exact Or.inl ⟨h,hw'⟩
+      · exact Or.inr (lt_of_not_ge hw')
+    exact (measure_mono cover).trans ((measure_union_le _ _).trans (add_le_add_right small _))
+  have result := hnorm htail
+  rwa [show (fun ω => c * W ω) = c • W from rfl, eLpNorm_const_smul,
+    Real.enorm_of_nonneg hc, ← mul_assoc, ← ENNReal.ofReal_mul (by unfold goodLambdaConstant; positivity)] at result
+
 end WeightedBMO
