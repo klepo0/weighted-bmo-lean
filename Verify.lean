@@ -209,3 +209,15 @@ info: 'WeightedBMO.supermartingale_max_le_supOn' depends on axioms: [propext, Cl
 -/
 #guard_msgs in
 #print axioms WeightedBMO.supermartingale_max_le_supOn
+
+/--
+info: 'WeightedBMO.supermartingale_max_le_of_measurableSet_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.supermartingale_max_le_of_measurableSet_zero
+
+/--
+info: 'WeightedBMO.supermartingale_max_le_supOn_of_measurableSet_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms WeightedBMO.supermartingale_max_le_supOn_of_measurableSet_zero

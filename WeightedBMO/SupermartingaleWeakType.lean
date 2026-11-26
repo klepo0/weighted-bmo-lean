@@ -22,9 +22,19 @@ bookkeeping about the stopped value (`measurability`, `integrability`,
 content is that `S` *is* a stopping time:
 `{S ≤ n} = {∃ k ≤ n, α ≤ X k}`, which is known at time `n`.
 
-Note that this is the *global* inequality; the event-tested (setwise) form
-`α μ{sup X > α} ≤ ∫_{sup X > α} X₀` is not needed for the `p < 1` bound, since a
-splitting argument recovers the sharp-order constant from the global form.
+The `p < 1` branch of Theorem 1.1 needs the *event-tested* form of this
+inequality, with the right-hand side integrated over the event:
+
+  `α μ({sup X > α} ∩ G) ≤ ∫_G X₀`  for `G` measurable at time `0`.
+
+That is `supermartingale_max_le_of_measurableSet_zero` below.  It is not a
+consequence of the global inequality alone (the global one integrates over all
+of `Ω`, and `‖·‖_p ≤ ‖·‖₁` would lose the sharp constant).  The proof localises
+the process: `ind = 1_G` is `ℱ 0`-measurable, hence `ℱ k`-measurable for every
+`k`, so `MG k = ind * X k` is again a supermartingale by the pull-out property
+of the conditional expectation (`condExp_mul_of_stronglyMeasurable_left`), and
+the global inequality applied to `MG` *is* the tested one, because
+`{α ≤ max MG} = {α ≤ max X} ∩ G` (`ind * M` vanishes off `G` and `α > 0`).
 -/
 
 open MeasureTheory Set Filter Topology
@@ -176,5 +186,80 @@ theorem supermartingale_max_le [SigmaFiniteFiltration μ ℱ]
         (MeasureTheory.ofReal_integral_eq_lintegral_ofReal hS_int
           (ae_of_all _ fun ω => hX0 _ ω)).symm
     _ ≤ ENNReal.ofReal (∫ ω, X 0 ω ∂μ) := ENNReal.ofReal_le_ofReal hXint
+
+
+omit [IsFiniteMeasure μ] in
+/-- **Weak-type inequality tested on an event of `ℱ 0`.**  The global inequality
+applied to the localised process `1_G · X`. -/
+theorem supermartingale_max_le_of_measurableSet_zero {ℱ : Filtration ℕ m} {X : ℕ → Ω → ℝ}
+    [SigmaFiniteFiltration μ ℱ]
+    (hX : Supermartingale X ℱ μ) (hX0 : ∀ k ω, 0 ≤ X k ω)
+    {α : ℝ} (hα : 0 < α) (N : ℕ) {G : Set Ω} (hG : MeasurableSet[ℱ 0] G) :
+    ENNReal.ofReal α * μ ({ω | α ≤ subMax X N ω} ∩ G) ≤
+      ENNReal.ofReal (∫ ω in G, X 0 ω ∂μ) := by
+  classical
+  set ind : Ω → ℝ := G.indicator (fun _ => 1) with hind
+  set MG : ℕ → Ω → ℝ := fun k ω => ind ω * X k ω with hMG
+  have hGm : MeasurableSet G := ℱ.le 0 G hG
+  have hind_eq : ∀ ω, ind ω = if ω ∈ G then 1 else 0 := by
+    intro ω
+    rw [hind]
+    by_cases h : ω ∈ G
+    · rw [Set.indicator_of_mem h]; simp [h]
+    · rw [Set.indicator_of_not_mem h]; simp [h]
+  have hind_nonneg : ∀ ω, 0 ≤ ind ω := fun ω => by rw [hind_eq ω]; split_ifs <;> norm_num
+  have hind_sm : ∀ k : ℕ, StronglyMeasurable[ℱ k] ind := fun k =>
+    StronglyMeasurable.indicator stronglyMeasurable_const ((ℱ.mono (Nat.zero_le k)) G hG)
+  have hMG_nonneg : ∀ k ω, 0 ≤ MG k ω := fun k ω =>
+    mul_nonneg (hind_nonneg ω) (hX0 k ω)
+  have hMG_eq : ∀ k, MG k = G.indicator (X k) := by
+    intro k
+    funext ω
+    simp only [hMG, hind_eq ω, Set.indicator_apply]
+    by_cases h : ω ∈ G <;> simp [h]
+  have hMG_int : ∀ k, Integrable (MG k) μ := by
+    intro k
+    rw [hMG_eq k]
+    exact (hX.integrable k).indicator hGm
+  have hMG_adapted : Adapted ℱ MG := fun k => by
+    rw [hMG_eq k]
+    exact StronglyMeasurable.indicator (hX.adapted k) ((ℱ.mono (Nat.zero_le k)) G hG)
+  have hMG_sup : Supermartingale MG ℱ μ := by
+    refine ⟨hMG_adapted, ?_, hMG_int⟩
+    intro i j hij
+    have hstep : μ[MG j | ℱ i] =ᵐ[μ] fun ω => ind ω * μ[X j | ℱ i] ω := by
+      have h := condExp_mul_of_stronglyMeasurable_left (m := ℱ i) (μ := μ)
+        (f := ind) (g := X j) (hind_sm i) (by simpa [hMG] using hMG_int j) (hX.integrable j)
+      simpa [hMG, Pi.mul_apply] using h
+    filter_upwards [hstep, hX.condExp_ae_le hij] with ω h1 h2
+    rw [h1, hMG]
+    exact mul_le_mul_of_nonneg_left h2 (hind_nonneg ω)
+  have hmain := supermartingale_max_le (X := MG) hMG_sup hMG_nonneg hα N
+  -- identify the two sides
+  have hkey : ∀ ω ∈ G, subMax MG N ω = subMax X N ω := by
+    intro ω hω
+    have hfun : (fun k => MG k ω) = (fun k => X k ω) := by
+      funext k
+      simp only [hMG, hind_eq ω, if_pos hω, one_mul]
+    simp only [subMax, hfun]
+  have hzero : ∀ ω ∉ G, subMax MG N ω = 0 := by
+    intro ω hω
+    refine le_antisymm ?_ (subMax_nonneg hMG_nonneg N ω)
+    refine Finset.sup'_le _ _ fun k _ => ?_
+    simp only [hMG, hind_eq ω, if_neg hω, zero_mul, le_refl]
+  have hset : {ω | α ≤ subMax MG N ω} = {ω | α ≤ subMax X N ω} ∩ G := by
+    ext ω
+    simp only [mem_setOf_eq, mem_inter_iff]
+    constructor
+    · intro h
+      by_cases hω : ω ∈ G
+      · exact ⟨hkey ω hω ▸ h, hω⟩
+      · rw [hzero ω hω] at h; linarith
+    · rintro ⟨h1, h2⟩
+      exact (hkey ω h2).symm ▸ h1
+  have hMG0 : ∫ ω, MG 0 ω ∂μ = ∫ ω in G, X 0 ω ∂μ := by
+    rw [hMG_eq 0, integral_indicator hGm]
+  rw [hset, hMG0] at hmain
+  exact hmain
 
 end WeightedBMO
