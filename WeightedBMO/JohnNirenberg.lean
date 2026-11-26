@@ -20,7 +20,9 @@ noncomputable def oscillationModulus {Ω : Type*} [m : MeasurableSpace Ω] (μ :
     (ℱ : Filtration ℝ m) (v vLeft φ : Ω → ℝ → ℝ) (s t : ℝ) :=
   sInf {c | 0 ≤ c ∧ StoppedOscillationBound μ ℱ v vLeft φ s t c}
 
-private theorem stoppedBound_of_bmo {Ω : Type*} [m : MeasurableSpace Ω] {μ : Measure Ω}
+/-- A weighted BMO bound in event form dominates the stopped oscillation test
+with the running supremum of the weight in the denominator. -/
+theorem stoppedBound_of_bmo {Ω : Type*} [m : MeasurableSpace Ω] {μ : Measure Ω}
     {ℱ : Filtration ℝ m} {v vLeft φ : Ω → ℝ → ℝ} {a T s t B : ℝ}
     (h : WeightedBMOOn μ ℱ v vLeft φ a T B) (ha : a ≤ s) (ht : t ≤ T)
     (hp : ∀ ω u, u ∈ Icc a T → 0 < φ ω u) (hw : ∀ ω, BddAbove (φ ω '' Icc a T)) :
