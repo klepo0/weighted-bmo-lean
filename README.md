@@ -24,6 +24,8 @@ This project formalizes estimates from Khoa Lê's
 | Continuous-time Doob step over `[0,T]`, sharp constant `p/(p-1)` | `WeightedBMO.eLpNorm_supOn_le` |
 | `est.Smaximal`, right-hand side, end to end | `WeightedBMO.estSmaximal_upper` |
 | `est.Smaximal`, left-hand side | `WeightedBMO.estSmaximal_lower` |
+| `est.X2`, normalized maximal function, uniform in `ε` | `WeightedBMO.estX2` |
+| `est.X3`, exponential form at rate `(2e³)⁻¹` | `WeightedBMO.estX3` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
 uses measurable nonnegative real-valued functions and mathlib's extended
@@ -145,6 +147,30 @@ and `d(X_0, X_T) ≤ sup_t d(X_0, X_t)` give
 
 So both inequalities of `est.Smaximal` are now stated end to end, each with the
 sharp maximal function supplied as a hypothesis.
+
+## The normalized and exponential forms
+
+`WeightedBMO/EstX2X3.lean` derives the two normalized forms of Theorem 1.1 from
+(1.9) and from `est.Smaximal`. For every `ε > 0` and `p > 0`, `estX2` gives
+
+```
+‖sup_t d(X_0,X_t) / (ε + sup_{s≤t} ψ_s)‖_p ≤ 2 c_p p ‖1‖,
+```
+
+uniformly in `ε`: this is (1.9) applied with the weight `2ψ`, whose oscillation
+modulus is at most `1`, and the pointwise bound `sup_{s≤t}(2ψ_s) = 2 sup_{s≤t} ψ_s`.
+`estX3` is the exponential form
+
+```
+∫ exp(λ sup_t d(X_0,X_t)/(ε + sup_{s≤t} ψ_s)) ≤ M·μ(univ)   for λ ≤ (2e³)⁻¹,
+```
+
+with `M = exponentialBound`. It follows from `estX2` at integer moments:
+dividing the maximal function by `2` brings the moment bound to exactly
+`c_n n ‖1‖`, so the exponential series of `GridExponential.lean` applies, and
+the factor `2` moves into the rate. The measurability needed there is the
+right-continuity of the cumulative supremum `t ↦ sup_{s≤t} ψ_s`, proved as
+`continuousWithinAt_intervalSup_cumul`.
 
 ## Finite-grid estimates
 

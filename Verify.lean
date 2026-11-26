@@ -167,3 +167,21 @@ info: 'WeightedBMO.estSmaximal_lower' depends on axioms: [propext, Classical.cho
 -/
 #guard_msgs in
 #print axioms WeightedBMO.estSmaximal_lower
+
+/--
+info: 'WeightedBMO.continuousWithinAt_intervalSup_cumul' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.continuousWithinAt_intervalSup_cumul
+
+/--
+info: 'WeightedBMO.estX2' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.estX2
+
+/--
+info: 'WeightedBMO.estX3' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.estX3
