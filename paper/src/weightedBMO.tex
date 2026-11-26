@@ -952,7 +952,7 @@
 		The rate in \eqref{eqn.squarerefined} cannot be improved in this class: the models of \cref{prop.lower} are square functions, so \eqref{eqn.lower2} holds for $\PP(Z_n>u)$ here, and \eqref{eqn.nosuper} holds with the supremum taken over the martingales of this corollary.
 	\end{corollary}
 	\begin{proof}
-		We apply \cref{prop.obja} and \cref{thm.refined} to $\xi_k=|df_k|^2$, $k\ge1$. The costs are nonnegative and adapted, $S_k=\sum_{j\le k}|df_j|^2=[f]_k$ by additivity of $[f]$, and $b_k=\E_{k-1}|df_k|^2$, so the budget \eqref{eqn.budget} is \eqref{eqn.squarebudget}. Since $K$ is $\cff_0$-measurable, the denominators $K+J_{k-1}$ are $\cff_{k-1}$-measurable, and the estimates of \cref{prop.obja,thm.refined} hold conditionally on $\cff_0$, hence almost surely.
+		We apply \cref{prop.obja} and \cref{thm.refined} to $\xi_k=|df_k|^2$, $k\ge1$. The costs are nonnegative and adapted, $S_k=\sum_{j\le k}|df_j|^2=[f]_k$ by additivity of $[f]$, and $b_k=\E_{k-1}|df_k|^2$, so the budget \eqref{eqn.budget} is \eqref{eqn.squarebudget}.
 
 		For the sharpness it is enough to realise the models of \cref{prop.lower} as square functions. Let $a>0$ and $p\in(0,1)$, let $df_1,\dots,df_n$ be independent with $\PP(df_k=a^{1/2})=\PP(df_k=-a^{1/2})=p/2$ and $\PP(df_k=0)=1-p$, and let $f$ be constant after $n$. Then $f$ is a square integrable martingale, $|df_k|^2$ takes the values $a$ and $0$ with probabilities $p$ and $1-p$, and $\E_{k-1}|df_k|^2=pa$, so that \eqref{eqn.squarebudget} holds with $K=npa$ and $(S_k,J_k)=([f]_k,\max_{j\le k}|df_j|^2)$ is the pair to which \cref{prop.lower} is applied.
 	\end{proof}
