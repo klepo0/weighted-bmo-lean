@@ -1,0 +1,153 @@
+\begin{thebibliography}{HvNVW16}
+
+\bibitem[ABLM20]{athreya2020well}
+Siva Athreya, Oleg Butkovsky, Khoa L{\^e}, and Leonid Mytnik.
+\newblock Well-posedness of stochastic heat equation with distributional drift
+  and skew stochastic heat equation.
+\newblock {\em arXiv preprint arXiv:2011.13498}, 2020.
+
+\bibitem[BDG72]{MR0400380}
+D.~L. Burkholder, B.~J. Davis, and R.~F. Gundy.
+\newblock Integral inequalities for convex functions of operators on
+  martingales.
+\newblock pages 223--240, 1972.
+
+\bibitem[BDG21]{butkovsky2021approximation}
+Oleg Butkovsky, Konstantinos Dareiotis, and M{\'a}t{\'e} Gerencs{\'e}r.
+\newblock Approximation of sdes: a stochastic sewing approach.
+\newblock {\em Probability Theory and Related Fields}, pages 1--60, 2021.
+
+\bibitem[Bur73]{MR365692}
+D.~L. Burkholder.
+\newblock Distribution function inequalities for martingales.
+\newblock {\em Ann. Probability}, 1:19--42, 1973.
+
+\bibitem[Dav70]{davis1970intergrability}
+Burgess Davis.
+\newblock On the intergrability of the martingale square function.
+\newblock {\em Israel Journal of Mathematics}, 8(2):187--190, 1970.
+
+\bibitem[DGL22]{dareiotis2021quantifying}
+Konstantinos Dareiotis, M{\'a}t{\'e} Gerencs{\'e}r, and Khoa L{\^e}.
+\newblock {Quantifying a convergence theorem of Gy{\"o}ngy and Krylov}.
+\newblock {\em Annals of Applied Probability}, 2022+.
+
+\bibitem[dlPnLS09]{MR2488094}
+Victor~H. de~la Pe\~{n}a, Tze~Leung Lai, and Qi-Man Shao.
+\newblock {\em Self-normalized processes}.
+\newblock Probability and its Applications (New York). Springer-Verlag, Berlin,
+  2009.
+\newblock Limit theory and statistical applications.
+
+\bibitem[Doo53]{MR0058896}
+J.~L. Doob.
+\newblock {\em Stochastic processes}.
+\newblock John Wiley \& Sons, Inc., New York; Chapman \& Hall, Limited, London,
+  1953.
+
+\bibitem[FHL21]{FHL21}
+Peter Friz, Antoine Hocquet, and Khoa L{\^e}.
+\newblock Rough stochastic differential equations.
+\newblock {\em arXiv preprint arXiv:2106.10340}, 2021.
+
+\bibitem[FS72]{MR447953}
+C.~Fefferman and E.~M. Stein.
+\newblock {$H\sp{p}$} spaces of several variables.
+\newblock {\em Acta Math.}, 129(3-4):137--193, 1972.
+
+\bibitem[Gar73]{MR0448538}
+Adriano~M. Garsia.
+\newblock {\em Martingale inequalities: {S}eminar notes on recent progress}.
+\newblock Mathematics Lecture Note Series. W. A. Benjamin, Inc., Reading,
+  Mass.-London-Amsterdam, 1973.
+
+\bibitem[Gei05]{MR2136865}
+Stefan Geiss.
+\newblock Weighted {BMO} and discrete time hedging within the {B}lack-{S}choles
+  model.
+\newblock {\em Probab. Theory Related Fields}, 132(1):13--38, 2005.
+
+\bibitem[HvNVW16]{MR3617205}
+Tuomas Hyt\"{o}nen, Jan van Neerven, Mark Veraar, and Lutz Weis.
+\newblock {\em Analysis in {B}anach spaces. {V}ol. {I}. {M}artingales and
+  {L}ittlewood-{P}aley theory}, volume~63 of {\em Ergebnisse der Mathematik und
+  ihrer Grenzgebiete. 3. Folge. A Series of Modern Surveys in Mathematics
+  [Results in Mathematics and Related Areas. 3rd Series. A Series of Modern
+  Surveys in Mathematics]}.
+\newblock Springer, Cham, 2016.
+
+\bibitem[JSW03]{MR2016616}
+Bing-Yi Jing, Qi-Man Shao, and Qiying Wang.
+\newblock Self-normalized {C}ram\'{e}r-type large deviations for independent
+  random variables.
+\newblock {\em Ann. Probab.}, 31(4):2167--2215, 2003.
+
+\bibitem[Kar02]{MR1913610}
+G.~A. Karagulyan.
+\newblock Exponential estimates for the {C}alder\'{o}n-{Z}ygmund operator and
+  related problems of {F}ourier series.
+\newblock {\em Mat. Zametki}, 71(3):398--411, 2002.
+
+\bibitem[KS22]{kuhn2022maximal}
+Franziska K{\"u}hn and Ren{\'e}~L Schilling.
+\newblock Maximal inequalities and some applications.
+\newblock {\em arXiv preprint arXiv:2204.04690}, 2022.
+
+\bibitem[L{\^{e}}20]{le2018stochastic}
+Khoa L{\^{e}}.
+\newblock A stochastic sewing lemma and applications.
+\newblock {\em Electron. J. Probab.}, 25:Paper No. 38, 55, 2020.
+
+\bibitem[L{\^e}22]{le2022stochastic}
+Khoa L{\^e}.
+\newblock Quantitative {John--Nirenberg} inequality for stochastic processes of
+  bounded mean oscillation.
+\newblock {\em arXiv preprint arXiv:2210.15736}, 2022.
+
+\bibitem[LL21]{le2021taming}
+Khoa L{\^e} and Chengcheng Ling.
+\newblock {Taming singular stochastic differential equations: A numerical
+  method}.
+\newblock {\em arXiv preprint arXiv:2110.01343}, 2021.
+
+\bibitem[OCPR13]{MR3124931}
+Carmen Ortiz-Caraballo, Carlos P\'{e}rez, and Ezequiel Rela.
+\newblock Exponential decay estimates for singular integral operators.
+\newblock {\em Math. Ann.}, 357(4):1217--1243, 2013.
+
+\bibitem[Os{\c{e}}15]{MR3426632}
+Adam Os{\c{e}}kowski.
+\newblock Sharp maximal estimates for {BMO} martingales.
+\newblock {\em Osaka J. Math.}, 52(4):1125--1142, 2015.
+
+\bibitem[RY99]{MR1725357}
+Daniel Revuz and Marc Yor.
+\newblock {\em Continuous martingales and {B}rownian motion}, volume 293 of
+  {\em Grundlehren der Mathematischen Wissenschaften [Fundamental Principles of
+  Mathematical Sciences]}.
+\newblock Springer-Verlag, Berlin, third edition, 1999.
+
+\bibitem[Sha97]{MR1428510}
+Qi-Man Shao.
+\newblock Self-normalized large deviations.
+\newblock {\em Ann. Probab.}, 25(1):285--328, 1997.
+
+\bibitem[Str73]{MR341601}
+Daniel~W. Stroock.
+\newblock Applications of {F}efferman-{S}tein type interpolation to probability
+  theory and analysis.
+\newblock {\em Comm. Pure Appl. Math.}, 26:477--495, 1973.
+
+\bibitem[SV06]{MR2190038}
+Daniel~W. Stroock and S.~R.~Srinivasa Varadhan.
+\newblock {\em Multidimensional diffusion processes}.
+\newblock Classics in Mathematics. Springer-Verlag, Berlin, 2006.
+\newblock Reprint of the 1997 edition.
+
+\bibitem[Wan91]{MR1127721}
+Gang Wang.
+\newblock Sharp inequalities for the conditional square function of a
+  martingale.
+\newblock {\em Ann. Probab.}, 19(4):1679--1688, 1991.
+
+\end{thebibliography}
