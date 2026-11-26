@@ -32,6 +32,12 @@ Konstantinos Dareiotis, M{\'a}t{\'e} Gerencs{\'e}r, and Khoa L{\^e}.
 \newblock {Quantifying a convergence theorem of Gy{\"o}ngy and Krylov}.
 \newblock {\em Annals of Applied Probability}, 2022+.
 
+\bibitem[dlaP93]{dlaP93}
+Victor~H. de la Pe{\'n}a.
+\newblock Inequalities for tails of adapted processes with an application
+  to {W}ald's lemma.
+\newblock {\em J. Theoret. Probab.}, 6(2):285--302, 1993.
+
 \bibitem[dlPnLS09]{MR2488094}
 Victor~H. de~la Pe\~{n}a, Tze~Leung Lai, and Qi-Man Shao.
 \newblock {\em Self-normalized processes}.
@@ -66,6 +72,10 @@ Stefan Geiss.
 \newblock Weighted {BMO} and discrete time hedging within the {B}lack-{S}choles
   model.
 \newblock {\em Probab. Theory Related Fields}, 132(1):13--38, 2005.
+\bibitem[GS21]{GS21}
+S.~Geiss and M.~Scheutzow.
+\newblock Sharpness of {L}englart's domination inequality and a sharp monotone version.
+\newblock {\em Electron. Commun. Probab.}, 26:Paper No. 44, 8 p., 2021.
 
 \bibitem[HvNVW16]{MR3617205}
 Tuomas Hyt\"{o}nen, Jan van Neerven, Mark Veraar, and Lutz Weis.
@@ -88,10 +98,39 @@ G.~A. Karagulyan.
   related problems of {F}ourier series.
 \newblock {\em Mat. Zametki}, 71(3):398--411, 2002.
 
-\bibitem[KS22]{kuhn2022maximal}
+\bibitem[KS23]{kuhn2022maximal}
 Franziska K{\"u}hn and Ren{\'e}~L Schilling.
 \newblock Maximal inequalities and some applications.
-\newblock {\em arXiv preprint arXiv:2204.04690}, 2022.
+\newblock {\em Probab. Surv.}, 20:382--485, 2023.
+
+\bibitem[Bas88]{Bas88}
+R.~F. Bass.
+\newblock Uniqueness in law for pure jump {M}arkov processes.
+\newblock {\em Probab. Theory Relat. Fields}, 79(2):271--287, 1988.
+
+\bibitem[BFM16]{BFM16}
+Boris Buchmann, Yuguang Fan, and Ross~A. Maller.
+\newblock Distributional representations and dominance of a {L}{\'e}vy process
+  over its maximal jump processes.
+\newblock {\em Bernoulli}, 22(4):2325--2371, 2016.
+
+\bibitem[BT08]{BT08}
+Bernard Bercu and Abderrahmen Touati.
+\newblock Exponential inequalities for self-normalized martingales with
+  applications.
+\newblock {\em Ann. Appl. Probab.}, 18(5):1848--1869, 2008.
+
+\bibitem[FGL15]{FGL15}
+Xiequan Fan, Ion Grama, and Quansheng Liu.
+\newblock Exponential inequalities for martingales with applications.
+\newblock {\em Electron. J. Probab.}, 20:Paper No. 1, 22 p., 2015.
+
+\bibitem[LLP80]{LLP80}
+{\'E}rik Lenglart, Dominique L{\'e}pingle, and Maurizio Pratelli.
+\newblock Pr{\'e}sentation unifi{\'e}e de certaines in{\'e}galit{\'e}s de la
+  th{\'e}orie des martingales.
+\newblock In {\em S{\'e}minaire de Probabilit{\'e}s XIV}, Lecture Notes in
+  Math. 784, pages 26--48. Springer, 1980.
 
 \bibitem[L{\^{e}}20]{le2018stochastic}
 Khoa L{\^{e}}.
@@ -103,12 +142,21 @@ Khoa L{\^e}.
 \newblock Quantitative {John--Nirenberg} inequality for stochastic processes of
   bounded mean oscillation.
 \newblock {\em arXiv preprint arXiv:2210.15736}, 2022.
+\bibitem[Len77]{MR0471069}
+{\'E}rik Lenglart.
+\newblock Relation de domination entre deux processus.
+\newblock {\em Ann. Inst. H. Poincar{\'e} Sect. B (N.S.)}, 13(2):171--179, 1977.
 
 \bibitem[LL21]{le2021taming}
 Khoa L{\^e} and Chengcheng Ling.
 \newblock {Taming singular stochastic differential equations: A numerical
   method}.
 \newblock {\em arXiv preprint arXiv:2110.01343}, 2021.
+
+\bibitem[NV99]{NV99}
+Alexander Novikov and Esko Valkeila.
+\newblock On some maximal inequalities for fractional {B}rownian motions.
+\newblock {\em Stat. Probab. Lett.}, 44(1):47--54, 1999.
 
 \bibitem[OCPR13]{MR3124931}
 Carmen Ortiz-Caraballo, Carlos P\'{e}rez, and Ezequiel Rela.
@@ -126,6 +174,10 @@ Daniel Revuz and Marc Yor.
   {\em Grundlehren der Mathematischen Wissenschaften [Fundamental Principles of
   Mathematical Sciences]}.
 \newblock Springer-Verlag, Berlin, third edition, 1999.
+\bibitem[ST94]{MR1280932}
+Gennady~Samorodnitsky and Murad~S. Taqqu.
+\newblock {\em Stable Non-{G}aussian Random Processes: Stochastic Models with Infinite Variance}.
+\newblock Chapman \& Hall, New York, 1994.
 
 \bibitem[Sha97]{MR1428510}
 Qi-Man Shao.
