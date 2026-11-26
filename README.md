@@ -26,6 +26,7 @@ This project formalizes estimates from Khoa Lê's
 | `est.Smaximal`, left-hand side | `WeightedBMO.estSmaximal_lower` |
 | `est.X2`, normalized maximal function, uniform in `ε` | `WeightedBMO.estX2` |
 | `est.X3`, exponential form at rate `(2e³)⁻¹` | `WeightedBMO.estX3` |
+| `est.Smax01`, exponents `p < 1`, modulo Kuhn's lemma | `WeightedBMO.estSmax01` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
 uses measurable nonnegative real-valued functions and mathlib's extended
@@ -171,6 +172,30 @@ dividing the maximal function by `2` brings the moment bound to exactly
 the factor `2` moves into the rate. The measurability needed there is the
 right-continuity of the cumulative supremum `t ↦ sup_{s≤t} ψ_s`, proved as
 `continuousWithinAt_intervalSup_cumul`.
+
+## Theorem 1.1 for exponents below one
+
+`WeightedBMO/EstSmax01.lean` gives `est.Smax01`:
+
+```
+‖sup_{t∈[0,T]} d(X_0,X_t)‖_p ≤ 2 c_p p (1-p)^{-1/p} ‖E_0 X^♯_T‖_p ,  0 < p < 1.
+```
+
+It is the composition the paper describes: `est.upperbound`, which holds for
+every exponent `p > 0` and bounds the path by `sup(2ψ)`, together with
+`sup(2ψ) ≤ 2 sup ψ` and the `L^p` bound for the nonnegative supermartingale
+`ψ` at exponent `p < 1`.
+
+**Kuhn's lemma is a hypothesis.** That `L^p` bound,
+`‖sup_t ψ_t‖_p ≤ (1-p)^{-1/p} ‖ψ_0‖_p`, is not proved here; it enters
+`estSmax01` as `hKuhn`. The obstruction is the one recorded for
+`est.Smaximal`: the sharp bound for `p < 1` needs the event-tested form of the
+supermartingale maximal inequality,
+`α μ{sup ψ > α} ≤ ∫_{sup ψ > α} ψ_0`, i.e. optional sampling at the first
+passage time tested on an event of `ℱ_S`. Mathlib has optional sampling only in
+discrete time and only unconditionally, and the unconditional (global)
+weak-type inequality cannot give the sharp constant: the layer-cake integral
+`∫_0^∞ p α^{p-2} dα` diverges at the origin when `p < 1`.
 
 ## Finite-grid estimates
 

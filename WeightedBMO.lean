@@ -4,3 +4,4 @@ import WeightedBMO.SharpMaximal
 import WeightedBMO.ContinuousDoob
 import WeightedBMO.EstSmaximal
 import WeightedBMO.EstX2X3
+import WeightedBMO.EstSmax01
