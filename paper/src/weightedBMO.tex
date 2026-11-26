@@ -634,6 +634,12 @@
 
 	Both applications take values in $\R$; the metric space formulation of \cref{cor.maximaldagger} is not needed for either of them.
 
+	\begin{remark}[What is machine-checked]\label[remark]{rmk.verification}
+		In the Lean~4 formalisation that accompanies this note, the estimates of \cref{thm.bmophi} and the five displays \eqref{est.upperbound}--\eqref{est.Smax01} of \cref{cor.maximaldagger} are proved. Nothing in the present section is: \cref{lem.RLint}, \cref{lem.RLsharp}, \cref{thm.RL}, \cref{cor.mono}, \cref{prop.obja}, \cref{prop.lower}, \cref{thm.refined}, \cref{cor.second}, \cref{cor.square} and \cref{prop.cont} are stated and proved here only, as are the examples and the remarks.
+
+		Two steps of the verification of \cref{cor.maximaldagger} are still hypotheses in it, and both are used below. First, $X^\sharp_{t,\tau}$ is defined there as a supremum over the rational grid, and is not identified with the supremum over $[t,\tau]$. Second, the weight $t\mapsto\E_tX^\sharp_{t,\tau}$ enters the verified statements as a hypothesis: the existence of a right-continuous version of a conditional-expectation process (Dellacherie--Meyer II (2.9)) is not formalised, and neither are the domination estimates $\E_Sd(X_U,X_\tau)\le\E_SX^\sharp_{S,\tau}$ at arbitrary stopping times. The estimates of \cref{thm.RL} and \eqref{eqn.mono2} of \cref{cor.mono} pass from \eqref{est.X2} and \eqref{est.X3} to a normaliser computed from the model, so they are conditional on the second step; the statements from \cref{prop.obja} onwards do not depend on it, but are unverified in their own right.
+	\end{remark}
+
 \subsection{Stable Volterra processes} % (fold)
 \label{sec:stable}
 
@@ -700,10 +706,6 @@
 		Replacing the denominator $\varepsilon+\sup_{r\in[0,t]}\E_rX^\sharp_{r,\tau}$ in \eqref{est.X2} and \eqref{est.X3} by the larger $\varepsilon+\mathcal N_t$ decreases the ratios, and the two estimates follow.
 	\end{proof}
 
-	\begin{remark}\label[remark]{rmk.RLunverified}
-		Unlike \eqref{est.upperbound}--\eqref{est.Smax01}, the two estimates of \cref{thm.RL} have \emph{not} been machine-verified. Passing from \eqref{est.X2} and \eqref{est.X3} to \eqref{eqn.RLmain} requires the right-continuous version of $r\mapsto\E_rX^\sharp_{r,\tau}$ (Dellacherie--Meyer II (2.9)), by which $\sup_{r\in[0,t]}\E_rX^\sharp_{r,\tau}$ is compared with $\mathcal N_t$, and it requires the domination estimates behind \eqref{est.X2} at arbitrary stopping times. In the formal development accompanying this note both are still hypotheses, so \cref{thm.RL} is, in that setting, conditional on them.
-	\end{remark}
-
 	\begin{remark}\label{rmk.RLsharpinf}
 		The essential supremum of the sharp function is infinite here. Indeed, by \eqref{eqn.RLsplit} and the triangle inequality, $\E_u|X_\tau-X_{u-}|\ge|Z_{u,\tau}|-\E|Y_{u,\tau}|$, and $Z_{u,\tau}$ is a nondegenerate symmetric $\alpha$-stable variable whenever $\tau>u>0$. Consequently the unweighted John--Nirenberg theorem of \cite{le2022stochastic}, and likewise a $\bmo^{p-\var}$ modulus in the sense of \cite{MR2136865}, cannot be applied to $X$, since both require a finite essential supremum of the conditional mean oscillation. Only the weighted estimates \eqref{est.jnweight2} and \eqref{est.jnexpwei} are available, and \cref{thm.RL} is a genuine instance of their use.
 	\end{remark}
@@ -737,10 +739,6 @@
 	\begin{proof}
 		For $r\le T$, $\E_r|X_T-X_{r-}|=\E_r(X_T-X_r)+\Delta X_r=\beta^T_r+\Delta X_r$, since $X_{r-}$ is $\cff_r$-measurable and $X$ is nondecreasing. As every jump of $X$ after $s$ is part of the increment $X_T-X_{s-}$, we have $\sup_{r\in[s,T]}\Delta X_r\le X_T-X_{s-}$, whence $X^\sharp_{s,T}\le K+X_T-X_{s-}$. Taking $\E_s$ and using the identity again at $r=s$ gives $\E_sX^\sharp_{s,T}\le\Delta X_s+2K\le J_t+2K$ for $s\le t$. The estimates \eqref{eqn.mono2} follow from \eqref{est.X2} and \eqref{est.X3} as in \cref{thm.RL}.
 	\end{proof}
-
-	\begin{remark}\label[remark]{rmk.monounverified}
-		As for \cref{thm.RL}, and unlike \eqref{est.upperbound}--\eqref{est.Smax01}, the estimates \eqref{eqn.mono2} have \emph{not} been machine-verified. The computation behind \eqref{eqn.mono1} is elementary, but the passage to \eqref{eqn.mono2} is the same regularisation step as in \cref{rmk.RLunverified}, and the formal development still carries that step as a hypothesis.
-	\end{remark}
 
 	\begin{remark}\label{rmk.mononormalizer}
 		The interest of \eqref{eqn.mono2} is the normaliser: it involves the current jump, and \eqref{eqn.mono2} requires no integrability of $J_T$. This is the point at which the left limit in the definition of $X^\sharp$ is used. With $X_{r}$ in place of $X_{r-}$ the identity in the proof fails and the estimate becomes false: for a compound Poisson process with a single large claim the ratio $X_t/(\varepsilon+J_{t-}+2K)$ is unbounded, while with $J_t$ it is at most one.
@@ -1131,5 +1129,5 @@
 	% The author was supported by Alexander von Humboldt Research Fellowship during the early stage of this work.
 % section funding (end)
 \bibliographystyle{alpha}
-\bibliography{biblio}
+\bibliography{weightedBMO}
 \end{document}
