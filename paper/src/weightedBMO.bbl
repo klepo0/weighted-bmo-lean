@@ -10,7 +10,7 @@ Siva Athreya, Oleg Butkovsky, Khoa L{\^e}, and Leonid Mytnik.
 D.~L. Burkholder, B.~J. Davis, and R.~F. Gundy.
 \newblock Integral inequalities for convex functions of operators on
   martingales.
-\newblock pages 223--240, 1972.
+\newblock In {\em Proc. Sixth Berkeley Sympos. Math. Statist. Probab., Vol.~II}, pages 223--240. Univ. California Press, Berkeley, 1972.
 
 \bibitem[BDG21]{butkovsky2021approximation}
 Oleg Butkovsky, Konstantinos Dareiotis, and M{\'a}t{\'e} Gerencs{\'e}r.
@@ -55,6 +55,11 @@ J.~L. Doob.
 Peter Friz, Antoine Hocquet, and Khoa L{\^e}.
 \newblock Rough stochastic differential equations.
 \newblock {\em arXiv preprint arXiv:2106.10340}, 2021.
+
+\bibitem[Fre75]{Fre75}
+David~A. Freedman.
+\newblock On tail probabilities for martingales.
+\newblock {\em Ann. Probab.}, 3:100--118, 1975.
 
 \bibitem[FS72]{MR447953}
 C.~Fefferman and E.~M. Stein.
