@@ -41,7 +41,7 @@ variable {Ω : Type*} [m : MeasurableSpace Ω] {μ : Measure Ω} [IsFiniteMeasur
 /-- **The dyadic lift, tested on an event of `ℱ 0`.** -/
 theorem supermartingale_max_le_supOn_of_measurableSet_zero [SigmaFiniteFiltration μ ℱ]
     {M : ℝ → Ω → ℝ} (hM : Supermartingale M ℱ μ) {T : ℝ} (hT : 0 ≤ T)
-    (hM0 : ∀ t ω, 0 ≤ M t ω) {α : ℝ} (hα : 0 < α) {G : Set Ω}
+    (hM0 : ∀ t ω, t ∈ Icc 0 T → 0 ≤ M t ω) {α : ℝ} (hα : 0 < α) {G : Set Ω}
     (hG : MeasurableSet[ℱ 0] G) :
     ENNReal.ofReal α * μ ({ω | ENNReal.ofReal α < supOn M T ω} ∩ G) ≤
       ENNReal.ofReal (∫ ω in G, M 0 ω ∂μ) := by
@@ -70,8 +70,14 @@ theorem supermartingale_max_le_supOn_of_measurableSet_zero [SigmaFiniteFiltratio
       show MeasurableSet[ℱ (t 0)] G
       rw [ht0]
       exact hG
+    have htmem : ∀ k : ℕ, t k ∈ Icc 0 T := by
+      intro k
+      refine ⟨?_, ?_⟩
+      · simp only [t, dyadicTime]
+        positivity
+      · exact min_le_right _ _
     have hmain := supermartingale_max_le_of_measurableSet_zero (ℱ := 𝒢) (X := X) hXsup
-      (fun k ω => hM0 _ ω) hα (2 ^ n) (G := G) hG'
+      (fun k ω => hM0 (t k) ω (htmem k)) hα (2 ^ n) (G := G) hG'
     have htmin : ∀ k ≤ 2 ^ n, t k = dyadicTime T n k := by
       intro k hk
       simp only [t]
@@ -145,7 +151,7 @@ theorem supermartingale_max_le_supOn_of_measurableSet_zero [SigmaFiniteFiltratio
 /-- **Dyadic lift of the global weak-type inequality.** -/
 theorem supermartingale_max_le_supOn [SigmaFiniteFiltration μ ℱ]
     {M : ℝ → Ω → ℝ} (hM : Supermartingale M ℱ μ) {T : ℝ} (hT : 0 ≤ T)
-    (hM0 : ∀ t ω, 0 ≤ M t ω) {α : ℝ} (hα : 0 < α) :
+    (hM0 : ∀ t ω, t ∈ Icc 0 T → 0 ≤ M t ω) {α : ℝ} (hα : 0 < α) :
     ENNReal.ofReal α * μ {ω | ENNReal.ofReal α < supOn M T ω} ≤
       ENNReal.ofReal (∫ ω, M 0 ω ∂μ) := by
   have h := supermartingale_max_le_supOn_of_measurableSet_zero hM hT hM0 hα

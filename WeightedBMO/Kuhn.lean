@@ -1,6 +1,9 @@
 import WeightedBMO.SupermartingaleLift
 import Mathlib.Analysis.SpecialFunctions.Pow.Integral
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+import WeightedBMO.EstSmaximal
+
+set_option maxHeartbeats 2000000
 
 /-!
 # Towards Kuhn's `L^p` maximal inequality for `p < 1`
@@ -146,6 +149,7 @@ theorem lintegral_min_mul_rpow {p c : ℝ} (hp : 0 < p) (hp1 : p < 1) (hc : 0 �
   field_simp
   ring
 
+
 /-- If `g` dominates `f` in integral over the set `{g < f}`, it dominates `f` a.e. -/
 theorem ae_le_of_setIntegral_le {f g : Ω → ℝ}
     (hS : MeasurableSet[m] {ω | g ω < f ω})
@@ -179,6 +183,148 @@ theorem ae_le_of_setIntegral_le {f g : Ω → ℝ}
   filter_upwards [hmem] with ω hω
   simp only [mem_setOf_eq, not_lt] at hω
   exact hω
+
+/-- **Kuhn's truncation.**  If the event-tested weak-type inequality
+`α μ({α < Y} ∩ G) ≤ ∫_G Z` holds for every `α > 0` and every `𝒢`-measurable `G`,
+then for `0 < q < 1` the `q`-th moments satisfy `∫ Y^q ≤ (1-q)^{-1} ∫ Z^q`.
+
+The proof conditions on `𝒢`: the weak-type inequality is equivalent to
+`α μ{α < Y | 𝒢} ≤ Z`, so the tail `μ{t < Y}` is at most
+`∫ min (1) (Z/t)`, and the one-variable computation `lintegral_min_mul_rpow`
+then gives the sharp constant. -/
+theorem lintegral_rpow_le_of_weak [IsProbabilityMeasure μ]
+    {Y Z : Ω → ℝ} {q : ℝ} (hq : 0 < q) (hq1 : q < 1)
+    (hY0 : ∀ ω, 0 ≤ Y ω) (hYm : @Measurable Ω ℝ m _ Y)
+    (hZ0 : ∀ ω, 0 ≤ Z ω) (hZm : @Measurable Ω ℝ m _ Z) (hZint : Integrable Z μ)
+    {𝒢 : MeasurableSpace Ω} (h𝒢 : 𝒢 ≤ m) (hZ𝒢 : @Measurable Ω ℝ 𝒢 _ Z)
+    (hweak : ∀ (α : ℝ), 0 < α → ∀ G : Set Ω, @MeasurableSet Ω 𝒢 G →
+      ENNReal.ofReal α * μ ({ω | α < Y ω} ∩ G) ≤ ENNReal.ofReal (∫ ω in G, Z ω ∂μ)) :
+    ∫⁻ ω, ENNReal.ofReal (Y ω ^ q) ∂μ ≤
+      ENNReal.ofReal (1 / (1 - q)) * ∫⁻ ω, ENNReal.ofReal (Z ω ^ q) ∂μ := by
+  letI : MeasurableSpace Ω := m
+  have h1q : (0:ℝ) < 1 - q := by linarith
+  have hbound : ∀ t : ℝ, 0 < t →
+      μ {ω | t < Y ω} ≤ ∫⁻ ω, ENNReal.ofReal (min 1 (Z ω / t)) ∂μ := by
+    intro t ht
+    classical
+    have hA : MeasurableSet {ω | t < Y ω} := hYm measurableSet_Ioi
+    set f : Ω → ℝ := μ[({ω | t < Y ω}).indicator (fun _ => (1:ℝ)) | 𝒢] with hf
+    have hind_int : Integrable (({ω | t < Y ω}).indicator (fun _ => (1:ℝ))) μ :=
+      Integrable.indicator (integrable_const (1:ℝ)) hA
+    have hfmeas : @Measurable Ω ℝ 𝒢 _ f := stronglyMeasurable_condExp.measurable
+    have hfint : Integrable f μ := by rw [hf]; exact integrable_condExp
+    have hind_le : ∀ ω, ({ω | t < Y ω}).indicator (fun _ => (1:ℝ)) ω ≤ 1 := by
+      intro ω
+      by_cases hω : ω ∈ {ω | t < Y ω} <;> simp [Set.indicator_apply, hω]
+    have hf1 : f ≤ᵐ[μ] fun _ => (1:ℝ) := by
+      have hone : μ[(fun _ => (1:ℝ)) | 𝒢] = fun _ => (1:ℝ) :=
+        condExp_of_stronglyMeasurable (μ := μ) h𝒢 stronglyMeasurable_const
+          (integrable_const (1:ℝ))
+      have h := condExp_mono (m := 𝒢) hind_int (integrable_const (1:ℝ))
+        (Eventually.of_forall hind_le)
+      filter_upwards [h] with ω h1
+      simp only [hf]
+      rw [hone] at h1
+      exact h1
+    have hS𝒢 : @MeasurableSet Ω 𝒢 {ω | Z ω < t * f ω} :=
+      measurableSet_lt hZ𝒢 (hfmeas.const_mul t)
+    have hS : MeasurableSet {ω | Z ω < t * f ω} := h𝒢 _ hS𝒢
+    have hped : (fun ω => t * f ω) ≤ᵐ[μ] Z := by
+      refine ae_le_of_setIntegral_le hS (hfint.const_mul t) hZint ?_
+      have h1 : ∫ ω in {ω | Z ω < t * f ω}, f ω ∂μ
+          = μ.real ({ω | Z ω < t * f ω} ∩ {ω | t < Y ω}) := by
+        have hstep : ∫ ω in {ω | Z ω < t * f ω}, f ω ∂μ
+            = ∫ ω in {ω | Z ω < t * f ω},
+                ({ω | t < Y ω}).indicator (fun _ => (1:ℝ)) ω ∂μ := by
+          simp only [hf]
+          exact setIntegral_condExp h𝒢 hind_int hS𝒢
+        rw [hstep, setIntegral_indicator hA, setIntegral_const, smul_eq_mul, mul_one,
+          measureReal_def]
+      have hset : ∫ ω in {ω | Z ω < t * f ω}, t * f ω ∂μ
+          = t * μ.real ({ω | Z ω < t * f ω} ∩ {ω | t < Y ω}) := by
+        rw [MeasureTheory.integral_const_mul, h1]
+      have hreal : t * μ.real ({ω | Z ω < t * f ω} ∩ {ω | t < Y ω})
+          ≤ ∫ ω in {ω | Z ω < t * f ω}, Z ω ∂μ := by
+        have hfin : μ ({ω | t < Y ω} ∩ {ω | Z ω < t * f ω}) ≠ ⊤ := measure_ne_top _ _
+        have hW := hweak t ht _ hS𝒢
+        rw [← ENNReal.ofReal_toReal hfin, ← measureReal_def, ← ENNReal.ofReal_mul ht.le] at hW
+        rw [Set.inter_comm]
+        exact (ENNReal.ofReal_le_ofReal_iff
+          (setIntegral_nonneg hS (fun ω _ => hZ0 ω))).1 hW
+      rw [hset]
+      exact hreal
+    have hf2 : f ≤ᵐ[μ] fun ω => Z ω / t := by
+      filter_upwards [hped] with ω hω
+      rw [le_div_iff₀ ht]
+      linarith
+    have hmin : f ≤ᵐ[μ] fun ω => min 1 (Z ω / t) := by
+      filter_upwards [hf1, hf2] with ω h1 h2
+      exact le_min h1 h2
+    have hminint : Integrable (fun ω => min 1 (Z ω / t)) μ := by
+      refine Integrable.mono' (integrable_const (1:ℝ))
+        (measurable_const.min (hZm.div_const t)).aestronglyMeasurable ?_
+      filter_upwards with ω
+      have h0 : 0 ≤ min 1 (Z ω / t) := le_min zero_le_one (div_nonneg (hZ0 ω) ht.le)
+      rw [Real.norm_eq_abs, abs_of_nonneg h0]
+      exact min_le_left _ _
+    have hnn : 0 ≤ᵐ[μ] (fun ω => min 1 (Z ω / t)) :=
+      Eventually.of_forall fun ω => le_min zero_le_one (div_nonneg (hZ0 ω) ht.le)
+    have hle_int : ∫ ω, f ω ∂μ ≤ ∫ ω, min 1 (Z ω / t) ∂μ :=
+      integral_mono_ae hfint hminint hmin
+    have hfval : ∫ ω, f ω ∂μ = μ.real {ω | t < Y ω} := by
+      simp only [hf]
+      rw [integral_condExp h𝒢, MeasureTheory.integral_indicator hA, setIntegral_const, smul_eq_mul, mul_one,
+        measureReal_def]
+    have hmu : μ {ω | t < Y ω} = ENNReal.ofReal (∫ ω, f ω ∂μ) := by
+      rw [hfval]
+      exact (ENNReal.ofReal_toReal (measure_ne_top _ _)).symm
+    calc μ {ω | t < Y ω} = ENNReal.ofReal (∫ ω, f ω ∂μ) := hmu
+      _ ≤ ENNReal.ofReal (∫ ω, min 1 (Z ω / t) ∂μ) := ENNReal.ofReal_le_ofReal hle_int
+      _ = ∫⁻ ω, ENNReal.ofReal (min 1 (Z ω / t)) ∂μ :=
+          ofReal_integral_eq_lintegral_ofReal hminint hnn
+  have huncurry : AEMeasurable
+      (Function.uncurry (fun t ω => ENNReal.ofReal (min 1 (Z ω / t)) *
+        ENNReal.ofReal (t ^ (q - 1)))) (Measure.prod (volume.restrict (Ioi (0:ℝ))) μ) := by
+    have hbase : Measurable (fun t : ℝ => t ^ (q - 1)) := by measurability
+    have h1 : Measurable (fun p : ℝ × Ω => ENNReal.ofReal (min 1 (Z p.2 / p.1))) :=
+      ENNReal.measurable_ofReal.comp
+        (measurable_const.min ((hZm.comp measurable_snd).div measurable_fst))
+    have h2 : Measurable (fun p : ℝ × Ω => ENNReal.ofReal (p.1 ^ (q - 1))) :=
+      ENNReal.measurable_ofReal.comp (hbase.comp measurable_fst)
+    exact (h1.mul h2).aemeasurable
+  rw [lintegral_rpow_eq_lintegral_meas_lt_mul μ (Eventually.of_forall hY0) hYm.aemeasurable hq]
+  have hstep : (∫⁻ t in Ioi (0:ℝ), μ {a | t < Y a} * ENNReal.ofReal (t ^ (q - 1)))
+      ≤ ∫⁻ t in Ioi (0:ℝ),
+          (∫⁻ ω, ENNReal.ofReal (min 1 (Z ω / t)) * ENNReal.ofReal (t ^ (q - 1)) ∂μ) := by
+    refine lintegral_mono_ae ?_
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+    rw [lintegral_mul_const (ENNReal.ofReal (t ^ (q - 1))) (by measurability)]
+    exact mul_le_mul_right' (hbound t ht) _
+  calc ENNReal.ofReal q * ∫⁻ t in Ioi (0:ℝ), μ {a | t < Y a} * ENNReal.ofReal (t ^ (q - 1))
+      ≤ ENNReal.ofReal q * ∫⁻ t in Ioi (0:ℝ),
+          (∫⁻ ω, ENNReal.ofReal (min 1 (Z ω / t)) * ENNReal.ofReal (t ^ (q - 1)) ∂μ) :=
+        mul_le_mul_left' hstep _
+    _ = ENNReal.ofReal q * (∫⁻ ω, (∫⁻ t in Ioi (0:ℝ),
+          ENNReal.ofReal (min 1 (Z ω / t)) * ENNReal.ofReal (t ^ (q - 1))) ∂μ) := by
+        congr 1
+        exact lintegral_lintegral_swap (μ := volume.restrict (Ioi (0:ℝ))) (ν := μ) huncurry
+    _ = ENNReal.ofReal q * ∫⁻ ω, ENNReal.ofReal ((Z ω) ^ q / (q * (1 - q))) ∂μ := by
+        congr 1
+        exact lintegral_congr fun ω => lintegral_min_mul_rpow hq hq1 (hZ0 ω)
+    _ = ENNReal.ofReal (1 / (1 - q)) * ∫⁻ ω, ENNReal.ofReal (Z ω ^ q) ∂μ := by
+        have hqne : q ≠ 0 := hq.ne'
+        have hfac : (0:ℝ) ≤ 1 / (q * (1 - q)) :=
+          div_nonneg zero_le_one (mul_nonneg hq.le h1q.le)
+        have hpt : ∀ ω, ENNReal.ofReal ((Z ω) ^ q / (q * (1 - q)))
+            = ENNReal.ofReal ((Z ω) ^ q) * ENNReal.ofReal (1 / (q * (1 - q))) := by
+          intro ω
+          rw [div_eq_mul_one_div, ENNReal.ofReal_mul (Real.rpow_nonneg (hZ0 ω) q)]
+        simp_rw [hpt]
+        rw [lintegral_mul_const (ENNReal.ofReal (1 / (q * (1 - q)))) (by measurability)]
+        rw [mul_comm (∫⁻ ω, ENNReal.ofReal (Z ω ^ q) ∂μ) (ENNReal.ofReal (1 / (q * (1 - q)))),
+          ← mul_assoc, ← ENNReal.ofReal_mul hq.le]
+        congr 1
+        field_simp
 
 
 end WeightedBMO

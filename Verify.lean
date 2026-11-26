@@ -233,3 +233,9 @@ info: 'WeightedBMO.ae_le_of_setIntegral_le' depends on axioms: [propext, Classic
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms WeightedBMO.ae_le_of_setIntegral_le
+
+/--
+info: 'WeightedBMO.lintegral_rpow_le_of_weak' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms WeightedBMO.lintegral_rpow_le_of_weak
