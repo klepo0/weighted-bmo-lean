@@ -221,3 +221,15 @@ info: 'WeightedBMO.supermartingale_max_le_supOn_of_measurableSet_zero' depends o
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms WeightedBMO.supermartingale_max_le_supOn_of_measurableSet_zero
+
+/--
+info: 'WeightedBMO.lintegral_min_mul_rpow' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.lintegral_min_mul_rpow
+
+/--
+info: 'WeightedBMO.ae_le_of_setIntegral_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms WeightedBMO.ae_le_of_setIntegral_le

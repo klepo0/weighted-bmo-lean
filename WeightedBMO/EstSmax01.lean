@@ -16,15 +16,20 @@ the weight `2ψ`, and the `L^p` bound for `0 < p < 1`
 it bounds `sup(2ψ)` by `2 sup ψ` and applies the `p`-th power estimate.
 
 Kuhn's lemma itself is *not* proved here; it enters as the hypothesis `hKuhn`.
-The obstruction is the same one recorded for `est.Smaximal`: the sharp `L^p`
-bound for `p < 1` needs the event-tested form of the supermartingale maximal
-inequality,
-`α μ{sup ψ > α} ≤ ∫_{sup ψ > α} ψ_0`,
-which is optional sampling at the first passage time `S = inf{t : ψ_t ≥ α}`
-tested on `{S ≤ T} ∈ ℱ_S`.  Mathlib has optional sampling only in discrete
-time and only unconditionally, and the global weak-type inequality (which does
-follow from it) cannot give the sharp constant, because the layer-cake
-integral `∫_0^∞ p α^{p-2} dα` diverges at the origin for `p < 1`.
+The sharp `L^p` bound for `p < 1` needs the *event-tested* weak-type inequality
+
+  `α μ({sup ψ > α} ∩ G) ≤ ∫_G ψ_0`  for every `G ∈ ℱ_0`,
+
+not the global form `α μ{sup ψ > α} ≤ ∫ ψ_0`, which only gives an `L¹` bound.
+That event-tested inequality is now proved, for a nonnegative supermartingale
+on a finite grid, in `SupermartingaleWeakType.supermartingale_max_le_of_measurableSet_zero`,
+and lifted to the supremum over `[0,T]` in
+`SupermartingaleLift.supermartingale_max_le_supOn_of_measurableSet_zero`.
+What is missing is the truncation turning it into the `L^p` bound with the
+sharp constant; `Kuhn.lean` proves its two ingredients (the one-variable
+integral `∫_0^∞ t^{p-1} min (1, c/t) dt = c^p/(p(1-p))` and the passage to the
+conditional form `α μ{sup ψ > α | ℱ_0} ≤ ψ_0`), but their assembly through the
+layer-cake formula is not yet formalized.
 -/
 
 open MeasureTheory Set Filter Topology

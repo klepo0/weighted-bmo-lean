@@ -188,38 +188,39 @@ every exponent `p > 0` and bounds the path by `sup(2ψ)`, together with
 `sup(2ψ) ≤ 2 sup ψ` and the `L^p` bound for the nonnegative supermartingale
 `ψ` at exponent `p < 1`.
 
-**Both inputs to Kuhn's lemma from the weak-type side are now in place:
-`WeightedBMO/SupermartingaleWeakType.lean` proves the global weak-type
-maximal inequality for a nonnegative supermartingale on a finite grid,
-`α μ{α ≤ max_{k≤N} X_k} ≤ ∫ X_0`, by the first-passage argument with
-mathlib's optional stopping applied to `-X`. That global form suffices for the
-`p < 1` bound, since splitting the layer cake at a level `τ` and then applying
-Jensen gives
+Kuhn's lemma is the remaining hypothesis `hKuhn` of `estSmax01`.  What is needed
+is the *event-tested* weak-type inequality
 
 ```
-E[(sup X)^p] ≤ τ^p μ(univ) + p τ^{p-1} E[X_0]/(1-p),
+α μ({sup ψ > α} ∩ G) ≤ ∫_G ψ_0      for every G ∈ ℱ_0,
 ```
 
-hence `‖sup X‖_p ≤ 2^{1/p}(p/(1-p))‖X_0‖_1` — a bound by the **L¹** norm.
+not the global form `α μ{sup ψ > α} ≤ ∫ ψ_0`: the global form only yields an
+`L¹` bound (`‖sup ψ‖_p ≤ 2^{1/p} p (1-p)^{-1} ‖ψ_0‖₁`, from splitting the layer
+cake at a level `τ`), and on a probability space `‖·‖_p ≤ ‖·‖₁`, so that is
+strictly weaker than what `est.Smax01` needs.  The naive repair — a generalised
+Hölder inequality with the negative exponent `p/(p-1)` — is false.
 
-That is not enough for `est.Smax01`, which needs `‖X_0‖_p`. For `0 < p < 1` on a
-probability space `‖X‖_p ≤ ‖X‖_1`, so an L¹ bound is weaker than the L^p bound
-required; the `τ`-splitting announced earlier therefore does not close the
-statement, and this route needs a genuinely sharper argument (the layer-cake
-truncation with the reverse-Hölder step of Garsia, Theorem III.5.2, which the
-paper cites; the naive generalised Hölder with a negative exponent is false).
-`estSmax01` accordingly still carries Kuhn's lemma as a hypothesis.
+`WeightedBMO/SupermartingaleWeakType.lean` proves the event-tested form for a
+nonnegative supermartingale on a finite grid
+(`supermartingale_max_le_of_measurableSet_zero`): localise the process to
+`1_G · X`, which is again a supermartingale because `1_G` is `ℱ_0`-measurable
+and the filtration increases, and apply the global inequality to it.
+`WeightedBMO/SupermartingaleLift.lean` lifts it to the supremum over `[0,T]`
+(`supermartingale_max_le_supOn_of_measurableSet_zero`), running the
+discrete inequality on each dyadic grid; the localisation is done on the grid,
+where every sample time is nonnegative, since an event of `ℱ_0` need not be
+`ℱ_t`-measurable for `t < 0`.
 
-Kuhn's lemma is a hypothesis.** That `L^p` bound,
-`‖sup_t ψ_t‖_p ≤ (1-p)^{-1/p} ‖ψ_0‖_p`, is not proved here; it enters
-`estSmax01` as `hKuhn`. The obstruction is the one recorded for
-`est.Smaximal`: the sharp bound for `p < 1` needs the event-tested form of the
-supermartingale maximal inequality,
-`α μ{sup ψ > α} ≤ ∫_{sup ψ > α} ψ_0`, i.e. optional sampling at the first
-passage time tested on an event of `ℱ_S`. Mathlib has optional sampling only in
-discrete time and only unconditionally, and the unconditional (global)
-weak-type inequality cannot give the sharp constant: the layer-cake integral
-`∫_0^∞ p α^{p-2} dα` diverges at the origin when `p < 1`.
+What remains is the truncation that turns the event-tested inequality into the
+`L^p` bound with the sharp constant.  `WeightedBMO/Kuhn.lean` proves its two
+ingredients: the one-variable computation
+`∫_0^∞ t^{p-1} min (1, c/t) dt = c^p/(p(1-p))` (`lintegral_min_mul_rpow`,
+whence `(1-p)^{-1}`), and the passage from the tested inequality to its
+conditional form `α μ{sup ψ > α | ℱ_0} ≤ ψ_0` a.e.
+(`ae_le_of_setIntegral_le`).  The final assembly through the layer-cake formula
+`MeasureTheory.lintegral_rpow_eq_lintegral_meas_lt_mul` and Tonelli is not yet
+formalized, so `estSmax01` still carries `hKuhn`.
 
 ## Finite-grid estimates
 
