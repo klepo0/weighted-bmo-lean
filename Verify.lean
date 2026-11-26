@@ -119,3 +119,27 @@ info: 'WeightedBMO.martingale_eLpNorm_maximal_le_of_terminal' depends on axioms:
 -/
 #guard_msgs in
 #print axioms WeightedBMO.martingale_eLpNorm_maximal_le_of_terminal
+
+/--
+info: 'WeightedBMO.supOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.supOn
+
+/--
+info: 'WeightedBMO.eLpNorm_supOn_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.eLpNorm_supOn_le
+
+/--
+info: 'WeightedBMO.eLpNorm_supOn_le_of_terminal' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.eLpNorm_supOn_le_of_terminal
+
+/--
+info: 'WeightedBMO.ofReal_le_supOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.ofReal_le_supOn

@@ -21,6 +21,7 @@ This project formalizes estimates from Khoa Lê's
 | Theorem 1.1 (b), path of increments in weighted BMO | `WeightedBMO.weightedBMOOfSharpMaximal` |
 | Theorem 1.1, `est.upperbound` with the sharp maximal function as a hypothesis | `WeightedBMO.sharpMaximal_eLpNorm_le` |
 | Theorem 1.1 (c), Doob's step for a martingale with terminal value `Ψ` | `WeightedBMO.martingale_eLpNorm_maximal_le_of_terminal` |
+| Continuous-time Doob step over `[0,T]`, sharp constant `p/(p-1)` | `WeightedBMO.eLpNorm_supOn_le` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
 uses measurable nonnegative real-valued functions and mathlib's extended
@@ -95,9 +96,26 @@ converts `‖sup_t E_t X^♯_{t,T}‖_p` into `p/(p-1) ‖X^♯_T‖_p`.
 `martingale_eLpNorm_maximal_le_of_terminal` records that step for a
 nonnegative martingale whose terminal value is a given `Ψ`; in the paper
 `M_t = E_t X^♯_τ` and `Ψ = X^♯_τ`, which is `ℱ_τ`-measurable.
-This step is discrete-time here: the continuous-time version needs a maximal
-inequality for RCLL martingales (optional sampling), which mathlib does not
-provide, so `est.Smaximal` itself is not yet formalized in real time.
+The continuous-time form of this step is `eLpNorm_supOn_le` in
+`WeightedBMO/ContinuousDoob.lean`: for a nonnegative martingale `M` indexed by
+`ℝ` and `p > 1`,
+
+```
+‖sup_{t∈[0,T]} M_t‖_p ≤ p/(p-1) ‖M_T‖_p
+```
+
+(`supOn` is the supremum over the dyadic grids of `[0,T]`; for right-continuous
+paths `ofReal_le_supOn` shows it dominates every value on `[0,T]`).
+Mathlib has optional sampling only in discrete time, so the argument runs the
+first-passage inequality on each dyadic grid — where the sampled process is a
+finite-time nonnegative martingale — and passes to the limit by monotone
+convergence, which reproduces the continuous-time statement with the same
+constant. The terminal-value form is `eLpNorm_supOn_le_of_terminal`.
+
+What is still missing to state `est.Smaximal` verbatim: the paper's weight
+`φ_t = 2E_t X^♯_{t,τ}` has to be exhibited as twice a martingale with terminal
+value `X^♯_τ`, and the interval supremum `intervalSup` used by (1.8) has to be
+identified with `supOn`; both are bookkeeping between the two formulations.
 
 ## Finite-grid estimates
 
