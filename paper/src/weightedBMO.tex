@@ -222,7 +222,7 @@
 
 	We will derive \cref{cor.maximaldagger} from John--Nirenberg inequalities for stochastic processes of bounded weighted mean oscillation (weighted BMO). 
 	\begin{definition}\label{def.bmophi}
-		Let $\tau>0$ be a fixed number,  $(\phi_t)_{t\in[0,\tau]}$ be a positive RCLL adapted  process and $(V_t)_{t\in[0,\tau]}$ be a real valued RCLL adapted process. $V$  belongs to $\bmo_\phi$ if \khoa{mind to remove $\tau$?}
+		Let $\tau>0$ be a fixed number,  $(\phi_t)_{t\in[0,\tau]}$ be a positive RCLL adapted  process and $(V_t)_{t\in[0,\tau]}$ be a real valued RCLL adapted process. $V$  belongs to $\bmo_\phi$ if
 		\begin{align*}
 			[V]_{\bmo_\phi}:=  \sup_{0\le S\le T\le \tau}\|\phi^{-1}_S\E_S|V_T-V_{S-}|\|_\infty<\infty,
 		\end{align*}
@@ -277,7 +277,7 @@
 		\end{gather}
 		Consequently, 
 		\begin{align}\label{est.jnexpwei}
-			\sup_{r\in[0,\tau]}\left\|\E_r \exp\left(\lambda\sup_{r\le t\le \tau}\frac{|V_t-V_r|}{\phi^*_{r,t}}\right)\right\|_\infty<\infty \text{ for every } \lambda\le(e^3\kappa^\phi_{r,\tau}(V))^{-1}.
+			\sup_{r\in[0,\tau]}\left\|\E_r \exp\left(\lambda\sup_{r\le t\le \tau}\frac{|V_t-V_r|}{\phi^*_{r,t}}\right)\right\|_\infty<\infty \text{ for every } \lambda\le(e^3\kappa^\phi_{0,\tau}(V))^{-1}.
 		\end{align}
 		Additionally, \eqref{ineq.JNweighted}-\eqref{est.jnexpwei} hold with $V_{r-}$ in place of $V_r$.
 	\end{theorem}
@@ -308,7 +308,6 @@
 	For further connections with the theory of singular integrals, we refer to \cite{MR447953,MR341601}, appendix A.1 of \cite{MR2190038},  remark III.5.1 of \cite{MR0448538} and chapter 3 of \cite{MR3617205}.
 
 	Weighted BMO sequences and discrete martingales were considered earlier by Garsia \cite{MR0448538}, Stroock \cite{MR341601}, Stroock and Varadhan \cite{MR2190038}, and weighted BMO processes were considered by Geiss \cite{MR2136865}. 
-	\khoa{also Garsia \cite{MR0448538} thm III.5.2, see Remark III.5.1, thm II.1.2} 
 	Inequality \eqref{ineq.JNweighted} is known (at least implicitly) to Geiss. However, John--Nirenberg inequalities are formulated as equivalence of norms in \cite{MR2136865} and require an additional condition on the weight process $\phi$.
 	In contrast, we have tried our best to frame the results in \cref{thm.bmophi} under simplest assumptions. This is important and beneficial because \cref{cor.maximaldagger} and martingale inequalities (\cref{sec:inequalities_for_martingales}) are consequences of \cref{thm.bmophi} but not earlier results. The role of \cref{cor.maximaldagger} below is therefore not the estimate itself, but the object it produces: in the applications of \cref{sec:applications} its sharp function identifies the quantity by which a path must be normalised, and in \cref{sec:stable} that quantity is one for which no unweighted estimate is available at all.
 	The relation between the exponential constant and modulus of mean oscillation has been observed in the author's previous work \cite{le2022stochastic} in the absence of weight. The proof of \cref{thm.bmophi} is different from \cite{le2022stochastic} but still follows similar arguments which appeared in earlier works. However our presentation simplifies previous proofs. 
@@ -728,7 +727,7 @@
 
 	We now specialise to nondecreasing paths, the case in which the sharp function can be evaluated in closed form and the normaliser becomes observable. We use the discrete notation $\E_k=\E(\cdot\,|\cff_k)$, $\xi_0=0$.
 
-	We call the increments $\xi_k$ costs and the constant $K$ a budget only for definiteness of language: in the notation of \cref{sec:introduction} the costs are the increments of an increasing process and $K$ bounds the total of its compensator, so that $K$ is a deterministic dominator in the sense of \cite{MR0471069}; the quantity $\beta^T_t$ below is the conditional expected remaining increment, the object of \cite{MR0448538,Bas88}. Both words are used in the applied literature on cumulative claims and on workload, where the statements of this section take their natural form.
+	We call the increments $\xi_k$ costs and the constant $K$ a budget only for definiteness of language: in the notation of \cref{sec:introduction} the costs are the increments of an increasing process and $K$ bounds the total of its compensator, so that $K$ is a deterministic dominator in the sense of \cite{MR0471069}; the quantity $\beta^T_t$ below is the conditional expected remaining increment, the object of \cite{MR0448538}. Both words are used in the applied literature on cumulative claims and on workload, where the statements of this section take their natural form.
 
 	\begin{corollary}\label[corollary]{cor.mono}
 		Let $(X_t)_{t\in[0,T]}$ be a nondecreasing RCLL adapted integrable process and put $J_t=\sup_{s\in[0,t]}\Delta X_s$, $\Delta X_s=X_s-X_{s-}$. Assume that there is $K\in(0,\infty)$ with $\beta^T_t:=\E_t(X_T-X_t)\le K$ for all $t\in[0,T]$. Then
@@ -989,7 +988,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 	\end{remark}
 
 	\medskip
-	\noindent\textit{Relation to the literature.} The discrete counterparts of the statements of this subsection are the exponential inequalities for sums. Those for independent variables normalise a deviation of $S_n$ by the number of terms together with either the range of a summand, as in Hoeffding's inequality, or a bound on the variances, as in the Bennett and Bernstein inequalities, the maximal versions following from Doob's inequality. For martingales the sharpest such result is Freedman's \cite{Fre75}, which bounds the maximal function by the predictable quadratic variation $\langle M\rangle$ together with an almost sure bound on the increments. Each of these normalisers is computed from a conditional variance or from an a priori range, and \eqref{eqn.budget} supplies neither. The costs need not be martingale differences and no conditional second moment is assumed finite, so that even the exponential moment of $S_n$ may fail to exist (Example~\ref{ex.pareto}); and the normaliser $K+J_k$ carries the largest cost actually realised, which is where the information sits when the second moment is infinite. Conversely, an almost sure bound $\xi_k\le K\ell$ with $\ell\ge1$ puts $J_k\le K\ell$, so that the normaliser is a constant multiple of $K$, and restores a conditional-variance bound, $\sum_{k\le n}\E_{k-1}\xi_k^2\le K\ell\,B_n\le K^2\ell$, hence Freedman's inequality for $M_k=S_k-B_k$, whose increments are bounded by $2K\ell$: since $\{Z_n>u\}\subset\{M_n>(u-1)K\}$, that gives a tail which is exponentially small in $u$ for fixed $\ell$. Such a tail is weaker than \eqref{eqn.obja} for large $u$, but it needs no jump in the normaliser; and the models of \cref{prop.lower}, which use a cost larger than $K$, are excluded by the hypothesis, as \cref{rmk.constant} records. What \cref{prop.obja} and \cref{thm.refined} add is accordingly the case in which no a priori bound on a single cost is available, with the largest cost replacing it --- the discrete counterpart of the bounded-jump hypothesis of \cite{Bas88} in \cref{sec:continuous}.
+	\noindent\textit{Relation to the literature.} The discrete counterparts of the statements of this subsection are the exponential inequalities for sums. Those for independent variables normalise a deviation of $S_n$ by the number of terms together with either the range of a summand, as in Hoeffding's inequality, or a bound on the variances, as in the Bennett and Bernstein inequalities, the maximal versions following from Doob's inequality. For martingales the sharpest such result is Freedman's \cite{Fre75}, which bounds the maximal function by the predictable quadratic variation $\langle M\rangle$ together with an almost sure bound on the increments. Each of these normalisers is computed from a conditional variance or from an a priori range, and \eqref{eqn.budget} supplies neither. The costs need not be martingale differences and no conditional second moment is assumed finite, so that even the exponential moment of $S_n$ may fail to exist (Example~\ref{ex.pareto}); and the normaliser $K+J_k$ carries the largest cost actually realised, which is where the information sits when the second moment is infinite. Conversely, an almost sure bound $\xi_k\le K\ell$ with $\ell\ge1$ puts $J_k\le K\ell$, so that the normaliser is a constant multiple of $K$, and restores a conditional-variance bound, $\sum_{k\le n}\E_{k-1}\xi_k^2\le K\ell\,B_n\le K^2\ell$, hence Freedman's inequality for $M_k=S_k-B_k$, whose increments are bounded by $2K\ell$: since $\{Z_n>u\}\subset\{M_n>(u-1)K\}$, that gives a tail which is exponentially small in $u$ for fixed $\ell$. Such a tail is weaker than \eqref{eqn.obja} for large $u$, but it needs no jump in the normaliser; and the models of \cref{prop.lower}, which use a cost larger than $K$, are excluded by the hypothesis, as \cref{rmk.constant} records. What \cref{prop.obja} and \cref{thm.refined} add is accordingly the case in which no a priori bound on a single cost is available, with the largest cost replacing it --- the discrete counterpart of the bounded-jump case of \cref{sec:continuous}.
 
 \subsection{Continuous time} % (fold)
 \label{sec:continuous}
@@ -1054,7 +1053,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 	\end{remark}
 
 	\medskip
-	\noindent\textit{Relation to the literature.} Continuous-time maximal inequalities are surveyed in \cite{kuhn2022maximal}, which covers martingales, L\'evy, L\'evy-type, Markov and Gaussian processes in continuous time and finite dimension, and deliberately leaves large deviations aside. Exponential bounds for increasing processes in that tradition are obtained by domination \cite{MR0471069,LLP80}, with sharp constants when the dominator is predictable \cite{GS21}, and under a bounded-jump hypothesis in Bass's form \cite{Bas88}. If the jumps of $X$ are bounded by a deterministic $j$, then $J_t\le j$ and the normaliser $K+J_t$ of \cref{prop.cont} is essentially constant, so the estimates reduce to a raw exponential moment bound for $\sup_tX_t$ and nothing beyond that body of results is obtained. The content of \cref{prop.cont} is therefore the case of unbounded jumps, where $J$ carries genuinely new information and no such reduction is available. Self-normalised exponential inequalities for martingales exist, with normalisers built from conditional variances or sums of squares \cite{BT08,FGL15,MR2488094}; their proofs use martingale structure, and their normalisers are predictable functionals of the past, neither of which is available here. Good-$\lambda$ and Lenglart-type tail comparisons for adapted, not necessarily martingale, processes go back at least to \cite{dlaP93}; their normalisers are dominating quantities in the sense of \cite{MR0471069}, not a mean budget together with the largest jump. The quantity $J_t=\sup_{s\le t}\Delta X_s$ itself appears in the L\'evy literature as the maximal jump process, where it is used to dominate a path rather than to normalise a maximal inequality \cite{BFM16}. What we claim as new in this subsection is accordingly narrow: a maximal inequality for cumulative costs whose normaliser is optional and jump-based, valid without bounded jumps and without a predictable dominator, and with the second-order exponent of \eqref{eqn.cont2}. A search of zbMATH Open for combinations of ``maximal inequality'', ``compensator'', ``exponential inequality'', ``largest jump'', ``self-normalized'' and ``counting process'' returned the works cited here and no statement of this form, and the forward-citation lists of \cite{MR0471069}, \cite{Bas88} and \cite{kuhn2022maximal} contain none either\footnote{The searches were made on 26 November 2026; on that date the three lists held 207, 174 and 30 citing works.}; absence from a survey is not absence from the literature, and \eqref{eqn.cont1} should not be claimed as new in the bounded-jump case.
+	\noindent\textit{Relation to the literature.} Continuous-time maximal inequalities are surveyed in \cite{kuhn2022maximal}, which covers martingales, L\'evy, L\'evy-type, Markov and Gaussian processes in continuous time and finite dimension, and deliberately leaves large deviations aside. Exponential bounds for increasing processes in that tradition are obtained by domination \cite{MR0471069,LLP80}, with sharp constants when the dominator is predictable \cite{GS21}. If the jumps of $X$ are bounded by a deterministic $j$, then $J_t\le j$ and the normaliser $K+J_t$ of \cref{prop.cont} is essentially constant, so the estimates reduce to a raw exponential moment bound for $\sup_tX_t$ and nothing beyond that body of results is obtained. The content of \cref{prop.cont} is therefore the case of unbounded jumps, where $J$ carries genuinely new information and no such reduction is available. Self-normalised exponential inequalities for martingales exist, with normalisers built from conditional variances or sums of squares \cite{BT08,FGL15,MR2488094}; their proofs use martingale structure, and their normalisers are predictable functionals of the past, neither of which is available here. Good-$\lambda$ and Lenglart-type tail comparisons for adapted, not necessarily martingale, processes go back at least to \cite{dlaP93}; their normalisers are dominating quantities in the sense of \cite{MR0471069}, not a mean budget together with the largest jump. The quantity $J_t=\sup_{s\le t}\Delta X_s$ itself appears in the L\'evy literature as the maximal jump process, where it is used to dominate a path rather than to normalise a maximal inequality \cite{BFM16}. What we claim as new in this subsection is accordingly narrow: a maximal inequality for cumulative costs whose normaliser is optional and jump-based, valid without bounded jumps and without a predictable dominator, and with the second-order exponent of \eqref{eqn.cont2}. A search of zbMATH Open for combinations of ``maximal inequality'', ``compensator'', ``exponential inequality'', ``largest jump'', ``self-normalized'' and ``counting process'' returned the works cited here and no statement of this form, and the forward-citation lists of \cite{MR0471069} and \cite{kuhn2022maximal} contain none either\footnote{The searches were made on 26 November 2026; on that date the two lists held 207 and 30 citing works.}; absence from a survey is not absence from the literature, and \eqref{eqn.cont1} should not be claimed as new in the bounded-jump case.
 
 \subsection{Optional and predictable dominators} % (fold)
 \label{sec:dominators}
@@ -1066,8 +1065,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 	\label{sec:weighted_vmo_spaces}
 	
 	% section weighted_vmo_spaces (end)
-	\khoa{apply to stopped BM and continuous martingales.}	
-	\begin{definition}
+	\begin{definition}\label{def.vmo}
 		Let $(V_t)_{t\in[0,\tau]}$ be a process in $\bmo_\phi$, $p\in[1,\infty)$ and $\alpha\in(0,1]$. 
 		\begin{enumerate}[(i)]
 			\item $V$ is $\vmo_\phi$ if $\kappa^\phi_{0,\tau}(V)=0$.
@@ -1085,7 +1083,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		where $\cpp([0,\tau])$ is the set of all partitions on $[0,\tau]$.
 	\end{definition}
 	It is evident that $\vmo^\alpha_\phi\subset \vmo^{1/\alpha-\var}_\phi$ and $[V]_{\vmo_\phi^{1/\alpha-\var};[0,\tau]}\le \tau^\alpha[V]_{\vmo_\phi^\alpha;[0,\tau]}$.  Reasoning as in \cite{le2022stochastic}, processes in $\vmo_\phi$ are necessarily continuous. 
-	\begin{proposition}
+	\begin{proposition}\label[proposition]{prop.vmocontrol}
 		Let $(V_t)_{t\in[0,\tau]}$ be a process in $\vmo^{p-\var}_\phi$ and define the function
 		\begin{align*}
 			(s,t)\mapsto w^\phi_{s,t}(V):=([V]_{\vmo^{p-\var}_\phi;[s,t]})^p.
@@ -1100,7 +1098,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		so that $\rho^\phi_{s,t}(V)\le \rho^\phi_{s,u}(V)+\rho^\phi_{u,t}(V)$.
 		The rest of the proof proceeds in the same way as in \cite[Section 3]{le2022stochastic}.
 	\end{proof}
-	\begin{theorem}
+	\begin{theorem}\label{thm.vmo}
 		Let $(V_t)_{t\in[0,\tau]}$ be $\vmo_\phi$. Then
 		\begin{align}\label{est.jnvmophi}
 			\sup_{r\in[0,\tau]}\left\|\E_r \exp\left(\lambda\sup_{t\in[r,\tau]}\frac{|V_t-V_r|}{\phi^*_{r,t}}\right)\right\|_\infty<\infty \text{ for every }\lambda>0.
@@ -1112,7 +1110,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 			\\
 			\E\exp\left(\lambda \sup_{t\in[0,\tau]}\frac{|V_t-V_0|^{p'}}{|\phi^*_{0,t}|^{p'}} \right)<\infty \text{ whenever }  \lambda(w^\phi_{0,\tau}(V))^{\frac1{p-1}}<c_p,
 			\label{est.phi2super}
-			\\\left\|\E_s\sup_{t\in[r,\tau]}\frac{|V_t-V_r|^m}{|\phi^*_{r,t}|^m}\right\|_\infty\le C_p \Gamma( m/{p'}+1)(w^\phi_{s,t}(V))^{m/p} \text{ for every }m\ge1.
+			\\\left\|\E_s\sup_{t\in[s,\tau]}\frac{|V_t-V_s|^m}{|\phi^*_{s,t}|^m}\right\|_\infty\le C_p \Gamma( m/{p'}+1)(w^\phi_{s,\tau}(V))^{m/p} \text{ for every }m\ge1.
 		\end{gather}
 		In \eqref{est.phi2super}, we have set $p'=p/(p-1)$.
 		If $V$ is in $\vmo^{1-\var}_\phi$ then \eqref{est.phi1} still holds with $p=1$ and
@@ -1133,22 +1131,23 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		\end{align*}
 		which implies that $n\le 1+(e^{3}\lambda)^p w^\phi_{0,\tau}(V)$. 
 	\end{proof}
-	\begin{corollary}
-		Let $(V_t)_{t\in[0,\tau]}$ be a process in $\bmo_\phi^{p-\var}$ with $p\in(1,\infty)$. Assume that there is $q\in(1,\infty)$ such that
+	\begin{corollary}\label[corollary]{cor.vmoweight}
+		Let $(V_t)_{t\in[0,\tau]}$ be a process in $\vmo_\phi^{p-\var}$ with $p\in(1,\infty)$. Assume that there is $q\in(1,\infty)$ such that
 		\begin{align*}
 			\E \exp\left({\lambda|\phi_\tau|^{\frac1{q-1}}}\right)<\infty \text{ for every }\lambda>0.
 		\end{align*}
-		Then
+		Assume in addition that $\phi$ is a supermartingale. Then
 		\begin{align*}
 			\E\exp\left(\lambda\sup_{t\in[0,\tau]}|V_t-V_0|^{\frac{p'}{q}}\right)<\infty \text{ for every }\lambda>0.
 		\end{align*}
 	\end{corollary}
 	\begin{proof}
 		If $w^\phi_{0,\tau}(V)=0$, $V$ is  a constant and the claim is trivial. We thus assume that $w^\phi_{0,\tau}(V)\neq0$.
-		Put $X=\sup_{t\in[0,\tau]}|V_t-V_0|$, $Y=\phi^*_{0,\tau}$. By Doob's maximal inequality, we have
-		\begin{align*}
-			\E e^{\lambda |\phi^*_{0,\tau}|^{1/(q-1)}}\le C \E e^{\lambda \phi_\tau^{1/(q-1)}}<\infty \text{ for every }\lambda>0.
-		\end{align*}
+		Put $X=\sup_{t\in[0,\tau]}|V_t-V_0|$, $Y=\phi^*_{0,\tau}$. By Doob's maximal inequality applied to the supermartingale $\phi$, $\|\phi^*_{0,\tau}\|_p\le p'\|\phi_\tau\|_p$ for every $p>1$. Applying this term by term to the series $\E e^{\lambda Z}=\sum_{k\ge1}\frac{\lambda^k}{k!}\|Z\|_k^k$ with $Z=(\phi^*_{0,\tau})^{1/(q-1)}$ gives, for a constant $c=c(q)\ge1$ and a finite constant $C(\lambda)$,
+		\[
+			\E\exp\Big(\lambda|\phi^*_{0,\tau}|^{\frac1{q-1}}\Big)\le C(\lambda)+\E\exp\Big(c\lambda\,\phi_\tau^{\frac1{q-1}}\Big)<\infty\qquad\text{for every }\lambda>0,
+		\]
+		the last inequality being the hypothesis.
 		Let $\lambda,\varepsilon$ be some positive numbers.
 		Using Young inequality
 		\begin{align*}
