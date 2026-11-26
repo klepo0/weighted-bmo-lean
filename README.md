@@ -22,6 +22,7 @@ This project formalizes estimates from Khoa Lê's
 | Theorem 1.1, `est.upperbound` with the sharp maximal function as a hypothesis | `WeightedBMO.sharpMaximal_eLpNorm_le` |
 | Theorem 1.1, `est.upperbound` with the paper's constant `2c_p p` | `WeightedBMO.estUpperbound` |
 | **Theorem 1.1 end to end, all five displays at once** | `WeightedBMO.cor_maximaldagger` |
+| `X^♯_{t,τ}` as an object (rational-grid supremum), measurable and antitone | `WeightedBMO.sharpMaximal` |
 | Theorem 1.1 (c), Doob's step for a martingale with terminal value `Ψ` | `WeightedBMO.martingale_eLpNorm_maximal_le_of_terminal` |
 | Continuous-time Doob step over `[0,T]`, sharp constant `p/(p-1)` | `WeightedBMO.eLpNorm_supOn_le` |
 | `est.Smaximal`, right-hand side, end to end | `WeightedBMO.estSmaximal_upper` |
@@ -236,6 +237,55 @@ The argument has three steps, all formalized:
   (`lintegral_min_mul_rpow`) then give `∫ (sup ψ)^p ≤ (1-p)^{-1} ∫ ψ_0^p`
   (`lintegral_rpow_le_of_weak`), which is `(1-p)^{-1/p}` after taking `p`-th
   roots (`eLpNorm_le_of_lintegral_rpow_le`).
+
+## `X^♯` as an object, and why `ψ`, `Ψ` are still hypotheses
+
+`WeightedBMO/SharpMaximalProcess.lean` defines
+
+```
+X^♯_{t,τ} = sup_{q ∈ ℚ ∩ [t,τ]} E_q d(X_{q-}, X_τ)     (sharpMaximal)
+X^♯_τ    = X^♯_{0,τ}                                    (sharpMaximalAt)
+```
+
+in `ℝ≥0∞`. Taking the supremum over `ℚ` rather than over `[t,τ]` makes it
+countable, which is what makes it an honest object here: it is measurable with
+no regularity assumption on the paths (`measurable_sharpMaximal` — a conditional
+expectation is strongly measurable and a countable supremum of measurable
+functions is measurable), it decreases in `t` (`sharpMaximal_antitone`), and
+each term of the supremum is dominated by it (`condExp_le_sharpMaximal`).  For
+right-continuous paths the rational supremum agrees with the supremum over
+`[t,τ]`, so this is the paper's `X^♯_{t,τ}` up to a null set.
+
+`cor_maximaldagger` still takes `ψ_t = E_t X^♯_{t,τ}` and `Ψ = X^♯_τ` as
+hypotheses rather than deriving them from `X`.  Doing that is exactly the
+regularisation step the paper delegates to Dellacherie--Meyer II (2.9), and it
+is not available here:
+
+* Mathlib has no right-continuous (RCLL) modification theorem for martingales or
+  supermartingales — there is nothing in `Mathlib/Probability` about càdlàg or
+  RCLL paths at all;
+* Mathlib's optional sampling is discrete-time only
+  (`Submartingale.expected_stoppedValue_mono`), so `E_S d(X_U, X_τ) ≤ ψ_S` for
+  arbitrary continuous-time stopping times `S ≤ U ≤ τ` cannot be derived from a
+  martingale property as it stands;
+* the upcrossing machinery exists for an abstract order
+  (`MeasureTheory.upcrossings`), but it is used in Mathlib only to get
+  convergence along `atTop`, not the one-sided limits at every `t` that an RCLL
+  modification needs.
+
+What would have to be built, in order, to discharge the two hypotheses:
+
+1. `X^♯` over the interval rather than the grid: `sup_{q ∈ ℚ ∩ [t,τ]}` equals
+   `sup_{s ∈ [t,τ]}` a.s. when `E_· d(X_{·-}, X_τ)` is right-continuous.
+2. `t ↦ E_t X^♯_{t,τ}` is a supermartingale whose mean is right-continuous
+   (the paper's argument: monotone convergence).
+3. Dellacherie--Meyer II (2.9): that supermartingale has an RCLL version — the
+   regularisation theorem, by upcrossings over `ℚ`.
+4. Continuous-time optional sampling at `S`, to turn the domination
+   `d(X_U, X_τ) ≤ X^♯_{S,τ}` into `E_S d(X_U, X_τ) ≤ ψ_S`.
+
+Steps 3 and 4 are the two large ones, and neither is a corollary of anything in
+Mathlib.
 
 ## Theorem 1.1 end to end, audited against the paper
 

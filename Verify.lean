@@ -263,3 +263,15 @@ info: 'WeightedBMO.cor_maximaldagger' depends on axioms: [propext, Classical.cho
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms WeightedBMO.cor_maximaldagger
+
+/--
+info: 'WeightedBMO.measurable_sharpMaximal' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms WeightedBMO.measurable_sharpMaximal
+
+/--
+info: 'WeightedBMO.sharpMaximal_antitone' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms WeightedBMO.sharpMaximal_antitone
