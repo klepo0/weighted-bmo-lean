@@ -155,3 +155,15 @@ info: 'WeightedBMO.estSmaximal_upper' depends on axioms: [propext, Classical.cho
 -/
 #guard_msgs in
 #print axioms WeightedBMO.estSmaximal_upper
+
+/--
+info: 'WeightedBMO.eLpNorm_intervalSup_le_supOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.eLpNorm_intervalSup_le_supOn
+
+/--
+info: 'WeightedBMO.estSmaximal_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.estSmaximal_lower

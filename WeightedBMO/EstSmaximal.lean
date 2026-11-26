@@ -5,10 +5,16 @@ import WeightedBMO.ContinuousDoob
 # `est.Smaximal` end to end
 
 Khoa Lê, *Maximal inequalities and weighted BMO processes*
-(arXiv:2211.15550v3), Theorem 1.1, second inequality of `est.Smaximal`:
-for a nonnegative martingale `M`, the maximal function of `t ↦ d(X_0, X_t)` on
-`[0,T]` is bounded by the John--Nirenberg constant times `p/(p-1)` times the
-`Lᵖ` norm of the terminal value.
+(arXiv:2211.15550v3), Theorem 1.1, the two-sided estimate `est.Smaximal`:
+
+  `(p-1)/(2p-1) ‖X^♯_T‖_p ≤ ‖sup_{t∈[0,T]} d(X_0, X_t)‖_p ≤ c_p p²/(p-1) ‖X^♯_T‖_p`.
+
+The upper bound `estSmaximal_upper` bounds the maximal function of
+`t ↦ d(X_0, X_t)` by the John--Nirenberg constant `c_p p` times `p/(p-1)` times
+the `Lᵖ` norm of the terminal value of the dominating martingale; the lower
+bound `estSmaximal_lower` bounds the sharp maximal function at the horizon by
+`(2p-1)/(p-1)` times the maximal function, from the triangle-inequality step
+and Doob's inequality for the martingale `t ↦ E_t d(X_0, X_T)`.
 
 The bookkeeping between the two formulations of the supremum is
 `ofReal_intervalSup_le_supOn`: on each time `t` of `[0,T]` the interval
@@ -159,5 +165,156 @@ theorem estSmaximal_upper {E : Type*} [PseudoMetricSpace E]
           positivity
         rw [ENNReal.ofReal_mul hC]
         ring
+
+omit [IsFiniteMeasure μ] in
+/-- An `eLpNorm` bound transfers from an interval supremum to a dyadic
+supremum that dominates it pointwise. -/
+theorem eLpNorm_intervalSup_le_supOn {M : ℝ → Ω → ℝ} {f : Ω → ℝ → ℝ} {T p : ℝ}
+    (hT : 0 ≤ T) (hb : ∀ ω, BddAbove (f ω '' Icc 0 T))
+    (hf0 : ∀ ω t, t ∈ Icc 0 T → 0 ≤ f ω t)
+    (hpt : ∀ ω, ENNReal.ofReal (intervalSup (f ω) 0 T) ≤ supOn M T ω) (hp : 0 < p) :
+    eLpNorm (fun ω => intervalSup (f ω) 0 T) (ENNReal.ofReal p) μ ≤
+      eLpNorm (supOn M T) (ENNReal.ofReal p) μ := by
+  have hP0 : ∀ ω, 0 ≤ intervalSup (f ω) 0 T := fun ω =>
+    (hf0 ω 0 ⟨le_rfl, hT⟩).trans (le_intervalSup (hb ω) ⟨le_rfl, hT⟩)
+  have hA : eLpNorm (fun ω => intervalSup (f ω) 0 T) (ENNReal.ofReal p) μ =
+      (∫⁻ ω, ENNReal.ofReal ((intervalSup (f ω) 0 T) ^ p) ∂μ) ^ (1 / p) := by
+    rw [eLpNorm_eq_lintegral_rpow_enorm (ENNReal.ofReal_ne_zero_iff.mpr hp)
+      ENNReal.ofReal_ne_top, ENNReal.toReal_ofReal hp.le]
+    congr 1
+    apply lintegral_congr
+    intro ω
+    rw [Real.enorm_eq_ofReal_abs, abs_of_nonneg (hP0 ω),
+      ENNReal.ofReal_rpow_of_nonneg (hP0 ω) hp.le]
+  have hB : eLpNorm (supOn M T) (ENNReal.ofReal p) μ =
+      (∫⁻ ω, (supOn M T ω) ^ p ∂μ) ^ (1 / p) := by
+    rw [eLpNorm_eq_lintegral_rpow_enorm (ENNReal.ofReal_ne_zero_iff.mpr hp)
+      ENNReal.ofReal_ne_top, ENNReal.toReal_ofReal hp.le]
+    simp
+  have hstep : ∫⁻ ω, ENNReal.ofReal ((intervalSup (f ω) 0 T) ^ p) ∂μ ≤
+      ∫⁻ ω, (supOn M T ω) ^ p ∂μ := by
+    calc ∫⁻ ω, ENNReal.ofReal ((intervalSup (f ω) 0 T) ^ p) ∂μ
+        = ∫⁻ ω, (ENNReal.ofReal (intervalSup (f ω) 0 T)) ^ p ∂μ := by
+          apply lintegral_congr
+          intro ω
+          exact (ENNReal.ofReal_rpow_of_nonneg (hP0 ω) hp.le).symm
+      _ ≤ ∫⁻ ω, (supOn M T ω) ^ p ∂μ :=
+          lintegral_mono fun ω => ENNReal.rpow_le_rpow (hpt ω) hp.le
+  rw [hA, hB]
+  exact ENNReal.rpow_le_rpow (z := 1 / p) hstep (by positivity)
+
+/-- **`est.Smaximal`, left-hand side.**  If the sharp maximal function at the
+horizon is dominated by the maximum of the path plus the maximum of a
+nonnegative right-continuous martingale `N` with terminal value
+`d(X_0, X_T)` — the paper's triangle-inequality step — then
+
+  `(p-1)/(2p-1) ‖ψ_T‖_p ≤ ‖sup_{t∈[0,T]} d(X_0, X_t)‖_p`.
+
+In the paper `ψ_T = X^♯_T` and `N_t = E_t d(X_0, X_T)`. -/
+theorem estSmaximal_lower {E : Type*} [PseudoMetricSpace E]
+    (X : Ω → ℝ → E) (ψ : Ω → ℝ → ℝ) (N : ℝ → Ω → ℝ) {T : ℝ} (hT : 0 ≤ T)
+    (mv : ∀ u ∈ Icc 0 T, Measurable (fun ω => dist (X ω 0) (X ω u)))
+    (cX : ∀ ω u, u ∈ Ico 0 T →
+      ContinuousWithinAt (fun s => dist (X ω 0) (X ω s)) (Ici u) u)
+    (hAb : ∀ ω, BddAbove ((fun u => dist (X ω 0) (X ω u)) '' Icc 0 T))
+    (hN : Martingale N ℱ μ) (hNmeas : ∀ t, Measurable (N t)) (hN0 : ∀ t ω, 0 ≤ N t ω)
+    (hNc : ∀ ω, ∀ t ∈ Ico 0 T, ContinuousWithinAt (fun s => N s ω) (Ici t) t)
+    (hNb : ∀ ω, BddAbove ((fun u => N u ω) '' Icc 0 T))
+    (hNT : N T =ᵐ[μ] fun ω => dist (X ω 0) (X ω T))
+    (hψT0 : ∀ ω, 0 ≤ ψ ω T)
+    (hψT : ∀ ω, ψ ω T ≤ intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T +
+      intervalSup (fun u => N u ω) 0 T)
+    {p : ℝ} (hp : 1 < p) :
+    ENNReal.ofReal ((p - 1) / (2 * p - 1)) *
+        eLpNorm (fun ω => ψ ω T) (ENNReal.ofReal p) μ ≤
+      eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
+        (ENNReal.ofReal p) μ := by
+  have hp0 : 0 < p := by linarith
+  have hp'0 : 0 < p / (p - 1) := div_pos hp0 (by linarith)
+  have hAmeas : Measurable (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T) :=
+    measurable_intervalSup hT hAb mv cX
+  have hBmeas : Measurable (fun ω => intervalSup (fun u => N u ω) 0 T) :=
+    measurable_intervalSup hT hNb (fun u _ => hNmeas u) (fun ω u hu => hNc ω u hu)
+  have hA0 : ∀ ω, 0 ≤ intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T := fun ω =>
+    dist_nonneg.trans (le_intervalSup (hAb ω) ⟨le_rfl, hT⟩)
+  have hB0 : ∀ ω, 0 ≤ intervalSup (fun u => N u ω) 0 T := fun ω =>
+    (hN0 0 ω).trans (le_intervalSup (hNb ω) ⟨le_rfl, hT⟩)
+  -- (1) pointwise domination and Minkowski
+  have h1 : eLpNorm (fun ω => ψ ω T) (ENNReal.ofReal p) μ ≤
+      eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T +
+        intervalSup (fun u => N u ω) 0 T) (ENNReal.ofReal p) μ := by
+    apply eLpNorm_mono
+    intro ω
+    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg (hψT0 ω),
+      abs_of_nonneg (add_nonneg (hA0 ω) (hB0 ω))]
+    exact hψT ω
+  have h2 : eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T +
+        intervalSup (fun u => N u ω) 0 T) (ENNReal.ofReal p) μ ≤
+      eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
+          (ENNReal.ofReal p) μ +
+        eLpNorm (fun ω => intervalSup (fun u => N u ω) 0 T) (ENNReal.ofReal p) μ := by
+    have h := eLpNorm_add_le (μ := μ) (p := ENNReal.ofReal p)
+      (f := fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
+      (g := fun ω => intervalSup (fun u => N u ω) 0 T)
+      (hAmeas.aestronglyMeasurable (μ := μ)) (hBmeas.aestronglyMeasurable (μ := μ))
+      (by rw [← ENNReal.ofReal_one]; exact ENNReal.ofReal_le_ofReal hp.le)
+    simpa [Pi.add_apply] using h
+  -- (2) Doob for the martingale `N`
+  have h3 : eLpNorm (fun ω => intervalSup (fun u => N u ω) 0 T) (ENNReal.ofReal p) μ ≤
+      ENNReal.ofReal (p / (p - 1)) *
+        eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
+          (ENNReal.ofReal p) μ := by
+    refine (eLpNorm_intervalSup_le_supOn (M := fun t ω => N t ω) hT hNb (fun ω t _ => hN0 t ω) ?_ hp0).trans ?_
+    · intro ω
+      exact ofReal_intervalSup_le_supOn (f := fun ω t => N t ω) (M := fun t ω => N t ω)
+        hT hNc (fun ω t _ => hN0 t ω) (fun _ _ _ => le_rfl) ω
+    · refine (eLpNorm_supOn_le hNmeas hN hN0 hT hp).trans ?_
+      rw [eLpNorm_congr_ae hNT]
+      refine mul_le_mul_left' ?_ _
+      apply eLpNorm_mono
+      intro ω
+      rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg dist_nonneg,
+        abs_of_nonneg (hA0 ω)]
+      exact le_intervalSup (hAb ω) ⟨hT, le_rfl⟩
+  -- (3) the constants
+  have hp1ne : (p : ℝ) - 1 ≠ 0 := by linarith
+  have h2pne : (2 * (p : ℝ) - 1) ≠ 0 := by linarith
+  have hcoef_real : 1 + p / (p - 1) = (2 * p - 1) / (p - 1) := by
+    field_simp
+    ring
+  have hcoef : (1 : ℝ≥0∞) + ENNReal.ofReal (p / (p - 1)) =
+      ENNReal.ofReal ((2 * p - 1) / (p - 1)) := by
+    rw [← ENNReal.ofReal_one, ← ENNReal.ofReal_add zero_le_one hp'0.le, hcoef_real]
+  have hprod : ENNReal.ofReal ((p - 1) / (2 * p - 1)) *
+      ENNReal.ofReal ((2 * p - 1) / (p - 1)) = 1 := by
+    rw [← ENNReal.ofReal_mul (div_nonneg (by linarith : (0:ℝ) ≤ p - 1)
+      (by linarith : (0:ℝ) ≤ 2 * p - 1))]
+    have h : (p - 1) / (2 * p - 1) * ((2 * p - 1) / (p - 1)) = 1 := by
+      field_simp
+    rw [h, ENNReal.ofReal_one]
+  have hmain : eLpNorm (fun ω => ψ ω T) (ENNReal.ofReal p) μ ≤
+      ENNReal.ofReal ((2 * p - 1) / (p - 1)) *
+        eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
+          (ENNReal.ofReal p) μ := by
+    calc eLpNorm (fun ω => ψ ω T) (ENNReal.ofReal p) μ
+        ≤ eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T +
+            intervalSup (fun u => N u ω) 0 T) (ENNReal.ofReal p) μ := h1
+      _ ≤ eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
+              (ENNReal.ofReal p) μ +
+            eLpNorm (fun ω => intervalSup (fun u => N u ω) 0 T) (ENNReal.ofReal p) μ := h2
+      _ ≤ eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
+              (ENNReal.ofReal p) μ +
+            ENNReal.ofReal (p / (p - 1)) *
+              eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
+                (ENNReal.ofReal p) μ := add_le_add le_rfl h3
+      _ = (1 + ENNReal.ofReal (p / (p - 1))) *
+            eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
+              (ENNReal.ofReal p) μ := by rw [add_mul, one_mul]
+      _ = ENNReal.ofReal ((2 * p - 1) / (p - 1)) *
+            eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
+              (ENNReal.ofReal p) μ := by rw [hcoef]
+  have hfinal := mul_le_mul_left' hmain (ENNReal.ofReal ((p - 1) / (2 * p - 1)))
+  rwa [← mul_assoc, hprod, one_mul] at hfinal
+
 
 end WeightedBMO

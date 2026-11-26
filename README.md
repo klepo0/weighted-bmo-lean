@@ -23,6 +23,7 @@ This project formalizes estimates from Khoa Lê's
 | Theorem 1.1 (c), Doob's step for a martingale with terminal value `Ψ` | `WeightedBMO.martingale_eLpNorm_maximal_le_of_terminal` |
 | Continuous-time Doob step over `[0,T]`, sharp constant `p/(p-1)` | `WeightedBMO.eLpNorm_supOn_le` |
 | `est.Smaximal`, right-hand side, end to end | `WeightedBMO.estSmaximal_upper` |
+| `est.Smaximal`, left-hand side | `WeightedBMO.estSmaximal_lower` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
 uses measurable nonnegative real-valued functions and mathlib's extended
@@ -129,6 +130,21 @@ right-continuous martingale `M`:
 proved from the weighted BMO bound, (1.8) with the weight `2ψ`, and Doob's
 step. In the paper `ψ = X^♯_{·,T}` and `M = 2 E_· X^♯_T`, so `M_T = 2 X^♯_T`
 and the constant is `2 c_p p²/(p-1)`, as printed in `est.Smaximal`.
+
+The first inequality of `est.Smaximal` is `estSmaximal_lower`. There the one
+extra hypothesis is the horizon step of the paper: the sharp maximal function
+at `T` is dominated by the maximum of the path plus the maximum of a
+nonnegative right-continuous martingale `N` with terminal value
+`d(X_0, X_T)` — in the paper `X^♯_T ≤ sup_t d(X_0, X_t) + sup_t E_t d(X_0, X_T)`.
+From it, the triangle inequality for `eLpNorm`, Doob's inequality for `N`,
+and `d(X_0, X_T) ≤ sup_t d(X_0, X_t)` give
+
+```
+(p-1)/(2p-1) ‖ψ_T‖_p ≤ ‖sup_{t∈[0,T]} d(X_0, X_t)‖_p ,  p > 1.
+```
+
+So both inequalities of `est.Smaximal` are now stated end to end, each with the
+sharp maximal function supplied as a hypothesis.
 
 ## Finite-grid estimates
 
