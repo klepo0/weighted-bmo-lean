@@ -20,6 +20,8 @@ This project formalizes estimates from Khoa Lê's
 | Doob's `L^p` maximal inequality, sharp constant `p/(p-1)` | `WeightedBMO.submartingale_eLpNorm_maximal_le` |
 | Theorem 1.1 (b), path of increments in weighted BMO | `WeightedBMO.weightedBMOOfSharpMaximal` |
 | Theorem 1.1, `est.upperbound` with the sharp maximal function as a hypothesis | `WeightedBMO.sharpMaximal_eLpNorm_le` |
+| Theorem 1.1, `est.upperbound` with the paper's constant `2c_p p` | `WeightedBMO.estUpperbound` |
+| **Theorem 1.1 end to end, all five displays at once** | `WeightedBMO.cor_maximaldagger` |
 | Theorem 1.1 (c), Doob's step for a martingale with terminal value `Ψ` | `WeightedBMO.martingale_eLpNorm_maximal_le_of_terminal` |
 | Continuous-time Doob step over `[0,T]`, sharp constant `p/(p-1)` | `WeightedBMO.eLpNorm_supOn_le` |
 | `est.Smaximal`, right-hand side, end to end | `WeightedBMO.estSmaximal_upper` |
@@ -228,6 +230,34 @@ The argument has three steps, all formalized:
   (`lintegral_min_mul_rpow`) then give `∫ (sup ψ)^p ≤ (1-p)^{-1} ∫ ψ_0^p`
   (`lintegral_rpow_le_of_weak`), which is `(1-p)^{-1/p}` after taking `p`-th
   roots (`eLpNorm_le_of_lintegral_rpow_le`).
+
+## Theorem 1.1 end to end
+
+`WeightedBMO/Theorem11.lean` states the paper's `cor.maximaldagger` as one
+theorem, `cor_maximaldagger`, with the five displayed estimates as the conjuncts
+of a single conclusion and a single hypothesis bundle: the path `X` with right
+limits `Xl`, the weight `ψ` with the two stopping-time domination properties,
+the regularity of `ψ` and of the path, the boundedness of `sup(2ψ)`, a
+nonnegative right-continuous martingale `M` dominating `2ψ`, a nonnegative
+right-continuous martingale `N` with terminal value `d(X_0, X_T)`, and the
+supermartingale property of `ψ` that Kuhn's lemma needs.
+
+The conjuncts, in the order of the paper:
+
+* `est.upperbound`, `‖sup_t d(X_0,X_t)‖_p ≤ 2 c_p p ‖sup_t ψ_t‖_p` for every
+  `p > 0` (`estUpperbound`, the constant `2 * goodLambdaConstant p` being
+  `2 c_p p`);
+* `est.X2`, the normalized form, uniform in `ε` (`estX2`);
+* `est.X3`, the exponential form at rate `(2e³)⁻¹` (`estX3`);
+* `est.Smaximal`, both inequalities, `(p-1)/(2p-1)‖ψ_T‖_p ≤ ‖sup_t d(X_0,X_t)‖_p
+  ≤ 2c_p p²/(p-1)‖ψ_T‖_p` for `p > 1` (`estSmaximal_lower`, and
+  `estSmaximal_upper` composed with `M_T = 2ψ_T`);
+* `est.Smax01`, `‖sup_t d(X_0,X_t)‖_p ≤ 2 c_p p (1-p)^{-1/p} ‖ψ_0‖_p` for
+  `0 < p < 1` (`estSmax01`).
+
+The only place where the statement is not literally the paper's is `est.X2`,
+which keeps the factor `‖1‖_p = eLpNorm (fun _ => 1) (ofReal p) μ` that the
+formalized estimate produces; on a probability measure that factor is `1`.
 
 ## Finite-grid estimates
 

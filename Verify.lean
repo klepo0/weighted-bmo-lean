@@ -251,3 +251,15 @@ info: 'WeightedBMO.supermartingale_eLpNorm_intervalSup_le' depends on axioms: [p
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms WeightedBMO.supermartingale_eLpNorm_intervalSup_le
+
+/--
+info: 'WeightedBMO.estUpperbound' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms WeightedBMO.estUpperbound
+
+/--
+info: 'WeightedBMO.cor_maximaldagger' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms WeightedBMO.cor_maximaldagger
