@@ -127,7 +127,7 @@
 		with some universal constants $\kappa_1(m),\kappa_2(m)$ independent from $\tau$ such that $\kappa_1(m)=O(1)$ and $\kappa_2(m)=O(m)$ as $m\to\infty$. 
 		% If $X$ is continuous, then the inequalities hold for every $m\in(0,\infty)$. 
 		This is a probabilistic version of Fefferman--Stein estimate for the sharp maximal functions.
-		While the former inequality is derived easily from Doob's martingale inequality, the latter inequality is a consequence of John--Nirenberg inequalities for weighted BMO processes, which are obtained in this note. We explain how John--Nirenberg inequalities can be utilized to obtain inequalities for martingales, both old and new alike in a unified way. One application is given in which the sharp function has infinite essential supremum and no unweighted John--Nirenberg estimate applies, namely self-normalised maximal bounds for Riemann--Liouville processes driven by stable noise. For nondecreasing processes the sharp function selects a normaliser built from the accumulated conditional means of the increments and the largest jump observed so far, and for that normaliser the tail of the maximal statistic is determined to second order, $-\log\mathbb{P}=u\log u+u\log\log u+o(u)$, uniformly in the model and in continuous time.
+		While the former inequality is derived easily from Doob's martingale inequality, the latter inequality is a consequence of John--Nirenberg inequalities for weighted BMO processes, which are obtained in this note. We explain how John--Nirenberg inequalities can be utilised to obtain inequalities for martingales, both old and new alike in a unified way. One application is given in which the sharp function has infinite essential supremum and no unweighted John--Nirenberg estimate applies, namely self-normalised maximal bounds for Riemann--Liouville processes driven by stable noise. For nondecreasing processes the sharp function selects a normaliser built from the accumulated conditional means of the increments and the largest jump observed so far, and for that normaliser the tail of the maximal statistic is determined to second order, $-\log\mathbb{P}=u\log u+u\log\log u+o(u)$, uniformly in the model and in continuous time; the normaliser obtained there is optional rather than predictable, so the domination inequalities available for predictable dominators do not apply to it.
 		\bigskip
 		
 		\noindent {{\sc Mathematics Subject Classification (2020):} 
@@ -148,13 +148,13 @@
 	\maketitle
 \section{Introduction and main results} % (fold)
 \label{sec:introduction}
-	Doob's maximal martingale inequality (\cite{MR0058896}) and Burkholder--Davis--Gundy inequality (\cite{MR0400380}) have ultimately become indispensable and in the development of probability theory. They are however only available within  martingales and their derivatives. 
+	Doob's maximal martingale inequality (\cite{MR0058896}) and Burkholder--Davis--Gundy inequality (\cite{MR0400380}) have ultimately become indispensable in the development of probability theory. They are however only available within  martingales and their derivatives. 
 	In most situations, it is possible to introduce some auxiliary martingales such that these inequalities can be applied. 
 	A recent example is the stochastic sewing lemma from \cite{le2018stochastic} which has led to a wide range of new applications from regularization by noise \cite{athreya2020well}, stochastic numerics \cite{dareiotis2021quantifying,le2021taming,butkovsky2021approximation} to rough stochastic differential equations \cite{FHL21}. However, when applying to certain problems, one encounters many technical issues and some unexplanatory conditions. 
 	This raises a question whether martingale method is  the correct toolbox for these problems, which we do not attempt to answer herein.
 	Nevertheless, as an initiative step forward, we derive in this note  maximal inequalities which are valid for general adapted integrable  stochastic processes having RCLL (right-continuous with left limits) sample paths. 
 	% To keep this note short and concise, we have
-	To state the results, we first fix some notation. Let $(\Omega,\cgg,\PP)$ be a probability pace equipped with a filtration $\{\cff_t\}_{t\ge0}$ satisfying the usual conditions. 
+	To state the results, we first fix some notation. Let $(\Omega,\cgg,\PP)$ be a probability space equipped with a filtration $\{\cff_t\}_{t\ge0}$ satisfying the usual conditions. 
 	% Let $\tau$ be a fixed number.
 	For each stopping time $S$, $\E_S$ denotes the conditional expectation with respect to $\cff_S$ and for each $G\in \cgg$, $\PP_S(G):=\E_S(\1_G)$. For an integrable random variable $\Xi$, $\E_\cdot \Xi$ always denotes a RCLL version of $t\mapsto \E_t \Xi$.
 	For each $m\in(0,\infty)$, we denote $\|\cdot\|_m=(\E|\cdot|^m)^{1/m}$ and $\|\cdot\|_\infty=\esssup_\omega|\cdot|$.
@@ -197,7 +197,7 @@
 		\end{align}
 		% If $(X^\sharp_t)_{t\ge0}$ is continuous then \eqref{est.Smaximal} (with different constants) holds for all $m\in(0,\infty)$.  
 	\end{theorem}
-	That $\sup_{t\in[0,\tau]}\E_tX^\sharp_{t,\tau}$ is a well-defined random variable needs some explanation. Observe that $t\mapsto \E_t X^\sharp_t$ is a supermartingale. In addition, $t\mapsto \E [\E_tX^\sharp_{t,\tau}]=\E\sup_{s\in[t,\tau]}\E_s d(X_{s-},X_\tau)$ is right-continuous by the Lebesgue monotone convergence theorem. Hence, be \cite[Chapter II (2.9)]{MR1725357}, the process $t\mapsto \E_t X^\sharp_t$ has a RCLL version for which we always use in \cref{cor.maximaldagger} and hereafter.
+	That $\sup_{t\in[0,\tau]}\E_tX^\sharp_{t,\tau}$ is a well-defined random variable needs some explanation. Observe that the process $t\mapsto \E_t X^\sharp_{t,\tau}$ is a supermartingale. In addition, $t\mapsto \E [\E_tX^\sharp_{t,\tau}]=\E\sup_{s\in[t,\tau]}\E_s d(X_{s-},X_\tau)$ is right-continuous by the Lebesgue monotone convergence theorem. Hence, by \cite[Chapter II (2.9)]{MR1725357}, the process $t\mapsto \E_t X^\sharp_{t,\tau}$ has a RCLL version, which we always use in \cref{cor.maximaldagger} and hereafter.
 	This shows that $\sup_{t\in[0,\tau]}\E_tX^\sharp_{t,\tau}$ is measurable.
 
 	
@@ -211,13 +211,13 @@
 	%  	X^\sharp_{s,\tau}\le \sup_{t\in[s,\tau]}(\E_t|X_\tau-X_t|^2)^{1/2}\le \sup_{t\in[s,\tau]}(\E_t\wei{X}_{t, \tau})^{1/2}
 	% \end{align*}
 	%   \khoa{discuss discrete versions, martingales and BDG} 
-	For general stochastic processes, \eqref{est.Smaximal} seems to be new and has no counterpart in literatures, as far as the author's knowledge.
+	For general stochastic processes, \eqref{est.Smaximal} seems to be new and has no counterpart in the literature, to the author's knowledge.
 	 % and has an advantage over BDG inequality that the martingale condition is not required. 
 	% \begin{align*}
 	%  	X^\sharp\le \sup_{t\in[0,\tau]}(\E_t|X_\tau-X_t|^2)^{1/2}\le \sup_{t\in[0,\tau]}(\E_t\wei{X_\tau})^{1/2}.
 	% \end{align*}  
 
-	We note that the estimate $\|\sup_{t\in[0,\tau]}d(X_0,X_t)\|_m\le c(m)\|\sup_{t\in[0,\tau]}\E_td(X_{t},X_\tau)\|_m $ fails for $m>2$ even for discrete martingale. A counter example  given by Os\c{e}kowski in \cite{MR3426632} is the martingale $g=(0,g_1,g_1,g_1,\ldots)$ with $\PP(g_1=-\varepsilon)=1-\PP(g_1=\varepsilon^{-1})=(1+\varepsilon^2)^{-1}$.
+	We note that the estimate $\|\sup_{t\in[0,\tau]}d(X_0,X_t)\|_m\le c(m)\|\sup_{t\in[0,\tau]}\E_td(X_{t},X_\tau)\|_m $ fails for $m>2$ even for a discrete martingale. A counterexample given by Os\c{e}kowski in \cite{MR3426632} is the martingale $g=(0,g_1,g_1,g_1,\ldots)$ with $\PP(g_1=-\varepsilon)=1-\PP(g_1=\varepsilon^{-1})=(1+\varepsilon^2)^{-1}$.
 
 
 	We will derive \cref{cor.maximaldagger} from John--Nirenberg inequalities for stochastic processes of bounded weighted mean oscillation (weighted BMO). 
@@ -283,7 +283,7 @@
 	\end{theorem}
 	Although not stated,
 	\cref{cor.maximaldagger,thm.bmophi} have natural discrete analogues. 
-	Neither one of \eqref{ineq.JNweighted} and \eqref{est.jnweight2} implies the other. However, \eqref{est.jnweight2} has an advantage of being meaningful even when $\phi^*_{r,\tau}$ is not $L^m$-integrable. While \eqref{ineq.JNweighted} may be comparable to \cite[Theorem 1]{MR2136865}, \cite[Theorem III.5.2]{MR0448538} and \cite[Lemma A.1.2]{MR2190038}, the estimates \eqref{est.jnweight2} and \eqref{est.jnexpwei} are genuine and inspired from similar phenomenon in the theory of singular integrals \cite{MR1913610,MR3124931}. Normalized estimates such as \eqref{est.jnexpwei} play important roles in the theory of self-normalized processes \cite{MR2488094} and self-normalized  large deviations \cite{MR1428510,MR2016616}.
+	Neither one of \eqref{ineq.JNweighted} and \eqref{est.jnweight2} implies the other. However, \eqref{est.jnweight2} has an advantage of being meaningful even when $\phi^*_{r,\tau}$ is not $L^m$-integrable. While \eqref{ineq.JNweighted} may be comparable to \cite[Theorem 1]{MR2136865}, \cite[Theorem III.5.2]{MR0448538} and \cite[Lemma A.1.2]{MR2190038}, the estimates \eqref{est.jnweight2} and \eqref{est.jnexpwei} are genuine and inspired from similar phenomenon in the theory of singular integrals \cite{MR1913610,MR3124931}. Normalised estimates such as \eqref{est.jnexpwei} play important roles in the theory of self-normalised processes \cite{MR2488094} and self-normalised large deviations \cite{MR1428510,MR2016616}.
 	The proofs of \cref{cor.maximaldagger,thm.bmophi} are presented in \cref{sec:weighted_bmo_processes}.
 
 
@@ -291,7 +291,7 @@
 
 	A discussion on weighted BMO processes would be incomplete without mentioning processes with vanishing weighted mean oscillation. Results for these processes are of independent interests and are presented in \cref{sec:weighted_vmo_spaces}. 
 	For further applications of BMO processes, we refer to the companion paper \cite{le2022stochastic} and the references therein.
-	Applications of the estimates above are given in \cref{sec:applications}: stable Volterra processes in \cref{sec:stable} and monotone processes in \cref{sec:monotone}.
+	Applications of the estimates above are given in \cref{sec:applications}: stable Volterra processes in \cref{sec:stable}, monotone processes in \cref{sec:monotone}, the continuous-time form of the monotone case in \cref{sec:continuous}, and the comparison with the domination inequalities for predictable dominators in \cref{sec:dominators}.
 	% \khoa{mention natural discrete versions}
 
 	\textit{Relation to previous works.}
@@ -339,7 +339,7 @@
 		\begin{align*}
 			\PP(Y> \alpha+\beta)\le \theta\PP(Y>\alpha)+\PP(X>\theta\beta)
 		\end{align*}
-		for every $\alpha>0$, $\beta>0$ and $\theta\in(0,1)$; then for for every $m\in(0,\infty)$, 
+		for every $\alpha>0$, $\beta>0$ and $\theta\in(0,1)$; then for every $m\in(0,\infty)$, 
 		\begin{align*}
 			\|Y\|_m\le c_m m\|X\|_m
 		\end{align*}
@@ -362,7 +362,7 @@
 
 	\begin{proof}[\bf Proof of \cref{thm.bmophi}]
 		We fix $r\in[0,\tau)$ and assume without loss of generality that $\rho^\phi_{r,\tau}(V)=1$.
-		We put $V^*=\sup_{t\in[r,\tau]}|V_t- V_{r}|$ and $\phi^*=\sup_{t\in[r,\tau]} \phi_r$.
+		We put $V^*=\sup_{t\in[r,\tau]}|V_t- V_{r}|$ and $\phi^*=\sup_{t\in[r,\tau]} \phi_t$.
 		Let $\alpha, \beta$ be two positive numbers and define
 		\begin{align*}
 			S&=\tau\wedge\inf\{t\in[r,\tau]:|V_t- V_{r}|> \alpha\},\\ 
@@ -588,13 +588,12 @@
 		Identity \eqref{id.isometry} can also be read from right to left. In particular, because $\E_i|f_k-f_{i-1}|^2\le \E_i|f^*_{i-1,n}|^2$, it implies that $([f]_k)_{k\le n}$ is BMO with weight $(\E_k|f^*_{k-1,n}|^2)_{k\le n}$.
 		Similarly, \eqref{id.condiso} implies that $(\wei{f}_k)_{k\le n}$ is BMO with either weight $(\E_k[f]_{k+1,n+1})_{k\le n}$ or weight $(\E_k|f^*_{k,n+1}|^2)_{k\le n}$.
 		Applying \cref{thm.bmophi}, we obtain \eqref{bdg.f10}-\eqref{bdg.fweisup0}. The second estimate in \eqref{bdg.f10} is due to $\E_k[f]_{k,n}=\E_k\wei{f}_{k,n-1}+|df_k|^2$.
-		We note that $[f]_{k,n}\le[f]_n$ and 
-		and $f^*_{k,n}\le 2f^*_n$. Hence, applying Doob's martingale inequality, we obtain \eqref{bdg.f11}-\eqref{bdg.fweisup1} from \eqref{bdg.f10}-\eqref{bdg.fweisup0}.  The exponential integrability of $V/\Phi$ is a direct consequence of \eqref{est.jnexpwei}.
+		We note that $[f]_{k,n}\le[f]_n$ and $f^*_{k,n}\le 2f^*_n$. Hence, applying Doob's martingale inequality, we obtain \eqref{bdg.f11}-\eqref{bdg.fweisup1} from \eqref{bdg.f10}-\eqref{bdg.fweisup0}.  The exponential integrability of $V/\Phi$ is a direct consequence of \eqref{est.jnexpwei}.
 	\end{proof}
 	We observe that necessary conditions for \cref{thm.dismart} are the identities \eqref{id.isometry} and \eqref{id.condiso}, which are valid as long as $\E_i df_j df_k=0$ whenever $i\le j< k$. In a more general case, one would need to control $\E_i\sum_{j<k} df_j df_k$ by a suitable weight, however we have not explored this idea.
-	Results for continuous square integrable martingales are stated without proof.
+	The continuous-time counterpart of \cref{thm.dismart} is the following.
 	\begin{theorem}\label{thm.contmart}
-		Let $(X_t)_{t\ge0}$ be a square integrable continuous martingale with quadratic variation $(\wei{X}_t)_{t\ge0}$. Define $X^*_{s,\tau}=\sup_{s\le r\le \tau}|X_t-X_s|$.
+		Let $(X_t)_{t\ge0}$ be a square integrable continuous martingale with quadratic variation $(\wei{X}_t)_{t\ge0}$, and put $\wei{X}_{s,\tau}=\wei{X}_\tau-\wei{X}_s$ for $s\le\tau$. Define $X^*_{s,\tau}=\sup_{s\le r\le \tau}|X_r-X_s|$.
 		% We put $X^*_{t,\tau}=\sup_{r\in[t,\tau]}|X_r-X_t|$ and $X^*_\tau=X^*_{0,\tau}$.
 		% Then for every $\tau>0$ and $m\in(0,\infty)$
 		% \begin{gather}
@@ -616,9 +615,16 @@
 			\sup_{\varepsilon>0}\E \exp\left\{\lambda\sup_{t\le \tau}\frac{\wei{X}_t}{\varepsilon+\sup_{s\in[0,t]}\E_s|X^*_{s,\tau}|^2}\right\}\le M.
 		\end{align}		
 	\end{theorem}
-	Estimates \eqref{bdg.f10}-\eqref{bdg.fweisup0} for the range $m\in(0,1)$ and the exponential integrability appear to be new, as far as the author's knowledge. Estimates with the conditional square functions can be found in \cite{MR0448538,MR365692,MR365692,MR1127721}. 
+	\begin{proof}
+		Since $X$ is continuous, $X_{S-}=X_S$ at every stopping time $S$. For stopping times $S\le T\le\tau$ the martingale isometry gives
+		\[
+			\E_S|X_T-X_S|\le\big(\E_S|X_T-X_S|^2\big)^{1/2}=\big(\E_S(\wei{X}_T-\wei{X}_S)\big)^{1/2}\le\big(\E_S\wei{X}_{S,\tau}\big)^{1/2},
+		\]
+		so that $X-X_0$ belongs to $\bmo_\phi$ with weight $\phi_S=(\E_S\wei{X}_{S,\tau})^{1/2}$ and $[X-X_0]_{\bmo_\phi}\le1$. Likewise $\E_S(\wei{X}_T-\wei{X}_S)=\E_S|X_T-X_S|^2\le\E_S|X^*_{S,\tau}|^2$, so that $\wei{X}$ belongs to $\bmo_\psi$ with weight $\psi_S=\E_S|X^*_{S,\tau}|^2$ and modulus at most one. For a weight whose modulus of oscillation is at most one, no subdivision of $[0,\tau]$ is needed in the argument of \cref{thm.bmophi}: the inequality $\lambda\rho^\phi_{s,t}(V)\le e^{-3}$ holds on the whole interval as soon as $\lambda\le e^{-3}$, and \eqref{est.jnexpwei} with $r=0$ therefore gives the two displays, since inserting $\varepsilon>0$ in the denominators only decreases the ratios.
+	\end{proof}
+	Estimates \eqref{bdg.f10}-\eqref{bdg.fweisup0} for the range $m\in(0,1)$ and the exponential integrability appear to be new, to the author's knowledge. Estimates with the conditional square functions can be found in \cite{MR0448538,MR365692,MR1127721}. 
 	Inequality \eqref{bdg.rosenthal} is also known as Burkholder--Rosenthal inequality which is valid for $m\in[1,\infty)$ (\cite{MR365692}). Although we did not recover the case $m=1$ from John--Nirenberg inequality, we have obtained its weak form, namely \eqref{bdg.f10}, which is valid for all $m\in(0,\infty)$.
-	The exponential estimates in \cref{thm.dismart,thm.contmart,cor.maximaldagger} are complementary to known estimates for self-normalized processes in \cite[Chapter 12]{MR2488094}. 
+	The exponential estimates in \cref{thm.dismart,thm.contmart,cor.maximaldagger} are complementary to known estimates for self-normalised processes in \cite[Chapter 12]{MR2488094}. 
 	Two of the estimates above admit a companion, self-normalised form when the total conditional mean of the underlying increasing process is bounded pathwise. For the quadratic variation, and for the dual of Doob's inequality \eqref{doob0}, the normaliser produced in \cref{sec:monotone} is computed from the budget and from the costs realised so far rather than from a conditional mean of the future path, the corresponding exponential moment bound then holds for every $\lambda>0$, and the tail is determined to second order. This is \cref{cor.square} and \cref{rmk.dualdoob}, and \cref{prop.lower} shows that the rate obtained there cannot be improved. Neither statement replaces the corresponding estimate here: both require the pathwise budget, and both control a ratio rather than an $L^m$ norm.
 	
 	
@@ -630,12 +636,12 @@
 \section{Applications} % (fold)
 \label{sec:applications}
 
-	The sharp function in \cref{cor.maximaldagger} is usually read as a device internal to the proof: it is the quantity one has to control in order to control the path. In the two applications below it plays a different role, namely it identifies the quantity by which the path has to be normalised, and that quantity is computable from the model. In \cref{sec:stable} it is a prediction error which no deterministic weight can replace, since the sharp function has infinite essential supremum; in \cref{sec:monotone} it is a mean budget together with the largest cost observed so far. That an order one bound holds for exactly the latter normaliser, while the constants of \cref{cor.maximaldagger} are $e^{-3}$-degraded, is evidence that the sharp function selects the correct object and not merely a sufficient one.
+	The sharp function in \cref{cor.maximaldagger} is usually read as a device internal to the proof: it is the quantity one has to control in order to control the path. In the applications below it plays a different role, namely it identifies the quantity by which the path has to be normalised, and that quantity is computable from the model. In \cref{sec:stable} it is a prediction error which no deterministic weight can replace, since the sharp function has infinite essential supremum; in \cref{sec:monotone} it is a mean budget together with the largest cost observed so far. That an order one bound holds for exactly the latter normaliser, while the constants of \cref{cor.maximaldagger} are $e^{-3}$-degraded, is evidence that the sharp function selects the correct object and not merely a sufficient one.
 
 	Both applications take values in $\R$; the metric space formulation of \cref{cor.maximaldagger} is not needed for either of them.
 
 	\begin{remark}[What is machine-checked]\label[remark]{rmk.verification}
-		In the Lean~4 formalisation that accompanies this note, the estimates of \cref{thm.bmophi} and the five displays \eqref{est.upperbound}--\eqref{est.Smax01} of \cref{cor.maximaldagger} are proved. Nothing in the present section is: \cref{lem.RLint}, \cref{lem.RLsharp}, \cref{thm.RL}, \cref{cor.mono}, \cref{prop.obja}, \cref{prop.lower}, \cref{thm.refined}, \cref{cor.second}, \cref{cor.square} and \cref{prop.cont} are stated and proved here only, as are the examples and the remarks.
+		In the Lean~4 formalisation that accompanies this note (\url{https://github.com/klepo0/weighted-bmo-lean}), the estimates of \cref{thm.bmophi} and the five displays \eqref{est.upperbound}--\eqref{est.Smax01} of \cref{cor.maximaldagger} are proved. Nothing in the present section is: \cref{lem.RLint}, \cref{lem.RLsharp}, \cref{thm.RL}, \cref{cor.mono}, \cref{prop.obja}, \cref{prop.lower}, \cref{thm.refined}, \cref{cor.second}, \cref{cor.square} and \cref{prop.cont} are stated and proved here only, as are the examples and the remarks.
 
 		Two steps of the verification of \cref{cor.maximaldagger} are still hypotheses in it, and both are used below. First, $X^\sharp_{t,\tau}$ is defined there as a supremum over the rational grid, and is not identified with the supremum over $[t,\tau]$. Second, the weight $t\mapsto\E_tX^\sharp_{t,\tau}$ enters the verified statements as a hypothesis: the existence of a right-continuous version of a conditional-expectation process (Dellacherie--Meyer II (2.9)) is not formalised, and neither are the domination estimates $\E_Sd(X_U,X_\tau)\le\E_SX^\sharp_{S,\tau}$ at arbitrary stopping times. The estimates of \cref{thm.RL} and \eqref{eqn.mono2} of \cref{cor.mono} pass from \eqref{est.X2} and \eqref{est.X3} to a normaliser computed from the model, so they are conditional on the second step; the statements from \cref{prop.obja} onwards do not depend on it, but are unverified in their own right.
 	\end{remark}
@@ -1078,7 +1084,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		\end{align}
 		where $\cpp([0,\tau])$ is the set of all partitions on $[0,\tau]$.
 	\end{definition}
-	It is evident that $\vmo^\alpha_\phi\subset \vmo^{1/\alpha-\var}_\phi$ and $[V]_{\vmo_\phi^{1/\alpha}-\var;[0,\tau]}\le \tau^\alpha[V]_{\vmo_\phi^\alpha;[0,\tau]}$.  Reasoning as in \cite{le2022stochastic}, processes in $\vmo_\phi$ are necessarily continuous. 
+	It is evident that $\vmo^\alpha_\phi\subset \vmo^{1/\alpha-\var}_\phi$ and $[V]_{\vmo_\phi^{1/\alpha-\var};[0,\tau]}\le \tau^\alpha[V]_{\vmo_\phi^\alpha;[0,\tau]}$.  Reasoning as in \cite{le2022stochastic}, processes in $\vmo_\phi$ are necessarily continuous. 
 	\begin{proposition}
 		Let $(V_t)_{t\in[0,\tau]}$ be a process in $\vmo^{p-\var}_\phi$ and define the function
 		\begin{align*}
@@ -1143,7 +1149,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		\begin{align*}
 			\E e^{\lambda |\phi^*_{0,\tau}|^{1/(q-1)}}\le C \E e^{\lambda \phi_\tau^{1/(q-1)}}<\infty \text{ for every }\lambda>0.
 		\end{align*}
-		Let $\lambda,\varepsilon$ some positive numbers.
+		Let $\lambda,\varepsilon$ be some positive numbers.
 		Using Young inequality
 		\begin{align*}
 		 	\lambda X^{\frac{p'}q}\le \frac {\varepsilon^q}q\left( \frac{X}{Y}\right)^{p'}+\frac{(\varepsilon^{-1}\lambda)^{q'}}{q'}Y^{\frac {q'}q}
