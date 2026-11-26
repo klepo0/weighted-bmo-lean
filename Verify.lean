@@ -185,3 +185,15 @@ info: 'WeightedBMO.estX3' depends on axioms: [propext, Classical.choice, Quot.so
 -/
 #guard_msgs in
 #print axioms WeightedBMO.estX3
+
+/--
+info: 'WeightedBMO.eLpNorm_intervalSup_two_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.eLpNorm_intervalSup_two_mul
+
+/--
+info: 'WeightedBMO.estSmax01' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.estSmax01
