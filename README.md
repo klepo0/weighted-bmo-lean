@@ -27,6 +27,7 @@ This project formalizes estimates from Khoa Lê's
 | `est.X2`, normalized maximal function, uniform in `ε` | `WeightedBMO.estX2` |
 | `est.X3`, exponential form at rate `(2e³)⁻¹` | `WeightedBMO.estX3` |
 | `est.Smax01`, exponents `p < 1`, modulo Kuhn's lemma | `WeightedBMO.estSmax01` |
+| Global weak-type maximal inequality for nonnegative supermartingales | `WeightedBMO.supermartingale_max_le` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
 uses measurable nonnegative real-valued functions and mathlib's extended
@@ -186,7 +187,25 @@ every exponent `p > 0` and bounds the path by `sup(2ψ)`, together with
 `sup(2ψ) ≤ 2 sup ψ` and the `L^p` bound for the nonnegative supermartingale
 `ψ` at exponent `p < 1`.
 
-**Kuhn's lemma is a hypothesis.** That `L^p` bound,
+**The first input to Kuhn's lemma is now in place:
+`WeightedBMO/SupermartingaleWeakType.lean` proves the global weak-type
+maximal inequality for a nonnegative supermartingale on a finite grid,
+`α μ{α ≤ max_{k≤N} X_k} ≤ ∫ X_0`, by the first-passage argument with
+mathlib's optional stopping applied to `-X`. That global form suffices for the
+`p < 1` bound, since splitting the layer cake at a level `τ` and then applying
+Jensen gives
+
+```
+E[(sup X)^p] ≤ τ^p μ(univ) + p τ^{p-1} E[X_0]/(1-p),
+```
+
+hence `‖sup X‖_p ≤ 2^{1/p}(p/(1-p))‖X_0‖_p` — the same order as the paper's
+constant `(1-m)^{-1/m}` but a different constant. Removing `hKuhn` from
+`estSmax01` therefore needs two more steps: the dyadic lift of the
+global weak-type to `[0,T]` (by monotone convergence), and this `τ`-splitting
+lemma.
+
+Kuhn's lemma is a hypothesis.** That `L^p` bound,
 `‖sup_t ψ_t‖_p ≤ (1-p)^{-1/p} ‖ψ_0‖_p`, is not proved here; it enters
 `estSmax01` as `hKuhn`. The obstruction is the one recorded for
 `est.Smaximal`: the sharp bound for `p < 1` needs the event-tested form of the
