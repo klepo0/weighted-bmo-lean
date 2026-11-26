@@ -619,7 +619,7 @@
 	Estimates \eqref{bdg.f10}-\eqref{bdg.fweisup0} for the range $m\in(0,1)$ and the exponential integrability appear to be new, as far as the author's knowledge. Estimates with the conditional square functions can be found in \cite{MR0448538,MR365692,MR365692,MR1127721}. 
 	Inequality \eqref{bdg.rosenthal} is also known as Burkholder--Rosenthal inequality which is valid for $m\in[1,\infty)$ (\cite{MR365692}). Although we did not recover the case $m=1$ from John--Nirenberg inequality, we have obtained its weak form, namely \eqref{bdg.f10}, which is valid for all $m\in(0,\infty)$.
 	The exponential estimates in \cref{thm.dismart,thm.contmart,cor.maximaldagger} are complementary to known estimates for self-normalized processes in \cite[Chapter 12]{MR2488094}. 
-	Two of the estimates above admit a sharper form when the mean budget of the underlying increasing process is bounded pathwise. For the quadratic variation, and for the dual of Doob's inequality \eqref{doob0}, the normaliser produced in \cref{sec:monotone} is computed from the budget and from the costs realised so far rather than from a conditional mean of the future path, the analogue of \eqref{est.jnexpwei} then holds for every $\lambda>0$, and the tail is determined to second order. This is \cref{cor.square} and \cref{rmk.dualdoob}, and \cref{prop.lower} shows that the rate obtained there cannot be improved. Neither statement replaces the corresponding estimate here: both require the pathwise budget, and both control a ratio rather than an $L^m$ norm.
+	Two of the estimates above admit a companion, self-normalised form when the mean budget of the underlying increasing process is bounded pathwise. For the quadratic variation, and for the dual of Doob's inequality \eqref{doob0}, the normaliser produced in \cref{sec:monotone} is computed from the budget and from the costs realised so far rather than from a conditional mean of the future path, the corresponding exponential moment bound then holds for every $\lambda>0$, and the tail is determined to second order. This is \cref{cor.square} and \cref{rmk.dualdoob}, and \cref{prop.lower} shows that the rate obtained there cannot be improved. Neither statement replaces the corresponding estimate here: both require the pathwise budget, and both control a ratio rather than an $L^m$ norm.
 	
 	
 	
@@ -747,7 +747,7 @@
 	The following statement sharpens \eqref{eqn.mono2} in the class of Corollary~\ref{cor.mono}, at the price of a stronger hypothesis on the budget. \emph{It is not a consequence of \cref{cor.maximaldagger}}: its proof is independent and uses only the structure \eqref{eqn.mono1} together with a positive supermartingale. What \cref{cor.maximaldagger} supplies is the choice of normaliser.
 
 	\begin{proposition}\label[proposition]{prop.obja}
-		Let $(\xi_k)_{k\ge1}$ be nonnegative adapted random variables on a filtered space satisfying the usual conditions, put $b_k=\E_{k-1}\xi_k$, $S_k=\sum_{j\le k}\xi_j$ and $J_k=\max_{j\le k}\xi_j$, and assume that for a finite $K>0$
+		Let $(\xi_k)_{k\ge1}$ be nonnegative adapted random variables on a filtered space satisfying the usual conditions, put $b_k=\E_{k-1}\xi_k$, $S_k=\sum_{j\le k}\xi_j$ and $J_k=\max_{j\le k}\xi_j$, and assume that for an $\cff_0$-measurable $K$ with $0<K<\infty$
 		\begin{align}\label{eqn.budget}
 			B_n:=\sum_{k=1}^n b_k\le K\qquad\text{a.s.}
 		\end{align}
@@ -846,7 +846,7 @@
 	\end{proof}
 
 	\begin{theorem}[Refined upper tail: the second order in the exponent]\label{thm.refined}
-		Let $n\ge1$, let \eqref{eqn.budget} hold, and let $u\ge e^{20}$. Then
+		Let $n\ge1$, let \eqref{eqn.budget} hold for an $\cff_0$-measurable $K$ with $0<K<\infty$, and let $u\ge e^{20}$. Then
 		\begin{align}\label{eqn.refined}
 			\PP(Z_n>u)\ \le\ \exp\big(-u\log u-u\log\log u+11u\big).
 		\end{align}
@@ -929,7 +929,7 @@
 	The class of \eqref{eqn.budget} contains more than costs. The increments of the quadratic variation of a discrete martingale are nonnegative, and their conditional means add up to its conditional quadratic variation, so \cref{prop.obja} and \cref{thm.refined} apply to $[f]$. They replace the conditional-mean weight and the restricted exponent of \cref{thm.dismart} by an observable normaliser and an unrestricted one.
 
 	\begin{corollary}\label[corollary]{cor.square}
-		Let $(f_k)_{k\ge0}$ be a square integrable martingale with $f_0=0$, let $[f]$ and $\wei{f}$ be as in \cref{sec:inequalities_for_martingales}, put $J_k=\max_{j\le k}|df_j|^2$ and $Z_n=\max_{k\le n}[f]_k/(K+J_k)$, and let $K$ be $\cff_0$-measurable with $0<K<\infty$ and
+		Let $(f_k)_{k\ge0}$ be a square integrable martingale with $f_0=0$, let $[f]$ and $\wei{f}$ be as in \cref{sec:inequalities_for_martingales}; fix $n\ge1$, put $J_k=\max_{j\le k}|df_j|^2$ and $Z_n=\max_{k\le n}[f]_k/(K+J_k)$, and let $K$ be $\cff_0$-measurable with $0<K<\infty$ and
 		\begin{align}\label{eqn.squarebudget}
 			\sum_{j=1}^n\E_{j-1}|df_j|^2\le K\quad\text{a.s.}
 		\end{align}
@@ -958,7 +958,7 @@
 	\end{proof}
 
 	\begin{remark}[The dual of Doob's inequality]\label[remark]{rmk.dualdoob}
-		The same argument applies to the dual of Doob's inequality \eqref{doob0}. For nonnegative $z_i$ the process $V_k=\sum_{i\le k}\E_i z_i$ is nondecreasing, and conversely every nonnegative adapted nondecreasing $(\xi_k)$ is of this form, with $z_k=\xi_k$, because $\E_k z_k=\xi_k$ by adaptedness. Hence \cref{prop.obja} and \cref{thm.refined} apply to $(V_k)$ whenever $\sum_{k\le n}\E_{k-1}z_k\le K$, with $J_k=\max_{j\le k}\E_j z_j$, and \cref{prop.lower} again shows that the rate cannot be improved there and that no sub-Gaussian bound can hold.
+		The same argument applies to the dual of Doob's inequality \eqref{doob0}. For integrable nonnegative $z_i$ the process $V_k=\sum_{i\le k}\E_i z_i$ is nondecreasing, and conversely every nonnegative adapted nondecreasing $(\xi_k)$ is of this form, with $z_k=\xi_k$, because $\E_k z_k=\xi_k$ by adaptedness. Hence \cref{prop.obja} and \cref{thm.refined} apply to $(V_k)$ whenever $\sum_{k\le n}\E_{k-1}z_k\le K$, with $J_k=\max_{j\le k}\E_j z_j$, and \cref{prop.lower} again shows that the rate cannot be improved there and that no sub-Gaussian bound can hold.
 
 		As in \cref{cor.square}, what changes relative to \cref{sec:inequalities_for_martingales} is the normaliser: it is $K+J_k$, formed from the budget and from the costs observed so far, where \eqref{doob0} carries $\sup_k\E_k\sum_{i\ge k}z_i$, a conditional mean of the future costs. A ratio form of \eqref{doob0} with the latter weight is already available from \cref{thm.bmophi}, through \eqref{est.jnweight2} and \eqref{est.jnexpwei}, together with the restriction on $\lambda$ in \eqref{est.jnexpwei}. Neither estimate implies the other.
 	\end{remark}
