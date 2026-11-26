@@ -22,6 +22,7 @@ This project formalizes estimates from Khoa Lê's
 | Theorem 1.1, `est.upperbound` with the sharp maximal function as a hypothesis | `WeightedBMO.sharpMaximal_eLpNorm_le` |
 | Theorem 1.1 (c), Doob's step for a martingale with terminal value `Ψ` | `WeightedBMO.martingale_eLpNorm_maximal_le_of_terminal` |
 | Continuous-time Doob step over `[0,T]`, sharp constant `p/(p-1)` | `WeightedBMO.eLpNorm_supOn_le` |
+| `est.Smaximal`, right-hand side, end to end | `WeightedBMO.estSmaximal_upper` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
 uses measurable nonnegative real-valued functions and mathlib's extended
@@ -112,10 +113,22 @@ finite-time nonnegative martingale — and passes to the limit by monotone
 convergence, which reproduces the continuous-time statement with the same
 constant. The terminal-value form is `eLpNorm_supOn_le_of_terminal`.
 
-What is still missing to state `est.Smaximal` verbatim: the paper's weight
-`φ_t = 2E_t X^♯_{t,τ}` has to be exhibited as twice a martingale with terminal
-value `X^♯_τ`, and the interval supremum `intervalSup` used by (1.8) has to be
-identified with `supOn`; both are bookkeeping between the two formulations.
+The bridge between the two formulations is `ofReal_intervalSup_le_supOn`: the
+interval supremum used by (1.8) is at most the dyadic supremum `supOn` used by
+the Doob step, provided the dominating process is right-continuous.
+
+Putting the three pieces together, `estSmaximal_upper` states the second
+inequality of `est.Smaximal` end to end. The sharp maximal function `ψ` stays a
+hypothesis, and the paper's weight `2ψ` must be dominated by a nonnegative
+right-continuous martingale `M`:
+
+```
+‖sup_{t∈[0,T]} d(X_0, X_t)‖_p ≤ c_p p · p/(p-1) · ‖M_T‖_p ,  p > 1,
+```
+
+proved from the weighted BMO bound, (1.8) with the weight `2ψ`, and Doob's
+step. In the paper `ψ = X^♯_{·,T}` and `M = 2 E_· X^♯_T`, so `M_T = 2 X^♯_T`
+and the constant is `2 c_p p²/(p-1)`, as printed in `est.Smaximal`.
 
 ## Finite-grid estimates
 
