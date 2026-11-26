@@ -28,6 +28,7 @@ This project formalizes estimates from Khoa Lê's
 | `est.X3`, exponential form at rate `(2e³)⁻¹` | `WeightedBMO.estX3` |
 | `est.Smax01`, exponents `p < 1`, modulo Kuhn's lemma | `WeightedBMO.estSmax01` |
 | Global weak-type maximal inequality for nonnegative supermartingales | `WeightedBMO.supermartingale_max_le` |
+| Its dyadic lift to `sup_{t∈[0,T]}` | `WeightedBMO.supermartingale_max_le_supOn` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
 uses measurable nonnegative real-valued functions and mathlib's extended
@@ -187,7 +188,7 @@ every exponent `p > 0` and bounds the path by `sup(2ψ)`, together with
 `sup(2ψ) ≤ 2 sup ψ` and the `L^p` bound for the nonnegative supermartingale
 `ψ` at exponent `p < 1`.
 
-**The first input to Kuhn's lemma is now in place:
+**Both inputs to Kuhn's lemma from the weak-type side are now in place:
 `WeightedBMO/SupermartingaleWeakType.lean` proves the global weak-type
 maximal inequality for a nonnegative supermartingale on a finite grid,
 `α μ{α ≤ max_{k≤N} X_k} ≤ ∫ X_0`, by the first-passage argument with
@@ -199,11 +200,15 @@ Jensen gives
 E[(sup X)^p] ≤ τ^p μ(univ) + p τ^{p-1} E[X_0]/(1-p),
 ```
 
-hence `‖sup X‖_p ≤ 2^{1/p}(p/(1-p))‖X_0‖_p` — the same order as the paper's
-constant `(1-m)^{-1/m}` but a different constant. Removing `hKuhn` from
-`estSmax01` therefore needs two more steps: the dyadic lift of the
-global weak-type to `[0,T]` (by monotone convergence), and this `τ`-splitting
-lemma.
+hence `‖sup X‖_p ≤ 2^{1/p}(p/(1-p))‖X_0‖_1` — a bound by the **L¹** norm.
+
+That is not enough for `est.Smax01`, which needs `‖X_0‖_p`. For `0 < p < 1` on a
+probability space `‖X‖_p ≤ ‖X‖_1`, so an L¹ bound is weaker than the L^p bound
+required; the `τ`-splitting announced earlier therefore does not close the
+statement, and this route needs a genuinely sharper argument (the layer-cake
+truncation with the reverse-Hölder step of Garsia, Theorem III.5.2, which the
+paper cites; the naive generalised Hölder with a negative exponent is false).
+`estSmax01` accordingly still carries Kuhn's lemma as a hypothesis.
 
 Kuhn's lemma is a hypothesis.** That `L^p` bound,
 `‖sup_t ψ_t‖_p ≤ (1-p)^{-1/p} ‖ψ_0‖_p`, is not proved here; it enters

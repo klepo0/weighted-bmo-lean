@@ -203,3 +203,9 @@ info: 'WeightedBMO.supermartingale_max_le' depends on axioms: [propext, Classica
 -/
 #guard_msgs in
 #print axioms WeightedBMO.supermartingale_max_le
+
+/--
+info: 'WeightedBMO.supermartingale_max_le_supOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.supermartingale_max_le_supOn
