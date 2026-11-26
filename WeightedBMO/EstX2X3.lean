@@ -79,7 +79,11 @@ theorem continuousWithinAt_intervalSup_cumul {f : ℝ → ℝ} {T u : ℝ}
 
 
 /-- **`est.X2`**: the normalized maximal function is bounded by `2 c_p p` on
-every `p > 0`, uniformly in the regularizing parameter `ε`. -/
+every `p > 0`, uniformly in the regularizing parameter `ε`.
+
+Stated for a finite measure, the constant carries the factor `‖1‖_p`; on a
+probability measure `eLpNorm_one` shows `‖1‖_p = 1` and the bound is the
+paper's bare constant `2 c_m m` (see `Theorem11.cor_maximaldagger`). -/
 theorem estX2 {E : Type*} [PseudoMetricSpace E]
     (X Xl : Ω → ℝ → E) (ψ : Ω → ℝ → ℝ) {T : ℝ} (hT : 0 ≤ T)
     (hℱ : RightContinuousFiltration ℱ)
@@ -247,7 +251,10 @@ theorem estX2 {E : Type*} [PseudoMetricSpace E]
         rw [ENNReal.ofReal_mul (by norm_num : (0:ℝ) ≤ 2)]
         ring
 
-/-- **`est.X3`**: the exponential form, at the rate `λ ≤ (2e³)⁻¹`. -/
+/-- **`est.X3`**: the exponential form, at the rate `λ ≤ (2e³)⁻¹`, with the
+bound `M · μ(univ)`. On a probability measure the factor `μ(univ)` is one and
+this is the paper's `M`, the constant of (1.1) (`exponentialBound`; its term of
+index zero is one, so it is `1 + Σ_{m ≥ 1} (c_m m)^m e^{-3m}/m!`). -/
 theorem estX3 {E : Type*} [PseudoMetricSpace E]
     (X Xl : Ω → ℝ → E) (ψ : Ω → ℝ → ℝ) {T : ℝ} (hT : 0 ≤ T)
     (hℱ : RightContinuousFiltration ℱ)

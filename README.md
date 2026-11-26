@@ -137,8 +137,9 @@ right-continuous martingale `M`:
 ```
 
 proved from the weighted BMO bound, (1.8) with the weight `2ψ`, and Doob's
-step. In the paper `ψ = X^♯_{·,T}` and `M = 2 E_· X^♯_T`, so `M_T = 2 X^♯_T`
-and the constant is `2 c_p p²/(p-1)`, as printed in `est.Smaximal`.
+step. Here `ψ_t = E_t X^♯_{t,T}` in the paper and `M = 2 E_· X^♯_T`, so
+`M_T = 2 X^♯_T` and the constant is `2 c_p p²/(p-1)`, as printed in
+`est.Smaximal`.
 
 The first inequality of `est.Smaximal` is `estSmaximal_lower`. There the one
 extra hypothesis is the horizon step of the paper: the sharp maximal function
@@ -149,8 +150,13 @@ From it, the triangle inequality for `eLpNorm`, Doob's inequality for `N`,
 and `d(X_0, X_T) ≤ sup_t d(X_0, X_t)` give
 
 ```
-(p-1)/(2p-1) ‖ψ_T‖_p ≤ ‖sup_{t∈[0,T]} d(X_0, X_t)‖_p ,  p > 1.
+(p-1)/(2p-1) ‖Ψ‖_p ≤ ‖sup_{t∈[0,T]} d(X_0, X_t)‖_p ,  p > 1,
 ```
+
+where `Ψ` is the horizon sharp maximal function (`X^♯_T` in the paper). `Ψ` is a
+single random variable, not the terminal value of the weight `ψ`: in the paper
+`ψ_T = E_T X^♯_{T,T} = E_T d(X_{T-}, X_T)`, which is strictly smaller than
+`X^♯_T` in general.
 
 So both inequalities of `est.Smaximal` are now stated end to end, each with the
 sharp maximal function supplied as a hypothesis.
@@ -231,33 +237,61 @@ The argument has three steps, all formalized:
   (`lintegral_rpow_le_of_weak`), which is `(1-p)^{-1/p}` after taking `p`-th
   roots (`eLpNorm_le_of_lintegral_rpow_le`).
 
-## Theorem 1.1 end to end
+## Theorem 1.1 end to end, audited against the paper
 
-`WeightedBMO/Theorem11.lean` states the paper's `cor.maximaldagger` as one
-theorem, `cor_maximaldagger`, with the five displayed estimates as the conjuncts
-of a single conclusion and a single hypothesis bundle: the path `X` with right
-limits `Xl`, the weight `ψ` with the two stopping-time domination properties,
-the regularity of `ψ` and of the path, the boundedness of `sup(2ψ)`, a
-nonnegative right-continuous martingale `M` dominating `2ψ`, a nonnegative
-right-continuous martingale `N` with terminal value `d(X_0, X_T)`, and the
-supermartingale property of `ψ` that Kuhn's lemma needs.
+`WeightedBMO/Theorem11.lean` states `cor.maximaldagger` as one theorem,
+`cor_maximaldagger`, whose conclusion is the conjunction of the five displayed
+estimates and whose hypotheses are a single bundle.
 
-The conjuncts, in the order of the paper:
+Three distinct objects of the paper are kept apart, because they cannot be
+merged:
 
-* `est.upperbound`, `‖sup_t d(X_0,X_t)‖_p ≤ 2 c_p p ‖sup_t ψ_t‖_p` for every
-  `p > 0` (`estUpperbound`, the constant `2 * goodLambdaConstant p` being
-  `2 c_p p`);
-* `est.X2`, the normalized form, uniform in `ε` (`estX2`);
-* `est.X3`, the exponential form at rate `(2e³)⁻¹` (`estX3`);
-* `est.Smaximal`, both inequalities, `(p-1)/(2p-1)‖ψ_T‖_p ≤ ‖sup_t d(X_0,X_t)‖_p
-  ≤ 2c_p p²/(p-1)‖ψ_T‖_p` for `p > 1` (`estSmaximal_lower`, and
-  `estSmaximal_upper` composed with `M_T = 2ψ_T`);
-* `est.Smax01`, `‖sup_t d(X_0,X_t)‖_p ≤ 2 c_p p (1-p)^{-1/p} ‖ψ_0‖_p` for
-  `0 < p < 1` (`estSmax01`).
+* the **weight** `ψ`, in the paper `t ↦ E_t X^♯_{t,τ}`: the nonnegative
+  supermartingale of `est.upperbound`, with the two stopping-time domination
+  properties that put `d(X_s, X_·)` in weighted BMO with weight `2ψ`;
+* the **horizon sharp maximal function** `Ψ`, in the paper
+  `X^♯_τ = sup_{s∈[0,τ]} E_s d(X_{s-}, X_τ)`: the object of `est.Smaximal`;
+* the **martingales** `M` and `N`, in the paper `M = 2 E_· X^♯_τ` (so
+  `M_τ = 2X^♯_τ`) and `N = E_· d(X_0, X_τ)` (so `N_τ = d(X_0, X_τ)`).
 
-The only place where the statement is not literally the paper's is `est.X2`,
-which keeps the factor `‖1‖_p = eLpNorm (fun _ => 1) (ofReal p) μ` that the
-formalized estimate produces; on a probability measure that factor is `1`.
+`ψ` and `Ψ` are not interchangeable: `ψ_τ = E_τ X^♯_{τ,τ} = E_τ d(X_{τ-}, X_τ)`,
+strictly below `X^♯_τ` in general. They meet only at time `0`, where
+`ψ_0 = E_0 X^♯_{0,τ} = E_0 X^♯_τ`, which is the right-hand side of
+`est.Smax01`.
+
+Line by line:
+
+| paper | `cor_maximaldagger` | verdict |
+|---|---|---|
+| `est.upperbound`: `‖sup_{t∈[0,τ]}d(X_0,X_t)‖_m ≤ 2c_m m ‖sup_t E_tX^♯_{t,τ}‖_m` | `2 * goodLambdaConstant p  eLpNorm (sup_t ψ_t)`, `goodLambdaConstant p = p c_p` | exact |
+| `est.X2`: `sup_{ε>0} ‖sup_t d(X_0,X_t)/(ε+sup_{s≤t}E_sX^♯_{s,τ})‖_m ≤ 2c_m m` | same integrand with `ψ` for `E_tX^♯_{t,τ}`, constant `2 * goodLambdaConstant p` | exact |
+| `est.X3`: `sup_{ε>0} E exp(λ sup_t ·) ≤ M`, `λ ≤ (2e³)⁻¹` | `∫⁻ ofReal exp(rate·sup_t ·) ≤ ofReal exponentialBound` | exact; `E` written `∫⁻ ofReal`, nonnegative integrand |
+| `est.Smaximal`: `(m-1)/(2m-1)‖X^♯_τ‖_m ≤ ‖sup_t d(X_0,X_t)‖_m ≤ (2c_m m²/(m-1))‖X^♯_τ‖_m` | the same two bounds with `Ψ` in place of `X^♯_τ` | exact |
+| `est.Smax01`: `‖sup_t d(X_0,X_t)‖_m ≤ (2c_m m/(1-m)^{1/m}) ‖E_0X^♯_τ‖_m` | `2 * goodLambdaConstant p * (1-p)^(-(1/p))  eLpNorm ψ_0` | exact |
+
+Two constants needed care in this audit and are now the paper's, not the
+formalization's:
+
+* `est.X2` is proved in `EstX2X3.lean` for a finite measure, where the
+  estimate naturally carries the factor `‖1‖_p = eLpNorm (fun _ => 1) (ofReal p) μ`.
+  The assembly removes it with `eLpNorm_one`, which shows `‖1‖_p = 1` on a
+  probability measure, so the conjunct is the paper's bare `2c_m m`.
+* `est.X3` is proved with the bound `M · μ(univ)`; the assembly removes the
+  `μ(univ)`. `exponentialBound` is the paper's `M`: its term of index zero is
+  `1` and the term of index `n ≥ 1` is `(c_n n)^n e^{-3n}/n!`, so it is
+  `1 + Σ_{m≥1}(c_m m)^m e^{-3m}/m!`.
+
+Differences that remain, none of them in a constant:
+
+* `‖·‖_m = (E|·|^m)^{1/m}` is `eLpNorm · (ofReal m) μ`; the paper's `‖·‖_∞`
+  case is not covered.
+* The paper takes `τ > 0`; here `0 ≤ T`, so `T = 0` is allowed too.
+* `X` is described in the paper as an RCLL adapted integrable process; here
+  right-continuity, left limits, adaptedness and the integrability at stopping
+  times are the explicit hypotheses `cX`, `lX`, `mv`, `hdata`.
+* `X^♯` itself is not defined, because an RCLL version of `t ↦ E_t X^♯_{t,τ}`
+  is not available here (Dellacherie--Meyer II (2.9)); `ψ` and `Ψ` stand in for
+  it, which is why the two are hypotheses rather than definitions.
 
 ## Finite-grid estimates
 

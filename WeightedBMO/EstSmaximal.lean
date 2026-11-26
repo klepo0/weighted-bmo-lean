@@ -204,15 +204,18 @@ theorem eLpNorm_intervalSup_le_supOn {M : ℝ → Ω → ℝ} {f : Ω → ℝ �
   exact ENNReal.rpow_le_rpow (z := 1 / p) hstep (by positivity)
 
 /-- **`est.Smaximal`, left-hand side.**  If the sharp maximal function at the
-horizon is dominated by the maximum of the path plus the maximum of a
+horizon, `Ψ`, is dominated by the maximum of the path plus the maximum of a
 nonnegative right-continuous martingale `N` with terminal value
 `d(X_0, X_T)` — the paper's triangle-inequality step — then
 
-  `(p-1)/(2p-1) ‖ψ_T‖_p ≤ ‖sup_{t∈[0,T]} d(X_0, X_t)‖_p`.
+  `(p-1)/(2p-1) ‖Ψ‖_p ≤ ‖sup_{t∈[0,T]} d(X_0, X_t)‖_p`.
 
-In the paper `ψ_T = X^♯_T` and `N_t = E_t d(X_0, X_T)`. -/
+In the paper `Ψ = X^♯_T` and `N_t = E_t d(X_0, X_T)`.  Note that `Ψ` is a
+single random variable, not the terminal value of a weight process: in the
+paper the weight of `est.upperbound` is `E_t X^♯_{t,T}`, whose value at `T` is
+`E_T d(X_{T-}, X_T)`, not `X^♯_T`. -/
 theorem estSmaximal_lower {E : Type*} [PseudoMetricSpace E]
-    (X : Ω → ℝ → E) (ψ : Ω → ℝ → ℝ) (N : ℝ → Ω → ℝ) {T : ℝ} (hT : 0 ≤ T)
+    (X : Ω → ℝ → E) (Ψ : Ω → ℝ) (N : ℝ → Ω → ℝ) {T : ℝ} (hT : 0 ≤ T)
     (mv : ∀ u ∈ Icc 0 T, Measurable (fun ω => dist (X ω 0) (X ω u)))
     (cX : ∀ ω u, u ∈ Ico 0 T →
       ContinuousWithinAt (fun s => dist (X ω 0) (X ω s)) (Ici u) u)
@@ -221,12 +224,12 @@ theorem estSmaximal_lower {E : Type*} [PseudoMetricSpace E]
     (hNc : ∀ ω, ∀ t ∈ Ico 0 T, ContinuousWithinAt (fun s => N s ω) (Ici t) t)
     (hNb : ∀ ω, BddAbove ((fun u => N u ω) '' Icc 0 T))
     (hNT : N T =ᵐ[μ] fun ω => dist (X ω 0) (X ω T))
-    (hψT0 : ∀ ω, 0 ≤ ψ ω T)
-    (hψT : ∀ ω, ψ ω T ≤ intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T +
+    (hΨ0 : ∀ ω, 0 ≤ Ψ ω)
+    (hΨ : ∀ ω, Ψ ω ≤ intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T +
       intervalSup (fun u => N u ω) 0 T)
     {p : ℝ} (hp : 1 < p) :
     ENNReal.ofReal ((p - 1) / (2 * p - 1)) *
-        eLpNorm (fun ω => ψ ω T) (ENNReal.ofReal p) μ ≤
+        eLpNorm Ψ (ENNReal.ofReal p) μ ≤
       eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
         (ENNReal.ofReal p) μ := by
   have hp0 : 0 < p := by linarith
@@ -240,14 +243,14 @@ theorem estSmaximal_lower {E : Type*} [PseudoMetricSpace E]
   have hB0 : ∀ ω, 0 ≤ intervalSup (fun u => N u ω) 0 T := fun ω =>
     (hN0 0 ω).trans (le_intervalSup (hNb ω) ⟨le_rfl, hT⟩)
   -- (1) pointwise domination and Minkowski
-  have h1 : eLpNorm (fun ω => ψ ω T) (ENNReal.ofReal p) μ ≤
+  have h1 : eLpNorm Ψ (ENNReal.ofReal p) μ ≤
       eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T +
         intervalSup (fun u => N u ω) 0 T) (ENNReal.ofReal p) μ := by
     apply eLpNorm_mono
     intro ω
-    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg (hψT0 ω),
+    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg (hΨ0 ω),
       abs_of_nonneg (add_nonneg (hA0 ω) (hB0 ω))]
-    exact hψT ω
+    exact hΨ ω
   have h2 : eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T +
         intervalSup (fun u => N u ω) 0 T) (ENNReal.ofReal p) μ ≤
       eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
@@ -292,11 +295,11 @@ theorem estSmaximal_lower {E : Type*} [PseudoMetricSpace E]
     have h : (p - 1) / (2 * p - 1) * ((2 * p - 1) / (p - 1)) = 1 := by
       field_simp
     rw [h, ENNReal.ofReal_one]
-  have hmain : eLpNorm (fun ω => ψ ω T) (ENNReal.ofReal p) μ ≤
+  have hmain : eLpNorm Ψ (ENNReal.ofReal p) μ ≤
       ENNReal.ofReal ((2 * p - 1) / (p - 1)) *
         eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
           (ENNReal.ofReal p) μ := by
-    calc eLpNorm (fun ω => ψ ω T) (ENNReal.ofReal p) μ
+    calc eLpNorm Ψ (ENNReal.ofReal p) μ
         ≤ eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T +
             intervalSup (fun u => N u ω) 0 T) (ENNReal.ofReal p) μ := h1
       _ ≤ eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T)
