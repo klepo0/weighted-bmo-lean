@@ -3,8 +3,6 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Integral
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import WeightedBMO.EstSmaximal
 
-set_option maxHeartbeats 2000000
-
 /-!
 # Towards Kuhn's `L^p` maximal inequality for `p < 1`
 
@@ -186,6 +184,7 @@ theorem ae_le_of_setIntegral_le {f g : Ω → ℝ}
   simp only [mem_setOf_eq, not_lt] at hω
   exact hω
 
+set_option maxHeartbeats 2000000 in
 /-- **Kuhn's truncation.**  If the event-tested weak-type inequality
 `α μ({α < Y} ∩ G) ≤ ∫_G Z` holds for every `α > 0` and every `𝒢`-measurable `G`,
 then for `0 < q < 1` the `q`-th moments satisfy `∫ Y^q ≤ (1-q)^{-1} ∫ Z^q`.
