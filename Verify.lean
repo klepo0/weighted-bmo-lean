@@ -71,3 +71,27 @@ info: 'WeightedBMO.weightedBMOOn_iff_condExp' depends on axioms: [propext, Class
 -/
 #guard_msgs in
 #print axioms WeightedBMO.weightedBMOOn_iff_condExp
+
+/--
+info: 'WeightedBMO.submartingale_weak_type' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.submartingale_weak_type
+
+/--
+info: 'WeightedBMO.submartingale_moment_maximal_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.submartingale_moment_maximal_le
+
+/--
+info: 'WeightedBMO.submartingale_eLpNorm_maximal_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.submartingale_eLpNorm_maximal_le
+
+/--
+info: 'WeightedBMO.martingale_eLpNorm_maximal_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in
+#print axioms WeightedBMO.martingale_eLpNorm_maximal_le

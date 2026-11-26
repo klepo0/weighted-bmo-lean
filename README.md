@@ -16,6 +16,8 @@ This project formalizes estimates from Khoa Lê's
 | Continuous-time (1.9) from the stopped oscillation modulus | `WeightedBMO.real_interval_moments` |
 | Real-time (1.9) ⇒ conditional (1.10) | `WeightedBMO.conditional_exponential_of_interval_moments` |
 | Single-interval exponential bound on a finite grid | `WeightedBMO.grid_exponential` |
+| Doob's weak-type (1,1) maximal inequality | `WeightedBMO.submartingale_weak_type` |
+| Doob's `L^p` maximal inequality, sharp constant `p/(p-1)` | `WeightedBMO.submartingale_eLpNorm_maximal_le` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
 uses measurable nonnegative real-valued functions and mathlib's extended
@@ -37,6 +39,32 @@ lake env lean Verify.lean
 
 The last command checks that the published estimates use only Lean’s standard
 axioms (`propext`, `Classical.choice`, and `Quot.sound`).
+
+If `elan` is not installed, Lake falls back to the `lean` on `PATH`. Extracting
+the pinned `lean-4.19.0-linux.tar.zst` release and putting its `bin` directory
+first on `PATH` reproduces the build without `elan`.
+
+## Doob's `L^p` maximal inequality
+
+The paper deduces Theorem 1.1 from the John--Nirenberg inequality (1.8) and
+Doob's `L^p` maximal inequality with constant `m/(m-1)`. Mathlib has the
+weak-type `(1,1)` inequality `MeasureTheory.maximal_ineq` but not its `L^p`
+consequence, so `WeightedBMO/DoobMaximal.lean` supplies it for discrete-time
+nonnegative submartingales on a finite measure space: for `p > 1`,
+
+```
+‖max_{k ≤ n} f k‖_p ≤ p/(p-1) ‖f n‖_p
+```
+
+(`submartingale_eLpNorm_maximal_le`, with the moment form
+`submartingale_moment_maximal_le` that states
+`∫ (max_{k ≤ n} f k)^p ≤ (p/(p-1))^p ∫ (f n)^p`) and the martingale
+specialization `martingale_eLpNorm_maximal_le`. The proof computes the moment
+by layer cake, integrates the weak-type bound over the level parameter
+(Tonelli), evaluates the resulting one-dimensional power integral, and
+concludes with Hölder's inequality. The weak-type inequality is restated as
+`submartingale_weak_type` in the normalization used by the rest of the
+argument.
 
 ## Finite-grid estimates
 
