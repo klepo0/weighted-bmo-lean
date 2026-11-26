@@ -26,9 +26,11 @@ This project formalizes estimates from Khoa Lê's
 | `est.Smaximal`, left-hand side | `WeightedBMO.estSmaximal_lower` |
 | `est.X2`, normalized maximal function, uniform in `ε` | `WeightedBMO.estX2` |
 | `est.X3`, exponential form at rate `(2e³)⁻¹` | `WeightedBMO.estX3` |
-| `est.Smax01`, exponents `p < 1`, modulo Kuhn's lemma | `WeightedBMO.estSmax01` |
+| `est.Smax01`, exponents `p < 1` | `WeightedBMO.estSmax01` |
 | Global weak-type maximal inequality for nonnegative supermartingales | `WeightedBMO.supermartingale_max_le` |
 | Its dyadic lift to `sup_{t∈[0,T]}` | `WeightedBMO.supermartingale_max_le_supOn` |
+| The event-tested (setwise) weak-type inequality | `WeightedBMO.supermartingale_max_le_supOn_of_measurableSet_zero` |
+| Kuhn's `L^p` maximal inequality, `p < 1` | `WeightedBMO.supermartingale_eLpNorm_intervalSup_le` |
 
 Lemma 2.1 works on finite measure spaces, including probability spaces. It
 uses measurable nonnegative real-valued functions and mathlib's extended
@@ -188,8 +190,13 @@ every exponent `p > 0` and bounds the path by `sup(2ψ)`, together with
 `sup(2ψ) ≤ 2 sup ψ` and the `L^p` bound for the nonnegative supermartingale
 `ψ` at exponent `p < 1`.
 
-Kuhn's lemma is the remaining hypothesis `hKuhn` of `estSmax01`.  What is needed
-is the *event-tested* weak-type inequality
+Kuhn's lemma — the `L^p` bound `‖sup_t ψ_t‖_p ≤ (1-p)^{-1/p} ‖ψ_0‖_p` for the
+nonnegative supermartingale `ψ` at exponent `p < 1` — is proved, in
+`WeightedBMO/Kuhn.lean`, for any nonnegative supermartingale with
+right-continuous paths.  So the only hypothesis `estSmax01` makes about `ψ` is
+`Supermartingale (fun t ω => ψ ω t) ℱ μ`.
+
+What the sharp constant needs is the *event-tested* weak-type inequality
 
 ```
 α μ({sup ψ > α} ∩ G) ≤ ∫_G ψ_0      for every G ∈ ℱ_0,
@@ -201,26 +208,26 @@ cake at a level `τ`), and on a probability space `‖·‖_p ≤ ‖·‖₁`, 
 strictly weaker than what `est.Smax01` needs.  The naive repair — a generalised
 Hölder inequality with the negative exponent `p/(p-1)` — is false.
 
-`WeightedBMO/SupermartingaleWeakType.lean` proves the event-tested form for a
-nonnegative supermartingale on a finite grid
-(`supermartingale_max_le_of_measurableSet_zero`): localise the process to
-`1_G · X`, which is again a supermartingale because `1_G` is `ℱ_0`-measurable
-and the filtration increases, and apply the global inequality to it.
-`WeightedBMO/SupermartingaleLift.lean` lifts it to the supremum over `[0,T]`
-(`supermartingale_max_le_supOn_of_measurableSet_zero`), running the
-discrete inequality on each dyadic grid; the localisation is done on the grid,
-where every sample time is nonnegative, since an event of `ℱ_0` need not be
-`ℱ_t`-measurable for `t < 0`.
+The argument has three steps, all formalized:
 
-What remains is the truncation that turns the event-tested inequality into the
-`L^p` bound with the sharp constant.  `WeightedBMO/Kuhn.lean` proves its two
-ingredients: the one-variable computation
-`∫_0^∞ t^{p-1} min (1, c/t) dt = c^p/(p(1-p))` (`lintegral_min_mul_rpow`,
-whence `(1-p)^{-1}`), and the passage from the tested inequality to its
-conditional form `α μ{sup ψ > α | ℱ_0} ≤ ψ_0` a.e.
-(`ae_le_of_setIntegral_le`).  The final assembly through the layer-cake formula
-`MeasureTheory.lintegral_rpow_eq_lintegral_meas_lt_mul` and Tonelli is not yet
-formalized, so `estSmax01` still carries `hKuhn`.
+* `WeightedBMO/SupermartingaleWeakType.lean` proves the event-tested form for a
+  nonnegative supermartingale on a finite grid
+  (`supermartingale_max_le_of_measurableSet_zero`): localise the process to
+  `1_G · X`, which is again a supermartingale because `1_G` is `ℱ_0`-measurable
+  and the filtration increases, and apply the global inequality to it.
+* `WeightedBMO/SupermartingaleLift.lean` lifts it to the supremum over `[0,T]`
+  (`supermartingale_max_le_supOn_of_measurableSet_zero`), running the
+  discrete inequality on each dyadic grid; the localisation is done on the grid,
+  where every sample time is nonnegative, since an event of `ℱ_0` need not be
+  `ℱ_t`-measurable for `t < 0`.
+* `WeightedBMO/Kuhn.lean` truncates.  In conditional form the tested inequality
+  reads `α μ{sup ψ > α | ℱ_0} ≤ ψ_0` a.e. (`ae_le_of_setIntegral_le`), so the
+  tail is `μ{t < sup ψ} ≤ ∫ min 1 (ψ_0/t)`; the layer cake
+  `MeasureTheory.lintegral_rpow_eq_lintegral_meas_lt_mul`, Tonelli and the
+  one-variable integral `∫_0^∞ t^{p-1} min (1, c/t) dt = c^p/(p(1-p))`
+  (`lintegral_min_mul_rpow`) then give `∫ (sup ψ)^p ≤ (1-p)^{-1} ∫ ψ_0^p`
+  (`lintegral_rpow_le_of_weak`), which is `(1-p)^{-1/p}` after taking `p`-th
+  roots (`eLpNorm_le_of_lintegral_rpow_le`).
 
 ## Finite-grid estimates
 

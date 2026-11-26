@@ -239,3 +239,15 @@ info: 'WeightedBMO.lintegral_rpow_le_of_weak' depends on axioms: [propext, Class
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms WeightedBMO.lintegral_rpow_le_of_weak
+
+/--
+info: 'WeightedBMO.eLpNorm_le_of_lintegral_rpow_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms WeightedBMO.eLpNorm_le_of_lintegral_rpow_le
+
+/--
+info: 'WeightedBMO.supermartingale_eLpNorm_intervalSup_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms WeightedBMO.supermartingale_eLpNorm_intervalSup_le

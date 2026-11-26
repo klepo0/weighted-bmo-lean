@@ -31,9 +31,11 @@ This file contains the two ingredients that are proved:
   over `{g < f}`" to "`g` dominates `f` almost everywhere", which converts the
   event-tested weak-type inequality into its conditional form.
 
-The remaining step — assembling them through the layer-cake formula
-`MeasureTheory.lintegral_rpow_eq_lintegral_meas_lt_mul` and Tonelli — is not yet
-formalized, so `estSmax01` still takes Kuhn's lemma as a hypothesis.
+The assembly is `lintegral_rpow_le_of_weak`; `eLpNorm_le_of_lintegral_rpow_le`
+converts it into the `eLpNorm` form, and
+`supermartingale_eLpNorm_intervalSup_le` states Kuhn's lemma for the interval
+supremum of a nonnegative supermartingale — the hypothesis `hKuhn` that
+`EstSmax01.estSmax01` used to carry.
 -/
 
 open MeasureTheory Set Filter Topology
@@ -325,6 +327,113 @@ theorem lintegral_rpow_le_of_weak [IsProbabilityMeasure μ]
           ← mul_assoc, ← ENNReal.ofReal_mul hq.le]
         congr 1
         field_simp
+
+
+/-- The converse of `lintegral_rpow_le_of_eLpNorm_le`: an `L^p` bound follows from
+the corresponding bound on the `p`-th powers. -/
+theorem eLpNorm_le_of_lintegral_rpow_le {f g : Ω → ℝ}
+    (hf0 : ∀ ω, 0 ≤ f ω) (hg0 : ∀ ω, 0 ≤ g ω) {p C : ℝ} (hp : 0 < p) (hC : 0 ≤ C)
+    (h : ∫⁻ ω, ENNReal.ofReal (f ω ^ p) ∂μ ≤
+      ENNReal.ofReal (C ^ p) * ∫⁻ ω, ENNReal.ofReal (g ω ^ p) ∂μ) :
+    eLpNorm f (ENNReal.ofReal p) μ ≤ ENNReal.ofReal C * eLpNorm g (ENNReal.ofReal p) μ := by
+  have hpne : ENNReal.ofReal p ≠ 0 := ENNReal.ofReal_ne_zero_iff.mpr hp
+  have hptop : ENNReal.ofReal p ≠ ⊤ := ENNReal.ofReal_ne_top
+  have hp1 : (0:ℝ) ≤ 1 / p := by positivity
+  have hf' : eLpNorm f (ENNReal.ofReal p) μ = (∫⁻ ω, ENNReal.ofReal (f ω ^ p) ∂μ) ^ (1 / p) := by
+    rw [eLpNorm_eq_lintegral_rpow_enorm hpne hptop, ENNReal.toReal_ofReal hp.le]
+    congr 1
+    exact lintegral_congr fun ω => by
+      rw [Real.enorm_of_nonneg (hf0 ω), ENNReal.ofReal_rpow_of_nonneg (hf0 ω) hp.le]
+  have hg' : eLpNorm g (ENNReal.ofReal p) μ = (∫⁻ ω, ENNReal.ofReal (g ω ^ p) ∂μ) ^ (1 / p) := by
+    rw [eLpNorm_eq_lintegral_rpow_enorm hpne hptop, ENNReal.toReal_ofReal hp.le]
+    congr 1
+    exact lintegral_congr fun ω => by
+      rw [Real.enorm_of_nonneg (hg0 ω), ENNReal.ofReal_rpow_of_nonneg (hg0 ω) hp.le]
+  rw [hf', hg']
+  have h2 := ENNReal.rpow_le_rpow h hp1
+  rw [ENNReal.mul_rpow_of_nonneg _ _ hp1,
+    ENNReal.ofReal_rpow_of_nonneg (Real.rpow_nonneg hC p) hp1] at h2
+  have e1 : (C ^ p) ^ (1 / p) = C := by
+    rw [← Real.rpow_mul hC, mul_one_div, div_self hp.ne', Real.rpow_one]
+  rwa [e1] at h2
+
+variable {ℱ : Filtration ℝ m}
+
+/-- **Kuhn's `L^p` maximal inequality** for a nonnegative supermartingale and
+`0 < q < 1`: `‖sup_{[0,T]} ψ‖_q ≤ (1-q)^{-1/q} ‖ψ_0‖_q`.  The supremum is the
+interval supremum; it is identified with the dyadic `supOn` by right-continuity
+of the paths. -/
+theorem supermartingale_eLpNorm_intervalSup_le [IsProbabilityMeasure μ]
+    [SigmaFiniteFiltration μ ℱ]
+    {ψ : Ω → ℝ → ℝ} {T q : ℝ} (hT : 0 ≤ T) (hq : 0 < q) (hq1 : q < 1)
+    (hψ : Supermartingale (fun t ω => ψ ω t) ℱ μ)
+    (hψ0 : ∀ ω t, t ∈ Icc 0 T → 0 ≤ ψ ω t)
+    (hψbdd : ∀ ω, BddAbove ((fun t => ψ ω t) '' Icc 0 T))
+    (hψrc : ∀ ω u, u ∈ Ico 0 T → ContinuousWithinAt (fun s => ψ ω s) (Ici u) u) :
+    eLpNorm (fun ω => intervalSup (fun t => ψ ω t) 0 T) (ENNReal.ofReal q) μ ≤
+      ENNReal.ofReal ((1 - q) ^ (-(1 / q))) *
+        eLpNorm (fun ω => ψ ω 0) (ENNReal.ofReal q) μ := by
+  set M : ℝ → Ω → ℝ := fun t ω => ψ ω t with hM
+  set Y : Ω → ℝ := fun ω => intervalSup (fun t => ψ ω t) 0 T with hY
+  set Z : Ω → ℝ := fun ω => ψ ω 0 with hZ
+  have hY0 : ∀ ω, 0 ≤ Y ω := fun ω =>
+    (hψ0 ω 0 ⟨le_rfl, hT⟩).trans (le_intervalSup (hψbdd ω) ⟨le_rfl, hT⟩)
+  have hZ0 : ∀ ω, 0 ≤ Z ω := fun ω => hψ0 ω 0 ⟨le_rfl, hT⟩
+  have hZm : Measurable Z := (hψ.adapted 0).measurable.mono (ℱ.le 0) le_rfl
+  have hYm : Measurable Y :=
+    measurable_intervalSup hT hψbdd (fun u _ => (hψ.adapted u).measurable.mono (ℱ.le u) le_rfl) hψrc
+  have hZint : Integrable Z μ := hψ.integrable 0
+  have hsuple : ∀ ω, supOn M T ω ≤ ENNReal.ofReal (Y ω) := by
+    intro ω
+    refine iSup_le fun n => ENNReal.ofReal_le_ofReal ?_
+    obtain ⟨k, hk, hkeq⟩ :=
+      Finset.exists_mem_eq_sup' Finset.nonempty_range_succ (fun k => M (dyadicTime T n k) ω)
+    rw [dyadicMax, hkeq]
+    refine le_intervalSup (hψbdd ω) ⟨?_, ?_⟩
+    · simp only [M, dyadicTime]; positivity
+    · have hk' : k ≤ 2 ^ n := Nat.lt_succ_iff.mp (by simpa using hk)
+      simp only [M, dyadicTime]
+      rw [div_le_iff₀ (by positivity : (0:ℝ) < (2:ℝ) ^ n)]
+      calc (k : ℝ) * T ≤ (2:ℝ) ^ n * T :=
+            mul_le_mul_of_nonneg_right (by exact_mod_cast hk') hT
+        _ = T * (2:ℝ) ^ n := by ring
+  have hsupge : ∀ ω, ENNReal.ofReal (Y ω) ≤ supOn M T ω := fun ω =>
+    ofReal_intervalSup_le_supOn (f := fun ω t => ψ ω t) (M := M) hT hψrc hψ0
+      (fun ω t _ => le_rfl) ω
+  have hsupeq : ∀ ω, supOn M T ω = ENNReal.ofReal (Y ω) :=
+    fun ω => le_antisymm (hsuple ω) (hsupge ω)
+  have hkey : ∀ (a y : ℝ), 0 < a → 0 ≤ y →
+      (ENNReal.ofReal a < ENNReal.ofReal y ↔ a < y) := by
+    intro a y ha hy
+    rcases eq_or_lt_of_le hy with h0 | hpos
+    · rw [← h0, ENNReal.ofReal_zero]
+      exact ⟨fun h => absurd h (not_lt.mpr (zero_le _)), fun h => absurd h (not_lt.mpr ha.le)⟩
+    · exact ENNReal.ofReal_lt_ofReal_iff hpos
+  have hweak : ∀ α : ℝ, 0 < α → ∀ G : Set Ω, MeasurableSet[ℱ 0] G →
+      ENNReal.ofReal α * μ ({ω | α < Y ω} ∩ G) ≤ ENNReal.ofReal (∫ ω in G, Z ω ∂μ) := by
+    intro α hα G hG
+    have hset : {ω | α < Y ω} = {ω | ENNReal.ofReal α < supOn M T ω} := by
+      ext ω
+      simp only [mem_setOf_eq, hsupeq ω]
+      exact (hkey α (Y ω) hα (hY0 ω)).symm
+    rw [hset]
+    exact supermartingale_max_le_supOn_of_measurableSet_zero (M := M) hψ hT
+      (fun t ω ht => hψ0 ω t ht) hα hG
+  have hmain : ∫⁻ ω, ENNReal.ofReal (Y ω ^ q) ∂μ ≤
+      ENNReal.ofReal (1 / (1 - q)) * ∫⁻ ω, ENNReal.ofReal (Z ω ^ q) ∂μ :=
+    lintegral_rpow_le_of_weak (𝒢 := ℱ 0) (h𝒢 := ℱ.le 0) hq hq1 hY0 hYm hZ0 hZm hZint
+      (hψ.adapted 0).measurable hweak
+  have hC : (0:ℝ) ≤ (1 - q) ^ (-(1 / q)) := Real.rpow_nonneg (by linarith) _
+  have hconst : ((1 - q) ^ (-(1 / q))) ^ q = 1 / (1 - q) := by
+    rw [← Real.rpow_mul (by linarith : (0:ℝ) ≤ 1 - q)]
+    have h1 : -(1 / q) * q = -1 := by field_simp
+    rw [h1, Real.rpow_neg (by linarith : (0:ℝ) ≤ 1 - q), Real.rpow_one]
+    ring
+  have hmain' : ∫⁻ ω, ENNReal.ofReal (Y ω ^ q) ∂μ ≤
+      ENNReal.ofReal (((1 - q) ^ (-(1 / q))) ^ q) * ∫⁻ ω, ENNReal.ofReal (Z ω ^ q) ∂μ := by
+    rw [hconst]
+    exact hmain
+  exact eLpNorm_le_of_lintegral_rpow_le hY0 hZ0 hq hC hmain'
 
 
 end WeightedBMO

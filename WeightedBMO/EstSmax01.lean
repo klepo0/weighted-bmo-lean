@@ -1,4 +1,5 @@
 import WeightedBMO.EstX2X3
+import WeightedBMO.Kuhn
 
 /-!
 # `est.Smax01`: Theorem 1.1 for exponents below one
@@ -15,21 +16,20 @@ the weight `2ψ`, and the `L^p` bound for `0 < p < 1`
 `ψ_t = E_t X^♯_{t,T}` (Kuhn's lemma).  `estSmax01` performs that composition:
 it bounds `sup(2ψ)` by `2 sup ψ` and applies the `p`-th power estimate.
 
-Kuhn's lemma itself is *not* proved here; it enters as the hypothesis `hKuhn`.
-The sharp `L^p` bound for `p < 1` needs the *event-tested* weak-type inequality
+Kuhn's lemma is *proved*, not assumed: `Kuhn.supermartingale_eLpNorm_intervalSup_le`
+gives it for any nonnegative supermartingale with right-continuous paths, so the
+only hypothesis about `ψ` here is `Supermartingale (fun t ω => ψ ω t) ℱ μ`.
+
+Its proof needs the *event-tested* weak-type inequality
 
   `α μ({sup ψ > α} ∩ G) ≤ ∫_G ψ_0`  for every `G ∈ ℱ_0`,
 
 not the global form `α μ{sup ψ > α} ≤ ∫ ψ_0`, which only gives an `L¹` bound.
-That event-tested inequality is now proved, for a nonnegative supermartingale
-on a finite grid, in `SupermartingaleWeakType.supermartingale_max_le_of_measurableSet_zero`,
-and lifted to the supremum over `[0,T]` in
-`SupermartingaleLift.supermartingale_max_le_supOn_of_measurableSet_zero`.
-What is missing is the truncation turning it into the `L^p` bound with the
-sharp constant; `Kuhn.lean` proves its two ingredients (the one-variable
-integral `∫_0^∞ t^{p-1} min (1, c/t) dt = c^p/(p(1-p))` and the passage to the
-conditional form `α μ{sup ψ > α | ℱ_0} ≤ ψ_0`), but their assembly through the
-layer-cake formula is not yet formalized.
+The tested form is `SupermartingaleWeakType.supermartingale_max_le_of_measurableSet_zero`,
+lifted to `[0,T]` by
+`SupermartingaleLift.supermartingale_max_le_supOn_of_measurableSet_zero`; the
+truncation that produces the sharp constant is
+`Kuhn.lintegral_rpow_le_of_weak`.
 -/
 
 open MeasureTheory Set Filter Topology
@@ -37,10 +37,10 @@ open scoped ENNReal
 
 namespace WeightedBMO
 
-variable {Ω : Type*} [m : MeasurableSpace Ω] {μ : Measure Ω} [IsFiniteMeasure μ]
+variable {Ω : Type*} [m : MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]
   {ℱ : Filtration ℝ m}
 
-omit [IsFiniteMeasure μ] in
+omit [IsProbabilityMeasure μ] in
 /-- The interval supremum of a pointwise doubled process. -/
 theorem eLpNorm_intervalSup_two_mul {f : Ω → ℝ → ℝ} {T p : ℝ} (hT : 0 ≤ T)
     (hf0 : ∀ ω t, t ∈ Icc 0 T → 0 ≤ f ω t)
@@ -72,7 +72,8 @@ theorem eLpNorm_intervalSup_two_mul {f : Ω → ℝ → ℝ} {T p : ℝ} (hT : 0
 /-- **`est.Smax01`**: for `0 < p < 1` the maximal function of the path is
 bounded by `2 c_p p (1-p)^{-1/p}` times the `L^p` norm of `ψ_0`, the value of
 the weight at the initial time.  The supermartingale `L^p` bound for `p < 1`
-(Kuhn's lemma) enters as a hypothesis on `ψ`. -/
+(Kuhn's lemma) is `Kuhn.supermartingale_eLpNorm_intervalSup_le`, applied here to
+the supermartingale hypothesis `hψ`. -/
 theorem estSmax01 {E : Type*} [PseudoMetricSpace E]
     (X Xl : Ω → ℝ → E) (ψ : Ω → ℝ → ℝ) {T : ℝ} (hT : 0 ≤ T)
     (hℱ : RightContinuousFiltration ℱ)
@@ -100,10 +101,7 @@ theorem estSmax01 {E : Type*} [PseudoMetricSpace E]
     (cw : ∀ ω u, u ∈ Ico 0 T → ContinuousWithinAt (ψ ω) (Ici u) u)
     (lw : ∀ ω u, u ∈ Ioc 0 T → ∃ l, Tendsto (ψ ω) (𝓝[<] u) (𝓝 l))
     (hψbdd : ∀ ω, BddAbove ((fun t => 2 * ψ ω t) '' Icc 0 T))
-    (hKuhn : ∀ {q : ℝ}, 0 < q → q < 1 →
-      eLpNorm (fun ω => intervalSup (fun t => ψ ω t) 0 T) (ENNReal.ofReal q) μ ≤
-        ENNReal.ofReal ((1 - q) ^ (-(1 / q))) *
-          eLpNorm (fun ω => ψ ω 0) (ENNReal.ofReal q) μ)
+    (hψ : Supermartingale (fun t ω => ψ ω t) ℱ μ)
     {p : ℝ} (hp : 0 < p) (hp1 : p < 1) :
     eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T) (ENNReal.ofReal p) μ ≤
       ENNReal.ofReal (2 * goodLambdaConstant p * (1 - p) ^ (-(1 / p))) *
@@ -149,7 +147,8 @@ theorem estSmax01 {E : Type*} [PseudoMetricSpace E]
       _ ≤ 2 * intervalSup (fun t => ψ ω t) 0 T := hpt ω
       _ = ‖2 * intervalSup (fun t => ψ ω t) 0 T‖ := by
           rw [Real.norm_eq_abs, abs_of_nonneg (mul_nonneg (by norm_num) (hn1 ω))]
-  have h3 := hKuhn hp hp1
+  have h3 := supermartingale_eLpNorm_intervalSup_le (ℱ := ℱ) (T := T) (q := p) hT hp hp1 hψ
+    (fun ω t ht => (hψpos ω t ht).le) hψbdd' cw
   calc eLpNorm (fun ω => intervalSup (fun u => dist (X ω 0) (X ω u)) 0 T) (ENNReal.ofReal p) μ
       ≤ ENNReal.ofReal (goodLambdaConstant p) *
           eLpNorm (fun ω => intervalSup (fun t => 2 * ψ ω t) 0 T) (ENNReal.ofReal p) μ := h1
