@@ -158,3 +158,13 @@ the `log log` term as a defect of the proof.
 * Sanitised `pdflatex` build after the edit: 0 errors, 0 overfull, 0 undefined
   references or citations, 2 underfull `\vbox` at page breaks (the last page
   carries only the author's address), 37 pages.
+* Literature check for the §4.2 positioning, 27 Nov 2026: `ti:"self-normalized"
+  cc:60F10` 61 records, `ab:"one big jump"` 13, `ab:saddlepoint cc:60F10` 22,
+  `ab:"worst case" ab:"large deviations"` 17, `ab:"best possible" ab:"tail
+  probabilities"` 6.  Four references were verified individually with
+  `zbmath.py show` before being added to §4.2 and to the `.bbl`: Bahadur–Ranga
+  Rao Zbl 0101.12603, Jensen Zbl 1274.62008, Asmussen–Klüppelberg Zbl
+  0879.60020, de la Peña–Klass–Lai Zbl 1189.60057 (Freedman re-checked as Zbl
+  0313.60037 against the existing `Fre75` entry).  No sweep of the
+  Lenglart/Pratelli, Garsia–Neveu or Bass strands was completed, so the
+  positioning is hedged in a footnote rather than claimed as a novelty audit.

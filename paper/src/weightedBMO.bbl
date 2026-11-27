@@ -1,10 +1,21 @@
 \begin{thebibliography}{HvNVW16}
 
+\bibitem[AK96]{AK96}
+S{\o}ren Asmussen and Claudia Kl{\"u}ppelberg.
+\newblock Large deviations results for subexponential tails, with applications
+  to insurance risk.
+\newblock {\em Stochastic Processes Appl.}, 64(1):103--125, 1996.
+
 \bibitem[ABLM24]{athreya2020well}
 Siva Athreya, Oleg Butkovsky, Khoa L{\^e}, and Leonid Mytnik.
 \newblock Well-posedness of stochastic heat equation with distributional drift
   and skew stochastic heat equation.
 \newblock {\em Commun. Pure Appl. Math.}, 77(5):2708--2777, 2024.
+
+\bibitem[BR60]{BR60}
+R.~R. Bahadur and R.~Ranga Rao.
+\newblock On deviations of the sample mean.
+\newblock {\em Ann. Math. Stat.}, 31:1015--1027, 1960.
 
 \bibitem[BDG72]{MR0400380}
 D.~L. Burkholder, B.~J. Davis, and R.~F. Gundy.
@@ -37,6 +48,11 @@ Victor~H. de la Pe{\'n}a.
 \newblock Inequalities for tails of adapted processes with an application
   to {W}ald's lemma.
 \newblock {\em J. Theoret. Probab.}, 6(2):285--302, 1993.
+
+\bibitem[dlPnKL07]{dlPnKL07}
+Victor~H. de~la Pe\~{n}a, Michael~J. Klass, and Tze~Leung Lai.
+\newblock Pseudo-maximization and self-normalized processes.
+\newblock {\em Probab. Surv.}, 4:172--192, 2007.
 
 \bibitem[dlPnLS09]{MR2488094}
 Victor~H. de~la Pe\~{n}a, Tze~Leung Lai, and Qi-Man Shao.
@@ -90,6 +106,12 @@ Tuomas Hyt\"{o}nen, Jan van Neerven, Mark Veraar, and Lutz Weis.
   [Results in Mathematics and Related Areas. 3rd Series. A Series of Modern
   Surveys in Mathematics]}.
 \newblock Springer, Cham, 2016.
+
+\bibitem[Jen95]{Jen95}
+Jens~Ledet Jensen.
+\newblock {\em Saddlepoint approximations}.
+\newblock Oxford Statistical Science Series 16. Oxford Science Publications.
+  New York: Oxford University Press, 1995.
 
 \bibitem[JSW03]{MR2016616}
 Bing-Yi Jing, Qi-Man Shao, and Qiying Wang.
