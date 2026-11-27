@@ -766,7 +766,7 @@
 		\end{align}
 		Moreover
 		\begin{align}\label{eqn.objamean}
-			\E Z_n\le1,\qquad\text{and}\qquad \E Z_n^m\le1\quad\text{for every }0<m\le1,
+			\E Z_n\le1,\qquad\text{and}\qquad \E Z_n^m\le1\quad\text{for every }0<m\le\frac{2}{1-e^{-2}}=2.3130\ldots,
 		\end{align}
 		with the constant $1$ sharp and not attained, while for every $m>0$ and every $\lambda>0$,
 		\begin{align}\label{eqn.objamom}
@@ -803,16 +803,34 @@
 			Z_n\le T_n:=\sum_{j\le n}\frac{\xi_j}{K+\xi_j}.
 		\]
 		Since $x\mapsto x/(K+x)$ is concave, $\E[\xi_j/(K+\xi_j)\mid\cff_{j-1}]\le b_j/K$, hence $\E[T_n\mid\cff_0]\le B_n/K\le1$ and $\E Z_n\le1$; concavity of $x\mapsto x^m$ gives $\E Z_n^m\le1$ for $0<m\le1$. The value $1$ is not attained: on $\{S_n>0\}$ every nonzero prefix has $J_k>0$, so $Z_n<S_n/K$, and $\E S_n\le\E K$; while i.i.d.\ costs in $\{0,a\}$ with $pa=K/n$ have $\E Z_n=\frac{a}{K+a}\E N=\frac K{K+a}$, which tends to $1$ as $a/K\to0$.
+	\end{proof}
+
 	\begin{remark}[The exact exponential moment]\label[remark]{rmk.mgf}
 		Let $t\ge0$ and put
 		\begin{align}\label{eqn.mgf}
 			R(t)=\max_{0\le q\le1}\frac{1-q}{q}\big(e^{tq}-1\big).
 		\end{align}
 		Then $\sup_\mathcal{C}\E e^{tZ_n}=e^{R(t)}$, the supremum over the models of \eqref{eqn.budget}. For the upper bound it suffices that $e^{tf(y)}\le1+R(t)y$ for $y\ge0$, where $f(y)=y/(1+y)$: with $\eta_k=\xi_k/(K+\xi_k)$ this gives $\E[e^{t\eta_k}\mid\cff_{k-1}]\le1+R(t)b_k/K\le e^{R(t)b_k/K}$, and since $Z_n\le T_n$ by \eqref{eqn.objamean}, iteration yields $\E e^{tZ_n}\le\E e^{tT_n}\le\E\prod_{k\le n}\big(1+R(t)\eta_k\big)\le e^{R(t)B_n/K}\le e^{R(t)}$. For the lower bound, i.i.d.\ costs in $\{0,a\}$ with $a=q/(1-q)$ and $p=K/(na)$ give $Z_n=qN$ with $N$ binomial of mean $\frac{1-q}{q}$, so $\E e^{tZ_n}=\big(1+\frac{h(q,t)}{n}\big)^n\to e^{h(q,t)}$ with $h(q,t)=\frac{1-q}{q}(e^{tq}-1)$, and the maximum over $q$ is \eqref{eqn.mgf}. The value is informative only for moderate $t$. One has $R(t)=t$ for $0\le t\le2$ and $R(t)>t$ for $t>2$, since $\frac{h(q,t)}{t}$ increases in $t$ and $h(q,2)\le2$ is $\log\frac{1+q}{1-q}\ge2q$; at $t=1$ this is the sharp form of \eqref{eqn.objamean}, by Jensen. For large $t$ the maximiser is $q=1-\frac{\gamma}{t}$ with $\gamma=\frac{t-\sqrt{t^2-4t}}{2}=1+\frac1t+O(t^{-2})$, whence $R(t)=\frac{\gamma}{t-\gamma}\big(e^{t-\gamma}-1\big)\sim\frac{e^{t-1}}{t}$: the supremum is attained by a single cost of size $\asymp tK$ appearing with mean count $\asymp1/t$, and \eqref{eqn.mgf} does not improve \eqref{eqn.obja}.
+
+		It also gives the range of \eqref{eqn.objamean}. Let $\Phi(t)=t/(1-e^{-t})$, which increases from $1$ to $\Phi(2)=\frac2{1-e^{-2}}$ on $(0,2]$, since $(1-e^{-y})^2\Phi'(y)=1-(1+y)e^{-y}>0$, and put $H(x)=\log(e^{tx}-1)-\Phi(t)\log x$ for $x>0$. Then $H'(x)=\big(\Phi(tx)-\Phi(t)\big)/x$, so $H$ decreases on $(0,1)$ and increases on $(1,\infty)$, and is minimised at $x=1$; hence
+		\[
+			e^{tx}-1\ \ge\ (e^t-1)\,x^{\Phi(t)},\qquad x\ge0,\ t>0 .
+		\]
+		Since $\E e^{tZ_n}\le e^{R(t)}=e^t$ for $t\le2$, this gives $\E Z_n^{\Phi(t)}\le\big(\E e^{tZ_n}-1\big)/(e^t-1)\le1$ for every $t\in(0,2]$, that is $\E Z_n^m\le1$ for every $m\le\Phi(2)$ and not merely for $m\le1$, the value $1$ remaining sharp by the two-point models.
 	\end{remark}
 
+	\begin{remark}[The moments of order above one]\label[remark]{rmk.moments}
+		Write $M_m=\sup_\mathcal{C}\E Z_n^m$, and let $L_m=\sup_{0<q<1}q^m\mathcal T_m\big(\frac{1-q}{q}\big)$ be the value approached by the two-point models, where $\mathcal T_m(\lambda)=\E N_\lambda^m$ for $N_\lambda$ Poisson of mean $\lambda$. Besides $M_m=1$ on $\big(0,\frac2{1-e^{-2}}\big]$ one has
+		\begin{align}\label{eqn.mombrackets}
+			1\le M_3\le1.1353,\qquad 1.2110\le M_4\le1.9087 .
+		\end{align}
+		The upper bounds come from $z^m\le A_m(e^{tz}-1)$ with $A_m=y_m^m/(e^{y_m}-1)$ and $m(1-e^{-y_m})=y_m$, optimised over $t\le2$ and then read off \eqref{eqn.mgf}; the lower ones from the two-point family, whose third and fourth moments are $1-q^2(2-q)$ and $1+2q-5q^2+q^3+q^4$. For large $m$ the two agree: with $D=\log m$,
+		\[
+			\log M_m=\log L_m+O\Big(\frac m{D^3}\Big)=m\big(D-\log D-1\big)+\frac m{2D^2}+O\Big(\frac m{D^3}\Big),
+		\]
+		so $M_m^{1/m}\sim m/(e\log m)$ and the two-point family is asymptotically optimal, while the essential supremum of $Z_n$ over the class is infinite.
+	\end{remark}
 
-	\end{proof}
 
 	\begin{example}[Heavy-tailed costs]\label{ex.pareto}
 		Let $\xi_1,\dots,\xi_n$ be i.i.d.\ with finite mean $\mu$, so that $b_k=\mu$ and \eqref{eqn.budget} holds with $K=n\mu$. Then \eqref{eqn.obja} bounds the running maximum of $\sum_{j\le k}\xi_j/(n\mu+\max_{j\le k}\xi_j)$ uniformly over all such laws. For a Pareto law with tail index $\alpha\in(1,2)$ the variance is infinite and $\E e^{\theta S_n}=\infty$ for every $\theta>0$, and the deviation is subexponential, $\PP(S_n\ge nx)\sim x^{-\alpha}n^{1-\alpha}$ as $n\to\infty$ for every fixed $x>\mu$; no estimate of Chernoff type, with or without the truncation that makes the method applicable to heavy tails, can therefore be exponentially small in $n$, and no variance-based maximal inequality is available either. The estimates \eqref{eqn.obja} and \eqref{eqn.objamom} hold nevertheless, uniformly in the law. $\E Z_n\le1$ by \eqref{eqn.objamean}, and the two-point models with $a\le\varepsilon K$ have $\E Z_n=\frac K{K+a}\ge1-\varepsilon$, so the mean bound is sharp here; \eqref{eqn.objamom} at $\lambda=W(1)=0.5671$ gives only $\E Z_n\le3.783$. Taking $u=4.317$ in \eqref{eqn.obja} gives the simultaneous envelope $S_k\le4.317(K+J_k)$, $k\le n$, with probability at least $0.95$.
@@ -981,10 +999,16 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		\begin{align}\label{eqn.secondorder2}
 			-\log P^\star(u)\ =\ u\log u+u\log\log u+\frac{u\log\log u}{\log u}+o\Big(\frac{u}{\log u}\Big).
 		\end{align}
+		With $t_H$ the root of $t=\ell+\log t$ one has, more precisely,
+		\begin{align}\label{eqn.secondorder3}
+			-\log P^\star(u)\ =\ u\,t_H+O\Big(\frac{u h^2}{\ell^2}\Big)
+			=\ u\Big[\ell+h+\frac h\ell+\frac{h-\frac12h^2}{\ell^2}\Big]+O\Big(\frac{u h^2}{\ell^2}\Big),
+		\end{align}
+		the second equality expanding $t_H=\ell+h+\frac h\ell+\frac{h-\frac12h^2}{\ell^2}+O(h^3/\ell^3)$; so the remainder after three terms is negative and of that exact order, and not merely $o(u/\ell)$.
 		Both halves carry the third term, so the two-sided estimate is closed to order $o(u/\log u)$, and \eqref{eqn.secondorder2} determines the tail of the worst model to that order.
 	\end{corollary}
 	\begin{proof}
-		The upper estimate on $\PP$ is \eqref{eqn.refinedmore}; the lower one, for each large $u$ and some model, is \eqref{eqn.lower2}. The two differ by $O\big(\frac{u(\log\log u)^2}{\log^2u}+\log u\big)$, which is $o\big(\frac{u}{\log u}\big)$.
+		The upper estimate on $\PP$ is \eqref{eqn.refinedmore}; the lower one, for each large $u$ and some model, is \eqref{eqn.lower2}. The two differ by $O\big(\frac{u(\log\log u)^2}{\log^2u}+\log u\big)$, which is $o\big(\frac{u}{\log u}\big)$; evaluated at $t_H$ instead of at $\ell+h$ they give \eqref{eqn.secondorder3}, since $t_H=\ell+h+\frac h\ell+O(\frac{h^2}{\ell^2})$ and the two remainders are $o(\frac{uh^2}{\ell^2})$ and $O(\frac{uh^2}{\ell^2})$ respectively.
 	\end{proof}
 
 	\begin{remark}[Mechanism]\label{rmk.mechanism}
