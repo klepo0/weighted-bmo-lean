@@ -1011,13 +1011,27 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		The upper estimate on $\PP$ is \eqref{eqn.refinedmore}; the lower one, for each large $u$ and some model, is \eqref{eqn.lower2}. The two differ by $O\big(\frac{u(\log\log u)^2}{\log^2u}+\log u\big)$, which is $o\big(\frac{u}{\log u}\big)$; evaluated at $t_H$ instead of at $\ell+h$ they give \eqref{eqn.secondorder3}, since $t_H=\ell+h+\frac h\ell+O(\frac{h^2}{\ell^2})$ and the two remainders are $o(\frac{uh^2}{\ell^2})$ and $O(\frac{uh^2}{\ell^2})$ respectively.
 	\end{proof}
 
-	\begin{remark}[The factor in front of the exponential]\label[remark]{rmk.prefactor}
-		Let $t_H$ be the root of $t=\ell+\log t$, as in \eqref{eqn.secondorder3}. The exponent is determined, the factor in front of it is not, and the two sides of the estimates above give
+		\begin{remark}[The factor in front of the exponential]\label[remark]{rmk.prefactor}
+		Let $t_H$ be the root of $t=\ell+\log t$, as in \eqref{eqn.secondorder3}. The exponent is then determined to its constant, while the factor in front of it is not: \eqref{eqn.secondorder3} and the two bounds below give
 		\begin{align}\label{eqn.prefactor}
-			\frac1{\sqrt{2\pi}}\,u^{-1/2}\big(1+o(1)\big)\ \le\ \frac{P^\star(u)}{e^{-ut_H}}\ \le\ e\sqrt{2\pi}\,t_H\,u^{1/2}\big(1+o(1)\big).
+			-\log P^\star(u)=u\,t_H+\frac1{t_H-1}+O(\log u)
 		\end{align}
-		The lower bound is the two-point family of \cref{prop.lower}: with $q=a/(1+a)$ and $\lambda=(1-q)/q$ the passage count is $r=\lfloor u/q\rfloor+1$, the Poisson atom is $\lambda^r/r!$, and its exponent $D(r)=r\log(r/\lambda)-r+\lambda$ is minimised at $\lambda=1/(t_H-1)+O(1/t_H^2)$, with $D_{\min}=ut_H+\frac1{t_H-1}$, so that the factor is $\sqrt{1-1/t_H}\,e^{-1/(t_H-1)}/\sqrt{2\pi}$; the tail is within $1+O(1/\ell)$ of the atom. Adaptivity in the \emph{timing} of a fixed jump size gains nothing: if the predictable occurrence probabilities satisfy $\sum_kp_k\le\lambda$, then $\E\binom Nj\le\lambda^j/j!$ and hence $\PP(Z_n>u)\le\lambda^r/r!$ for every $n$. The upper bound is the banding of \cref{lem.bandsum} with the ratio $c=1+1/(ut_H)$ in place of $1+1/u$: the minimum of the band exponent is then $ut_H-1+O(1/u)$, and the sum over the $\asymp\sqrt u$ contributing bands is a discrete Gaussian sum of width $\sqrt{2\pi u}/t_H$ whose phase is immaterial, since adjacent bands differ by a factor $1+O(1/(ut_H))$. The two bounds differ by the factor $2\pi e\,t_Hu$. Closing that gap is a question about the per-band exponential Markov step --- not about the grid, the threshold or the schedule, all three of which are accounted for above --- and is left open here, together with the question whether the ratio has a limit at all.
+		and
+		\begin{align}\label{eqn.prefactorwindow}
+			\frac1{\sqrt{2\pi}}\,u^{-1/2}\big(1-o(1)\big)\ \le\ \frac{P^\star(u)}{\exp\{-ut_H-\frac1{t_H-1}\}}\ \le\ 1+o(1).
+		\end{align}
+		The lower bound is the atom of the two-point family of \cref{prop.lower}. With $q=a/(1+a)$ and $\lambda=(1-q)/q$ the passage count is $r=\lfloor u/q\rfloor+1$, the Poisson exponent $D(r)=r\log(r/\lambda)-r+\lambda$ is minimised at $\lambda=1/(t_H-1)+O(1/t_H^2)$ with $D_{\min}=ut_H+\frac1{t_H-1}$, and Stirling's formula at the atom gives $\lambda^r/r!=e^{-D_{\min}}u^{-1/2}\sqrt{1-1/t_H}/\sqrt{2\pi}\,(1+o(1))$, the tail being within $1+O(1/\ell)$ of the atom. Adaptivity in the \emph{timing} of a fixed jump size gains nothing: if the predictable occurrence probabilities satisfy $\sum_kp_k\le\lambda$, then $\E\binom Nj\le\lambda^j/j!$, hence $\PP(Z_n>u)\le\lambda^r/r!$ for every $n$.
+		The upper bound needs no banding. For $\lambda>0$ the process $M_k=e^{-\lambda B_k}\prod_{j\le k}(1+\lambda\xi_j)$, $M_0=1$, is a nonnegative supermartingale, since $\E[M_k\mid\cff_{k-1}]=M_{k-1}e^{-\lambda b_k}(1+\lambda b_k)\le M_{k-1}$. Let $\tau$ be the first crossing, so that $\{\tau\le n\}=\{Z_n>u\}$. On this event $J_\tau>0$ and every cost up to $\tau$ lies in $[0,J_\tau]$, so concavity of $x\mapsto\log(1+\lambda x)$ gives $\log(1+\lambda\xi_j)\ge(\xi_j/J_\tau)\log(1+\lambda J_\tau)$, and with $S_\tau>u(K+J_\tau)$ and $B_\tau\le K$
+		\[
+			\log M_\tau\ \ge\ -\lambda K+u\,\frac{K+J_\tau}{J_\tau}\,\log(1+\lambda J_\tau).
+		\]
+		Optional stopping at $\tau\wedge n$ and Markov's inequality therefore give, conditionally on $\cff_0$,
+		\[
+			\PP(Z_n>u)\ \le\ \exp\Big\{-\sup_{\lambda>0,\,J>0}\Big[u\,\frac{K+J}{J}\log(1+\lambda J)-\lambda K\Big]\Big\},
+		\]
+		whose saddle satisfies $1+\lambda J=u(1+J/K)$ and $\log(1+\lambda J)=\frac JK+1-\frac Ku$, and whose value is $ut_H+\frac1{t_H-1}+O(1/u)$. The factor $\sqrt u$ that separates \eqref{eqn.prefactorwindow}'s two sides is the local Stirling factor of the passage count, and it cannot be recovered from the exponential family of test functions: a positive mixture of the supermartingales $\{M^\lambda\}$ is bounded on every path by its total mass times the pointwise maximum of the integrands, which yields no Gaussian factor. Closing the gap --- a local limit statement for the passage count inside the maximum --- is left open, as is the question whether the ratio has a limit at all.
 	\end{remark}
+
 
 
 	\begin{remark}[Mechanism]\label{rmk.mechanism}
