@@ -1095,11 +1095,15 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 			\PP\Big\{\sup_{t\le T}\frac{X_t}{B_T+J_t}>u\Big\}\ >\ 1-\varepsilon .
 		\end{align}
 		Take blocks $[k,k+1)$ on which jumps of size $R_k=2^k$ arrive at rate one, so that the compensator has slope $R_k$ and $b_{k+1}=2^{k+1}-1$, and stop $X$ and $B$ at the first time $\tau$ with $X_t>u(b_t+j_t)$, where $b,j$ belong to the raw process. Then $B$ is continuous adapted, hence predictable, and $X-B$ is the stopped martingale. On block $k$ one has $b_t+j_t\le3R_k-1$, while $\lfloor3u\rfloor+1$ jumps give $X_t\ge(\lfloor3u\rfloor+1)R_k>u(3R_k-1)$; each block therefore crosses with probability at least $q_u=\PP(\mathrm{N}(1)\ge\lfloor3u\rfloor+1)$, independently of the past, so that $N$ blocks give \eqref{eqn.vacuous} once $(1-q_u)^N\le\varepsilon$. The event is a ratio, so rescaling all jumps and the compensator by one constant leaves it unchanged while making $B_T\le K_0$ for any prescribed $K_0$; and choosing $N$ through an $\cff_0$-measurable random variable mixes these models into a single one with $B_T\le1$, $\E X_T\le1$ and arbitrarily slow tails. Consequently the sharp mean $\E Z\le1$ of \eqref{eqn.objamean} also fails here, so the defect is in the normaliser and not in the tail estimate.
-		What survives is a bracket on the record scale, with an explicit price. If $0<a\le b$ are $\cff_0$-measurable and the record lies in $[a,b]$, then
+		What survives is a bracket on the record scale, and it costs only a polynomial factor. Write $q=uL$, so that $\log(1+q)=L$, and let $0<a\le b<\infty$ be deterministic, or $\cff_0$-measurable. Then
 		\begin{align}\label{eqn.bracket}
-			\PP\big(A_u,\ a\le J_T\le b\big)\ \le\ \Big(1+uL\,\frac ab\Big)^{-u}\ =\ \exp\Big\{-u\log\Big(1+uL\,\frac ab\Big)\Big\},
+			\PP\big(A_u,\ a\le J_T\le b\big)\ \le\ \Big(1+q\,\frac ab\Big)^{-u},
 		\end{align}
-		the loss against the sharp exponent $uL$ being $u\log\frac{1+uL}{1+uLa/b}$. Thus the rate is retained, up to $o(u)$, for every bracket with $\log(b/a)=o(L)$, and even for $\log(b/a)\asymp L$ it stays of order $u\log u$; at $a=b$ the two sides are $e^{-uL}$ and the sharp bound is recovered, while for $a/b\downarrow0$ the exponent vanishes, so \eqref{eqn.vacuous} is the degenerate endpoint of \eqref{eqn.bracket}. Equivalently, $\delta\le J_T\le a$ with $\eta=\delta/a$ gives the same display with $\eta$ in place of $a/b$.
+		and consequently, for every such pair,
+		\begin{align}\label{eqn.bracketrange}
+			\PP(A_u)\ \le\ \PP(J_T>b)+\PP(0<J_T<a)+e^{1/L}\big[1+(q+1)\log(b/a)\big]\,e^{-q}.
+		\end{align}
+		For \eqref{eqn.bracket} one takes $\lambda=q/b$, which is chosen by the band endpoint and not by the realised record, and puts $r=B_T/J_T$ and $j=J_T/b\in[a/b,1]$. Since $X_T>u(B_T+J_T)$ on $A_u$, the product supermartingale gives $\log M_T>rC(j)+u\log(1+qj)$ with $C(j)=u\log(1+qj)-qj$; $C$ is concave with $C(0)=C(1)=0$, hence $C\ge0$ on $[0,1]$, and this is where the random budget is absorbed, the event being harder when $\Phi_T\ge B_T$. For \eqref{eqn.bracketrange} one covers $[a,b]$ by bands of ratio $1+1/q$ and sums: each band contributes $e^{-q}$ up to the factor $e^{1/L}$, and there are at most $1+(q+1)\log(b/a)$ of them. At $a=b$ both displays reduce to $e^{-q}=e^{-uL}$, the sharp bound of \cref{prop.cont} with its constant, for an arbitrary predictable budget; as $a/b\downarrow0$ the exponent in \eqref{eqn.bracket} vanishes, so \eqref{eqn.vacuous} is its degenerate endpoint.
 
 A predictable budget is therefore harmless exactly when the record scale is bracketed in advance. Since $uL=ut_H+\frac1{t_H-1}+O(1/u)$, the constant of \cref{cor.second} survives the loss of $\cff_0$-measurability whenever the bracket does.
 	\end{remark}
