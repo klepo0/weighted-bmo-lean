@@ -1068,6 +1068,25 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 				\emph{The sharp estimate.} The argument of \cref{thm.refined} transfers verbatim. Put $M_t=e^{-\lambda B_t}\prod_{s\le t}(1+\lambda\Delta X_s)$, which is constant between jumps and at a jump time satisfies $\E[M_t\mid\cff_{t-}]=M_{t-}e^{-\lambda\Delta B_t}(1+\lambda\Delta B_t)\le M_{t-}$, so $M$ is a nonnegative supermartingale with $M_0=1$. On $\{\tau\le T\}$ every jump up to $\tau$ lies in $[0,J_\tau]$, $X_\tau>u(K+J_\tau)$ and $B_\tau\le K$, so concavity of $\log(1+\lambda x)$ on $[0,J_\tau]$ gives the same lower bound for $\log M_\tau$ as in \cref{thm.refined}; optional stopping at $\tau\wedge T$, the minimisation over $\lambda$ and the record size, and the same saddle then give \eqref{eqn.cont3} with the value $ut_H+\frac1{t_H-1}+O(1/u)$, and \eqref{eqn.cont2} follows from it. The discrete and the continuous version therefore have the same exponent to its constant.
 	\end{proof}
 
+	\begin{corollary}[The far tail, and its comparison with John--Nirenberg]\label[corollary]{cor.fartail}
+		Let $X$ be as in \cref{prop.cont}, with $B_T\le K$, and assume in addition that $J_T\le K$, where $K\ge e^{20}$. Then for every $v\ge e^{20}K$,
+		\begin{align}\label{eqn.fartail}
+			\PP\Big(\sup_{t\le T}X_t>v\Big)\ \le\ \exp\Big(-\frac{v}{2K}\log\frac{v}{2K}-\frac{v}{2K}\log\log\frac{v}{2K}+O\Big(\log\frac vK\Big)\Big).
+		\end{align}
+		Consequently $\E\exp\big(\lambda\sup_{t\le T}X_t\big)<\infty$ for every $\lambda>0$, and $\|\sup_{t\le T}X_t\|_p=O\big(pK/\log p\big)$ as $p\to\infty$.
+	\end{corollary}
+	\begin{proof}
+		Since $K+J_T\le2K$, the event $\{\sup_tX_t>v\}$ is contained in $\{\sup_tX_t/(K+J_t)>v/(2K)\}$, so \eqref{eqn.cont3} with $u=v/(2K)\ge e^{20}$ and $t_H$ evaluated at that $u$ gives \eqref{eqn.fartail}, because $ut_H=u\log u+u\log\log u+O(u)$. The integrability statements follow by summing $\exp(\lambda v)$ against the right-hand side of \eqref{eqn.fartail}, and the growth of the $L^p$ norms from the same display.
+	\end{proof}
+	\begin{remark}[Comparison with John--Nirenberg]\label[remark]{rmk.fartailjn}
+		Take an increasing process whose compensator is pathwise bounded, $B_T\le K$, and whose jumps are at most $K$, and let $V^*=\sup_{r\le\cdot}d(X_0,X_r)$ for a BMO process $V=d(X_0,X_\cdot)$ with that $V^*$. Then $V^*$ satisfies the hypotheses of \cref{cor.fartail} and, since its compensator budget and the BMO norm are comparable, $\|V\|_{\bmo}\asymp K$; so
+		\[
+			\PP(V^*_T>v)\ \lesssim\ \exp\Big(-\Theta\Big(\frac vK\log\frac vK\Big)\Big)\quad(v\gg K)
+		\]
+		against the John--Nirenberg estimate $e^{-cv/\|V\|_{\bmo}}$. The two are of the same order in the bulk $v\asymp K$, and \eqref{eqn.fartail} is strictly thinner in the far range, by the $\log(v/K)$ in the exponent; consistently with this, all exponential moments of $V^*$ are then finite, whereas John--Nirenberg gives finiteness only for $\lambda<\|V\|^{-1}_{\bmo}$. No contradiction arises: the sharpness of John--Nirenberg lives in the bulk, and the regime it describes includes martingales with unbounded jumps, excluded here by the convention that $|\Delta V_S|\le[V]_{\bmo_\phi}\phi_S$ (take $T=S$ in \eqref{ineq.JNweighted}'s hypothesis) and by $J_T\le K$. The bound \eqref{eqn.fartail} is not free: it needs the compensator to be bounded pathwise, whereas a weighted BMO hypothesis supplies only $\E_t(B^*_T-B^*_t)\le c_1\E_t\phi^*_{t,\tau}$ through \cref{thm.bmophi}, which bounds the mean of the remaining compensator and not the compensator itself.
+	\end{remark}
+
+
 	\begin{remark}\label{rmk.contlimits}
 		Three points about the hypotheses, in increasing order of importance.
 
