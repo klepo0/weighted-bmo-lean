@@ -1078,6 +1078,20 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 	\begin{proof}
 		Since $K+J_T\le2K$, the event $\{\sup_tX_t>v\}$ is contained in $\{\sup_tX_t/(K+J_t)>v/(2K)\}$, so \eqref{eqn.cont3} with $u=v/(2K)\ge e^{20}$ and $t_H$ evaluated at that $u$ gives \eqref{eqn.fartail}, because $ut_H=u\log u+u\log\log u+O(u)$. The integrability statements follow by summing $\exp(\lambda v)$ against the right-hand side of \eqref{eqn.fartail}, and the growth of the $L^p$ norms from the same display.
 	\end{proof}
+	\begin{remark}[Budgets that are not known in advance]\label[remark]{rmk.randomscale}
+		The hypothesis $B_T\le K$ of \cref{prop.cont} is a bound on the compensator, and $K$ itself enters the normaliser; knowing the compensator along the way is not the same thing. If only the realised $B_T$ normalises, nothing survives. For every $u>1$ and every $\varepsilon>0$ there is a finite model, with $B$ continuous adapted increasing, for which
+		\begin{align}\label{eqn.vacuous}
+			\PP\Big\{\sup_{t\le T}\frac{X_t}{B_T+J_t}>u\Big\}\ >\ 1-\varepsilon .
+		\end{align}
+		Take blocks $[k,k+1)$ on which jumps of size $R_k=2^k$ arrive at rate one, so that the compensator has slope $R_k$ and $b_{k+1}=2^{k+1}-1$, and stop $X$ and $B$ at the first time $\tau$ with $X_t>u(b_t+j_t)$, where $b,j$ belong to the raw process. Then $B$ is continuous adapted, hence predictable, and $X-B$ is the stopped martingale. On block $k$ one has $b_t+j_t\le3R_k-1$, while $\lfloor3u\rfloor+1$ jumps give $X_t\ge(\lfloor3u\rfloor+1)R_k>u(3R_k-1)$; each block therefore crosses with probability at least $q_u=\PP(\mathrm{N}(1)\ge\lfloor3u\rfloor+1)$, independently of the past, so that $N$ blocks give \eqref{eqn.vacuous} once $(1-q_u)^N\le\varepsilon$. The event is a ratio, so rescaling all jumps and the compensator by one constant leaves it unchanged while making $B_T\le K_0$ for any prescribed $K_0$; and choosing $N$ through an $\cff_0$-measurable random variable mixes these models into a single one with $B_T\le1$, $\E X_T\le1$ and arbitrarily slow tails. Consequently the sharp mean $\E Z\le1$ of \eqref{eqn.objamean} also fails here, so the defect is in the normaliser and not in the tail estimate.
+		What survives is a bracket on the record scale. If $0<\delta\le a$ are $\cff_0$-measurable and $\eta=\delta/a$, then on the passage event
+		\begin{align}\label{eqn.bracket}
+			\PP\big(A_u,\ \delta\le J_T\le a\big)\ \le\ \E\exp\big\{-u\log(1+uL\eta)\big\},\qquad e^L=1+uL,
+		\end{align}
+		the truncation costing only $\PP(J_T>a)+\PP(0<J_T<\delta)$; the argument uses a concave envelope in $B_T/J_T$ and $J_T/a$, which is why the bracket and not the record has to be $\cff_0$-measurable. At $\eta=1$ the right-hand side is $e^{-uL}$, that is the sharp rate with its constant, and it holds for an arbitrary predictable budget; as $\eta\downarrow0$ the exponent vanishes, so \eqref{eqn.vacuous} is the degenerate endpoint of \eqref{eqn.bracket}. A predictable budget is therefore harmless exactly when the record scale is bracketed in advance. Since $uL=ut_H+\frac1{t_H-1}+O(1/u)$, the constant of \cref{cor.second} survives the loss of $\cff_0$-measurability whenever the bracket does.
+	\end{remark}
+
+
 	\begin{remark}[Comparison with John--Nirenberg]\label[remark]{rmk.fartailjn}
 		Take an increasing process whose compensator is pathwise bounded, $B_T\le K$, and whose jumps are at most $K$, and let $V^*=\sup_{r\le\cdot}d(X_0,X_r)$ for a BMO process $V=d(X_0,X_\cdot)$ with that $V^*$. Then $V^*$ satisfies the hypotheses of \cref{cor.fartail} and, since its compensator budget and the BMO norm are comparable, $\|V\|_{\bmo}\asymp K$; so
 		\[
