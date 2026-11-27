@@ -1,10 +1,10 @@
 \begin{thebibliography}{HvNVW16}
 
-\bibitem[ABLM20]{athreya2020well}
+\bibitem[ABLM24]{athreya2020well}
 Siva Athreya, Oleg Butkovsky, Khoa L{\^e}, and Leonid Mytnik.
 \newblock Well-posedness of stochastic heat equation with distributional drift
   and skew stochastic heat equation.
-\newblock {\em arXiv preprint arXiv:2011.13498}, 2020.
+\newblock {\em Commun. Pure Appl. Math.}, 77(5):2708--2777, 2024.
 
 \bibitem[BDG72]{MR0400380}
 D.~L. Burkholder, B.~J. Davis, and R.~F. Gundy.
@@ -27,12 +27,12 @@ Burgess Davis.
 \newblock On the intergrability of the martingale square function.
 \newblock {\em Israel Journal of Mathematics}, 8(2):187--190, 1970.
 
-\bibitem[DGL22]{dareiotis2021quantifying}
+\bibitem[DGL23]{dareiotis2021quantifying}
 Konstantinos Dareiotis, M{\'a}t{\'e} Gerencs{\'e}r, and Khoa L{\^e}.
 \newblock {Quantifying a convergence theorem of Gy{\"o}ngy and Krylov}.
-\newblock {\em Annals of Applied Probability}, 2022+.
+\newblock {\em Ann. Appl. Probab.}, 33(3):2291--2323, 2023.
 
-\bibitem[dlaP93]{dlaP93}
+\bibitem[dlP93]{dlaP93}
 Victor~H. de la Pe{\'n}a.
 \newblock Inequalities for tails of adapted processes with an application
   to {W}ald's lemma.
@@ -135,7 +135,7 @@ Xiequan Fan, Ion Grama, and Quansheng Liu.
 \bibitem[L{\^{e}}20]{le2018stochastic}
 Khoa L{\^{e}}.
 \newblock A stochastic sewing lemma and applications.
-\newblock {\em Electron. J. Probab.}, 25:Paper No. 38, 55, 2020.
+\newblock {\em Electron. J. Probab.}, 25:Paper No. 38, 55 p., 2020.
 
 \bibitem[L{\^e}22]{le2022stochastic}
 Khoa L{\^e}.
@@ -147,11 +147,11 @@ Khoa L{\^e}.
 \newblock Relation de domination entre deux processus.
 \newblock {\em Ann. Inst. H. Poincar{\'e} Sect. B (N.S.)}, 13(2):171--179, 1977.
 
-\bibitem[LL21]{le2021taming}
+\bibitem[LL25]{le2021taming}
 Khoa L{\^e} and Chengcheng Ling.
 \newblock {Taming singular stochastic differential equations: A numerical
   method}.
-\newblock {\em arXiv preprint arXiv:2110.01343}, 2021.
+\newblock {\em Ann. Probab.}, 53(5):1764--1824, 2025.
 
 \bibitem[NV99]{NV99}
 Alexander Novikov and Esko Valkeila.
