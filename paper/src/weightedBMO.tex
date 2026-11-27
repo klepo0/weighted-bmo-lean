@@ -764,7 +764,11 @@
 			\qquad\text{hence}\qquad
 			\PP(Z_n>u)\le e^{u-1}u^{-u}\ \ (u>1).
 		\end{align}
-		Moreover, for every $m>0$ and every $\lambda>0$,
+		Moreover
+		\begin{align}\label{eqn.objamean}
+			\E Z_n\le1,\qquad\text{and}\qquad \E Z_n^m\le1\quad\text{for every }0<m\le1,
+		\end{align}
+		with the constant $1$ sharp and not attained, while for every $m>0$ and every $\lambda>0$,
 		\begin{align}\label{eqn.objamom}
 			\E Z_n^m\le e^{e^\lambda-1}\frac{\Gamma(m+1)}{\lambda^m},
 			\qquad
@@ -793,10 +797,25 @@
 			\E_{k-1}e^{\lambda R_k}\le e^{\lambda R_{k-1}}\exp\Big((e^\lambda-1)\frac{b_k}{K+J_{k-1}}\Big).
 		\]
 		Hence $V_k=e^{\lambda R_k-C_k}$ with $C_k=(e^\lambda-1)\sum_{j\le k}b_j/(K+J_{j-1})$ is a positive supermartingale with $V_0=1$, and \eqref{eqn.budget} gives $C_k\le(e^\lambda-1)B_k/K\le e^\lambda-1$. By Doob's maximal inequality, $\PP(\max_{k\le n}V_k>x)\le1/x$; on $\{Z_n>u\}$ we have $V_k>e^{\lambda u-e^\lambda+1}$ for some $k$, which proves the first bound in \eqref{eqn.obja}. Minimising $e^\lambda-1-\lambda u$ over $\lambda>0$, that is $\lambda=\log u$, gives the second. The moment bounds follow from the layer cake representation and \eqref{eqn.obja}.
+
+		For \eqref{eqn.objamean}, note that $K+\xi_j\le K+J_k$ for $j\le k$, so that
+		\[
+			Z_n\le T_n:=\sum_{j\le n}\frac{\xi_j}{K+\xi_j}.
+		\]
+		Since $x\mapsto x/(K+x)$ is concave, $\E[\xi_j/(K+\xi_j)\mid\cff_{j-1}]\le b_j/K$, hence $\E[T_n\mid\cff_0]\le B_n/K\le1$ and $\E Z_n\le1$; concavity of $x\mapsto x^m$ gives $\E Z_n^m\le1$ for $0<m\le1$. The value $1$ is not attained: on $\{S_n>0\}$ every nonzero prefix has $J_k>0$, so $Z_n<S_n/K$, and $\E S_n\le\E K$; while i.i.d.\ costs in $\{0,a\}$ with $pa=K/n$ have $\E Z_n=\frac{a}{K+a}\E N=\frac K{K+a}$, which tends to $1$ as $a/K\to0$.
+	\begin{remark}[The exact exponential moment]\label[remark]{rmk.mgf}
+		Let $t\ge0$ and put
+		\begin{align}\label{eqn.mgf}
+			R(t)=\max_{0\le q\le1}\frac{1-q}{q}\big(e^{tq}-1\big).
+		\end{align}
+		Then $\sup_\mathcal{C}\E e^{tZ_n}=e^{R(t)}$, the supremum over the models of \eqref{eqn.budget}. For the upper bound it suffices that $e^{tf(y)}\le1+R(t)y$ for $y\ge0$, where $f(y)=y/(1+y)$: with $\eta_k=\xi_k/(K+\xi_k)$ this gives $\E[e^{t\eta_k}\mid\cff_{k-1}]\le1+R(t)b_k/K\le e^{R(t)b_k/K}$, and since $Z_n\le T_n$ by \eqref{eqn.objamean}, iteration yields $\E e^{tZ_n}\le\E e^{tT_n}\le\E\prod_{k\le n}\big(1+R(t)\eta_k\big)\le e^{R(t)B_n/K}\le e^{R(t)}$. For the lower bound, i.i.d.\ costs in $\{0,a\}$ with $a=q/(1-q)$ and $p=K/(na)$ give $Z_n=qN$ with $N$ binomial of mean $\frac{1-q}{q}$, so $\E e^{tZ_n}=\big(1+\frac{h(q,t)}{n}\big)^n\to e^{h(q,t)}$ with $h(q,t)=\frac{1-q}{q}(e^{tq}-1)$, and the maximum over $q$ is \eqref{eqn.mgf}. The value is informative only for moderate $t$. One has $R(t)=t$ for $0\le t\le2$ and $R(t)>t$ for $t>2$, since $\frac{h(q,t)}{t}$ increases in $t$ and $h(q,2)\le2$ is $\log\frac{1+q}{1-q}\ge2q$; at $t=1$ this is the sharp form of \eqref{eqn.objamean}, by Jensen. For large $t$ the maximiser is $q=1-\frac{\gamma}{t}$ with $\gamma=\frac{t-\sqrt{t^2-4t}}{2}=1+\frac1t+O(t^{-2})$, whence $R(t)=\frac{\gamma}{t-\gamma}\big(e^{t-\gamma}-1\big)\sim\frac{e^{t-1}}{t}$: the supremum is attained by a single cost of size $\asymp tK$ appearing with mean count $\asymp1/t$, and \eqref{eqn.mgf} does not improve \eqref{eqn.obja}.
+	\end{remark}
+
+
 	\end{proof}
 
 	\begin{example}[Heavy-tailed costs]\label{ex.pareto}
-		Let $\xi_1,\dots,\xi_n$ be i.i.d.\ with finite mean $\mu$, so that $b_k=\mu$ and \eqref{eqn.budget} holds with $K=n\mu$. Then \eqref{eqn.obja} bounds the running maximum of $\sum_{j\le k}\xi_j/(n\mu+\max_{j\le k}\xi_j)$ uniformly over all such laws. For a Pareto law with tail index $\alpha\in(1,2)$ the variance is infinite and $\E e^{\theta S_n}=\infty$ for every $\theta>0$, and the deviation is subexponential, $\PP(S_n\ge nx)\sim x^{-\alpha}n^{1-\alpha}$ as $n\to\infty$ for every fixed $x>\mu$; no estimate of Chernoff type, with or without the truncation that makes the method applicable to heavy tails, can therefore be exponentially small in $n$, and no variance-based maximal inequality is available either. The estimates \eqref{eqn.obja} and \eqref{eqn.objamom} hold nevertheless, uniformly in the law. Taking $\lambda=W(1)=0.5671$ in \eqref{eqn.objamom} gives $\E Z_n\le3.783$, and $u=4.317$ in \eqref{eqn.obja} gives the simultaneous envelope $S_k\le4.317(K+J_k)$, $k\le n$, with probability at least $0.95$.
+		Let $\xi_1,\dots,\xi_n$ be i.i.d.\ with finite mean $\mu$, so that $b_k=\mu$ and \eqref{eqn.budget} holds with $K=n\mu$. Then \eqref{eqn.obja} bounds the running maximum of $\sum_{j\le k}\xi_j/(n\mu+\max_{j\le k}\xi_j)$ uniformly over all such laws. For a Pareto law with tail index $\alpha\in(1,2)$ the variance is infinite and $\E e^{\theta S_n}=\infty$ for every $\theta>0$, and the deviation is subexponential, $\PP(S_n\ge nx)\sim x^{-\alpha}n^{1-\alpha}$ as $n\to\infty$ for every fixed $x>\mu$; no estimate of Chernoff type, with or without the truncation that makes the method applicable to heavy tails, can therefore be exponentially small in $n$, and no variance-based maximal inequality is available either. The estimates \eqref{eqn.obja} and \eqref{eqn.objamom} hold nevertheless, uniformly in the law. $\E Z_n\le1$ by \eqref{eqn.objamean}, and the two-point models with $a\le\varepsilon K$ have $\E Z_n=\frac K{K+a}\ge1-\varepsilon$, so the mean bound is sharp here; \eqref{eqn.objamom} at $\lambda=W(1)=0.5671$ gives only $\E Z_n\le3.783$. Taking $u=4.317$ in \eqref{eqn.obja} gives the simultaneous envelope $S_k\le4.317(K+J_k)$, $k\le n$, with probability at least $0.95$.
 	\end{example}
 
 	\begin{example}[Adaptively capped costs]\label{ex.adaptive}
@@ -872,35 +891,41 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		\end{align}
 		Then
 		\begin{align}\label{eqn.bandsumtot}
-			\sum_{m\ge0}e^{-E_m}\ \le\ \exp\Big(-u\ell-uh-\frac{u h}{\ell}+2\frac{u h^2}{\ell^2}\Big).
+			\Big|-\log\sum_{m\ge0}e^{-E_m}-u\ell-uh-\frac{u h}{\ell}\Big|\ \le\ \frac{u h^2}{\ell^2}.
 		\end{align}
 	\end{lemma}
-	\begin{proof}
-		Put $A=\ell+h$ and $F(x)=(A+\frac1u)x-\log x+\ell-1-A-\frac Au$ for $x>0$. Estimating $E_m-uA=\big[u(\ell-\log x_m-1)+x_m-uA(c-x_m)\big]/(c-x_m)$ and using $c=1+1/u$ gives
+		\begin{proof}
+		Put $A=\ell+h$ and $f(x)=\big(u(\log(u/x)-1)+x\big)/(c-x)$, so that $E_m=f(x_m)$. Since $(c-x)^2f'(x)=c+u\big(\log(u/x)-c/x\big)$, and the right-hand side is strictly increasing on $(0,c)$, negative near $0$ and positive at $c$, $f$ has a unique minimiser $x_0\in(0,c)$, characterised by
 		\[
-			E_m-uA=\frac{uF(x_m)}{c-x_m}.
+			\lambda:=\log\frac u{x_0}=\frac c{x_0}-\frac cu,\qquad\text{so that}\qquad f_0:=f(x_0)=\frac u{x_0}-1=\frac uc\lambda=e^\lambda-1 .
 		\]
-		Now $F$ is strictly convex with $F'(x)=A+\frac1u-\frac1x$, so its minimum on $(0,1]$ is attained at $x^\star=1/(A+\frac1u)$ and equals
+		Writing $x=x_0(1+y)$ and using these identities,
+		\begin{align}\label{eqn.bandprofile}
+			f(x)-f_0=\frac{u\big(y-\log(1+y)\big)}{c-x}\ge0,\qquad y=\frac x{x_0}-1>-1 .
+		\end{align}
+		Since $c-x_m\le c$ and $u/c\ge u-1$, \eqref{eqn.bandprofile} gives $E_m\ge f_0+(u-1)G(t_m)$, where
 		\[
-			g_0=F(x^\star)=\ell+\log(A+\tfrac1u)-A(1+\tfrac1u)=\log\Big(1+\frac{h+1/u}{\ell}\Big)-\frac Au>0 .
+			G(t)=t-1-\log t,\qquad t_m=\frac{x_m}{x_0}=\frac{c^{-m}}{x_0},
 		\]
-		Since $(A+\frac1u)x^\star=1$, for $x>0$
+		and $G$ decreases on $(0,1]$, increases on $[1,\infty)$ and vanishes at $t=1$. With $v=\log t$, the values $v_m=\log t_m$ decrease in $m$ by $\log c\in[\frac1{2u},\frac1u]$, so the sequence $e^{-(u-1)G(e^{v_m})}$ is unimodal and is bounded by three plus the integral of its interpolant. Using $G(1+y)\ge\frac{y^2}{2(1+y)}$ for $y\ge0$, $G(1+y)\ge\frac{y^2}{2}$ for $-1<y\le0$, $4G(t)\ge-\log t$ on $(0,\frac12]$ and $G(t)\ge\frac t6$ on $[3,\infty)$, together with $\frac1{\log c}\le u+1$ and $u-1\ge\frac u2$,
 		\[
-			F(x)-g_0=\frac{x-x^\star}{x^\star}-\log\frac{x}{x^\star}=y-\log(1+y),\qquad y=\frac{x}{x^\star}-1>-1 .
+			\sum_{m\ge0}e^{-(u-1)G(t_m)}\ \le\ 3+(u+1)\Big(2\sqrt{\frac{12\pi}{u}}+\frac{12}{u}\Big)\ \le\ 20\sqrt u .
 		\]
-		The function $\psi(s)=e^{-s}-1+s$ is nonnegative and satisfies $\psi(s)\ge\frac{s^2}{4}$ for $|s|\le1$ and $\psi(s)\ge\frac{|s|}{4}$ for $|s|\ge1$. With $s_m=m\log c-\log(A+\frac1u)$ one has $y_m=x_m/x^\star-1=e^{-s_m}-1$, hence $F(x_m)=g_0+\psi(s_m)\ge0$; and $c-x_m\le c$ gives
+		Hence $\sum_{m\ge0}e^{-E_m}\le20\sqrt u\,e^{-f_0}$, that is $-\log\sum_{m\ge0}e^{-E_m}\ge f_0-\log20-\frac\ell2$.
+		In the other direction let $m$ be the integer nearest to $\log(1/x_0)/\log c$ and put $\eta=v_m$, so that $|\eta|\le\frac12\log c$. Since $G(e^\eta)=e^\eta-1-\eta\le\eta^2$ and $x_m<2x_0<\frac4{19}$, so that $c-x_m>\frac{15}{19}$,
 		\[
-			E_m\ \ge\ uA+\frac uc\big(g_0+\psi(s_m)\big).
+			E_m-f_0\ \le\ \frac{u\eta^2}{15/19}\ \le\ \frac{19}{60}u(\log c)^2<\frac1u ,
 		\]
-		The sequence $s_m$ increases in $m$ by $\log c\ge\frac1{2u}$, and $u\log c\ge\frac{u}{u+1}\ge\frac12$, $c\le2$. Hence at most $1+\frac2{\log c}\le1+4u$ of the indices have $|s_m|\le1$, while the others contribute at most $2\sum_{j\ge0}e^{-\frac u{4c}(1+j\log c)}\le\frac2{1-e^{-1/16}}$, their $|s_m|$ being at least $1$ and increasing by at least $\log c$ along each of the two sides of the minimum. Therefore
+		so that $-\log\sum_{m\ge0}e^{-E_m}\le f_0+\frac1u$.
+		It remains to expand $f_0$. From $\lambda=\log(u/x_0)=\ell-\log c+\log(\lambda+c/u)$, writing $s=h/\ell$, $q=\log(1+s)$ and $d=\lambda-A$, and noting $\log A=h+q$,
 		\[
-			\sum_{m\ge0}e^{-E_m}\ \le\ (4u+34)\,e^{-uA-\frac{u g_0}{c}}\ \le\ e^{-uA-\frac{u g_0}{c}+2\ell},
+			d-\log\Big(1+\frac dA\Big)=q+\varepsilon_u,\qquad |\varepsilon_u|\le\frac2u .
 		\]
-		since $\log(4u+34)\le2\ell$ for $\ell\ge20$. It remains to bound $g_0$ from below. From $\log(1+z)\ge\frac z{1+z}$ with $z=\frac{h+1/u}{\ell}$, from $\frac h{\ell+h}\ge\frac h\ell(1-\frac h\ell)$, from $\frac uc\ge u-1$ and from $A\le2\ell$,
+		The left-hand side increases in $d$, and $s\le0.15$ and $A>22$ for $\ell\ge20$, so $0<d\le(q+\frac2u)\frac A{A-1}$. Since $u/c=u-u/(u+1)$ and $f_0=u\lambda-\frac{u\lambda}{u+1}=uA+ud-\frac{u\lambda}{u+1}$, these bounds give
 		\[
-			\frac ucg_0\ \ge\ (u-1)\Big(\frac h{\ell+h}-\frac1{u\ell}\Big)-A\ \ge\ \frac{uh}{\ell}-\frac{uh^2}{\ell^2}-2-2\ell\ \ge\ \frac{uh}{\ell}-\frac{uh^2}{\ell^2}-3\ell .
+			uA+us-\frac u2s^2-3\ell\ \le\ f_0\ \le\ uA+us+\frac{us}{A-1}+\frac A{A-1}\ \le\ uA+us+us^2+2 ,
 		\]
-		Finally $5\ell\le\frac{uh^2}{\ell^2}$ for $\ell\ge20$, because $u=e^\ell\ge e^{20}$ exceeds $5\ell^3/h^2$ there, so $2\ell+3\ell$ is absorbed by a second copy of $\frac{uh^2}{\ell^2}$, and \eqref{eqn.bandsumtot} follows.
+		where the last step uses $\frac{us}{A-1}\le\frac{us^2}{h}$ and $A\le2(A-1)$. Finally $3.5\ell+\log20\le\frac u2s^2$ and $2+\frac1u\le us^2$ for $\ell\ge20$, so the two displays give \eqref{eqn.bandsumtot}.
 	\end{proof}
 
 
@@ -944,7 +969,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		\[
 			\PP(Z_n>u)\ \le\ \sum_{m\ge0}\PP(A_m)\ \le\ \sum_{m\ge0}e^{-E_m},
 		\]
-		and the band sum is estimated in \cref{lem.bandsum}, with $\ell=\log u$ and $h=\log\ell$: it is at most $\exp\big(-u\ell-uh-\frac{uh}{\ell}+2\frac{uh^2}{\ell^2}\big)$. Since $2h\le\ell$ for $\ell\ge20$, the last two terms together are at most $\frac{uh}{\ell}$, and both \eqref{eqn.refined} and \eqref{eqn.refinedmore} follow.
+		and the band sum is estimated in \cref{lem.bandsum}, with $\ell=\log u$ and $h=\log\ell$: it is at most $\exp\big(-u\ell-uh-\frac{uh}{\ell}+\frac{uh^2}{\ell^2}\big)$. Since $2h\le\ell$ for $\ell\ge20$, the last two terms together are at most $\frac{uh}{\ell}$, and both \eqref{eqn.refined} and \eqref{eqn.refinedmore} follow.
 	\end{proof}
 
 	\begin{corollary}[The second order in the exponent is $u\log\log u$, and the third is $u\log\log u/\log u$]\label[corollary]{cor.second}
@@ -963,12 +988,12 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 	\end{proof}
 
 	\begin{remark}[Mechanism]\label{rmk.mechanism}
-		The term $u\log\log u$ is not an artefact of the proof, and the two halves explain each other. To have $Z_n>u$ one needs $S_k>u(K+J_k)$, and since a single huge cost raises $J$ and saturates the ratio at one, the cheapest configuration is $r\asymp u$ costs of comparable size $a$, which forces $a>uK/(r-u)$; the conditional mean budget caps the probability of such a cost by a multiple of $K/(na)$, hence $-\log\PP\approx r\log(1/p)$ with $p\lesssim\frac{r-u}{nu}$. Writing $r=(1+\varepsilon)u$ this becomes $(1+\varepsilon)u(\log u+\log\frac1\varepsilon+O(1))$, minimal at $\varepsilon\asymp1/\log u$ with value $u\log u+u\log\log u+O(u)$. Keeping instead of discarding the excess $\varepsilon u\log(1/\varepsilon)$, the value at that $\varepsilon$ is $u\log u+u\log\log u+\frac{u\log\log u}{\log u}+O\big(\frac u{\log u}\big)$, which is the three-term expansion of \eqref{eqn.secondorder2}; that is \eqref{eqn.lower2}. In the other direction, the single-scale argument behind \eqref{eqn.obja} is blind to the fact that a cost of size comparable to $K+J$ also raises $J$, and therefore the denominator; banding on the terminal value $K+J_\tau$, as in the proof of \cref{thm.refined}, is what recovers the $\log\log$ term.	\end{remark}
+		The term $u\log\log u$ is not an artefact of the proof, and the two halves explain each other. To have $Z_n>u$ one needs $S_k>u(K+J_k)$, and since a single huge cost raises $J$ and saturates the ratio at one, the cheapest configuration is $r\asymp u$ costs of comparable size $a$, which forces $a>uK/(r-u)$; the conditional mean budget caps the probability of such a cost by a multiple of $K/(na)$, hence $-\log\PP\approx r\log(1/p)$ with $p\lesssim\frac{r-u}{nu}$. Writing $r=(1+\varepsilon)u$ this becomes $(1+\varepsilon)u(\log u+\log\frac1\varepsilon+O(1))$, minimal at $\varepsilon\asymp1/\log u$ with value $u\log u+u\log\log u+O(u)$. Keeping instead of discarding the excess $\varepsilon u\log(1/\varepsilon)$, the value at that $\varepsilon$ is $u\log u+u\log\log u+\frac{u\log\log u}{\log u}+O\big(\frac u{\log u}\big)$, which is the three-term expansion of \eqref{eqn.secondorder2}; that is \eqref{eqn.lower2}. A single scale already carries the whole three-term exponent: if the costs take at most $m$ values, then, partitioning the passage event by the record size $J_\tau$ and applying the supermartingale argument bandwise to each record value, $\PP(Z_n>u)\le m\,e^{-M_u}$ with $M_u=u(\rho_*+1)-1$ and $\rho_*+1-\log\big(u(1+\rho_*)\big)=1/u$; the two-point models attain $M_u+O(\log u)$, and $\rho_*=\ell+h-1+\frac h\ell+O\big(\frac{h^2}{\ell^2}\big)$ gives $M_u=u\ell+uh+\frac{uh}{\ell}+O\big(\frac{uh^2}{\ell^2}\big)$. No finite menu improves the coefficient, and \cref{lem.bandsum} gives the matching bound in the full class. In the other direction, the single-scale argument behind \eqref{eqn.obja} is blind to the fact that a cost of size comparable to $K+J$ also raises $J$, and therefore the denominator; banding on the terminal value $K+J_\tau$, as in the proof of \cref{thm.refined}, is what recovers the $\log\log$ term.	\end{remark}
 
 	\begin{remark}[The constant in the exponent, and its dependence on the class]\label[remark]{rmk.constant}
 		The bound \eqref{eqn.obja} is exactly the Chernoff bound for a Poisson$(1)$ variable, whose own tail is $\exp(-u\log u+u)/\sqrt{2\pi u}$. The constant in \eqref{eqn.secondorder} therefore measures how much of that Poisson shape the class of \eqref{eqn.budget} can realise. If the coefficient of $u$ could be brought to one, with matching lower order terms, then the supremum of $\PP(Z_n>u)$ over models would agree with $\PP(\mathrm{Poisson}(1)>u)$ up to a factor $1+o(1)$, and the extremal model would be Poisson-like; if it cannot, the budget constraint costs a further factor $e^{Cu}$ and no model is Poisson-like. By \cref{cor.second} the second alternative holds: the coefficient is $0$, so the worst-case tail is smaller than the Poisson tail by the factor $e^{-(1+o(1))u\log\log u}$, and no model is Poisson-like. The budget constraint therefore costs exactly the factor $e^{(1+o(1))u\log\log u}$ in the exponent, and nothing of order $u$.
 
-		The value is not a universal number and should not be expected to be one, because it is a property of the class of models admitted and not of the inequality alone. In the predictable case the corresponding sharp constant is known and equals $p^{-p}$ \cite{GS21}; here the class itself is different, and the constant moves with it. The dependence is easy to see and is not merely a matter of constants in the proofs. The construction behind \eqref{eqn.lower2} uses costs of size $a=1$ while $K=1/\log u$, so its individual costs exceed the accumulated mean budget by a factor $\log u$; any additional hypothesis tying the size of a single cost to the budget, for instance $\xi_k\le K$ for all $k$, which holds whenever each individual cost is small compared with the total admissible mean, excludes that construction and weakens the lower side. Enlarging the class has the opposite effect. By \cref{thm.refined} the exponent carries no term of order $u$ at all, and by \eqref{eqn.lower2} neither does the construction, so the coefficient of $u$ in \eqref{eqn.secondorder} is $0$. \Cref{cor.second} goes further: the two sides already meet at the next term, both carrying $u\log\log u/\log u$, so what remains undetermined is only the $o(u/\log u)$ of \eqref{eqn.secondorder2}. The rate in \eqref{eqn.secondorder} is therefore a property of the class of \eqref{eqn.budget}, and the constant, here $0$, is a property of that class as well: imposing further structure on the class can only change it, which is why it is stated here for the class and not as a universal number.
+		The value is not a universal number and should not be expected to be one, because it is a property of the class of models admitted and not of the inequality alone. In the predictable case the corresponding sharp constant is known and equals $p^{-p}$ \cite{GS21}; here the class itself is different, and the constant moves with it. The dependence is easy to see and is not merely a matter of constants in the proofs. The construction behind \eqref{eqn.lower2} uses costs of size $a=1$ while $K=1/\log u$, so its individual costs exceed the accumulated mean budget by a factor $\log u$; any additional hypothesis tying the size of a single cost to the budget, for instance $\xi_k\le K$ for all $k$, which holds whenever each individual cost is small compared with the total admissible mean, excludes that construction and weakens the lower side. That class is understood exactly: if $\xi_k\le cK$ for all $k$, then $-\log\sup_\mathcal{C}\PP(Z_n>u)=H\big(u(1+c)\big)/c+O_c(\log u)$ with $H(z)=z\log z-z+1$, the upper bound from the exponential supermartingale at truncation level $cK$ and the lower one from costs in $\{0,cK\}$; at $c=1$ the coefficient of $u\log u$ is $2$ rather than $1$. Enlarging the class has the opposite effect. By \cref{thm.refined} the exponent carries no term of order $u$ at all, and by \eqref{eqn.lower2} neither does the construction, so the coefficient of $u$ in \eqref{eqn.secondorder} is $0$. \Cref{cor.second} goes further: the two sides already meet at the next term, both carrying $u\log\log u/\log u$, so what remains undetermined is only the $o(u/\log u)$ of \eqref{eqn.secondorder2}. The rate in \eqref{eqn.secondorder} is therefore a property of the class of \eqref{eqn.budget}, and the constant, here $0$, is a property of that class as well: imposing further structure on the class can only change it, which is why it is stated here for the class and not as a universal number.
 	\end{remark}
 
 	The class of \eqref{eqn.budget} contains more than costs. The increments of the quadratic variation of a discrete martingale are nonnegative, and their conditional means add up to its conditional quadratic variation, so \cref{prop.obja} and \cref{thm.refined} apply to $[f]$. They replace the conditional-mean weight and the restricted exponent of \cref{thm.dismart} by an observable normaliser and an unrestricted one.
