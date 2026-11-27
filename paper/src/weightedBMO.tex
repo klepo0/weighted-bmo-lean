@@ -648,7 +648,7 @@
 	Estimates \eqref{bdg.f10}-\eqref{bdg.fweisup0} for the range $m\in(0,1)$ and the exponential integrability appear to be new, to the author's knowledge. Estimates with the conditional square functions can be found in \cite{MR0448538,MR365692,MR1127721}. 
 	Inequality \eqref{bdg.rosenthal} is also known as Burkholder--Rosenthal inequality which is valid for $m\in[1,\infty)$ (\cite{MR365692}). Although we did not recover the case $m=1$ from John--Nirenberg inequality, we have obtained its weak form, namely \eqref{bdg.f10}, which is valid for all $m\in(0,\infty)$.
 	The exponential estimates in \cref{thm.dismart,thm.contmart,cor.maximaldagger} are complementary to known estimates for self-normalised processes in \cite[Chapter 12]{MR2488094}. 
-	Two of the estimates above admit a companion, self-normalised form when the total conditional mean of the underlying increasing process is bounded pathwise. For the quadratic variation, and for the dual of Doob's inequality \eqref{doob0}, the normaliser produced in \cref{sec:monotone} is computed from the budget and from the costs realised so far rather than from a conditional mean of the future path, the corresponding exponential moment bound then holds for every $\lambda>0$, and the tail is determined to third order. This is \cref{cor.square} and \cref{rmk.dualdoob}, and \cref{prop.lower} shows that the rate obtained there cannot be improved. Neither statement replaces the corresponding estimate here: both require the pathwise budget, and both control a ratio rather than an $L^m$ norm.
+	Two of the estimates above admit a companion, self-normalised form when the total conditional mean of the underlying increasing process is bounded pathwise. For the quadratic variation, and for the dual of Doob's inequality \eqref{doob0}, the normaliser produced in \cref{sec:monotone} is computed from the budget and from the costs realised so far rather than from a conditional mean of the future path, the corresponding exponential moment bound then holds for every $\lambda>0$, and the extremal tail is determined to sublinear precision. This is \cref{cor.square} and \cref{rmk.dualdoob}, and \cref{prop.lower} shows that the rate obtained there cannot be improved. Neither statement replaces the corresponding estimate here: both require the pathwise budget, and both control a ratio rather than an $L^m$ norm.
 	
 	
 	
@@ -751,6 +751,21 @@
 
 	We now specialise to nondecreasing paths, the case in which the sharp function can be evaluated in closed form and the normaliser becomes observable. We use the discrete notation $\E_k=\E(\cdot\,|\cff_k)$, $\xi_0=0$.
 
+	\textit{The extremal problem.} Throughout this subsection, $\mathcal C$ denotes the class of models
+	\begin{align}\label{eqn.class}
+		\mathcal C=\Big\{(\xi_1,\dots,\xi_n):\ n\ge1,\ \xi_k\ge0\ \text{adapted},\ \sum_{k\le n}\E_{k-1}\xi_k\le K\ \text{a.s.}\Big\},
+	\end{align}
+	with $K$ a constant, or an $\cff_0$-measurable random variable in which case every statement is read conditionally on $\cff_0$, and
+	\begin{align}\label{eqn.Pstar}
+		P^\star(u)=\sup_{\mathcal C}\PP\Big(\max_{0\le k\le n}\frac{S_k}{K+J_k}>u\Big),
+	\end{align}
+	where $S_k=\sum_{j\le k}\xi_j$ and $J_k=\max_{j\le k}\xi_j$. This subsection determines the extremal tail $P^\star$ to sublinear precision. With $\ell=\log u$, $h=\log\log u$ and $t_H$ the root of $t=\ell+\log t$,
+	\begin{align}\label{eqn.mainresult}
+		-\log P^\star(u)\ =\ u\,t_H+\frac1{t_H-1}+O(\log u),
+	\end{align}
+	the expansion of $t_H$ being displayed in \eqref{eqn.secondorder3}. The proof is a single line of argument and the results below follow it in order: the sharp supermartingale and its variational saddle give the upper bound (\cref{thm.refined}), a two-point model supplies the matching construction (\cref{prop.lower}), and the two together give \eqref{eqn.mainresult} in the form \eqref{eqn.secondorder3} (\cref{cor.second}), whose factor in front of the exponential is bounded in \cref{rmk.prefactor}. The single-scale estimate $\PP(Z_n>u)\le e^{u-1}u^{-u}$ of \cref{prop.obja} is the accessible first-order case of the same supermartingale argument, at a fixed $\lambda$; \cref{cor.mono} is the form with the degraded constants of \cref{cor.maximaldagger}; and $\mathcal C$ also carries the moment bounds of \cref{rmk.moments} and the quadratic-variation statement of \cref{cor.square}.
+
+
 	We call the increments $\xi_k$ costs and the constant $K$ a budget only for definiteness of language: in the notation of \cref{sec:introduction} the costs are the increments of an increasing process and $K$ bounds the total of its compensator, so that $K$ is a deterministic dominator in the sense of \cite{MR0471069}; the quantity $\beta^T_t$ below is the conditional expected remaining increment, the object of \cite{MR0448538}. Both words are used in the applied literature on cumulative claims and on workload, where the statements of this section take their natural form.
 
 	\begin{corollary}\label[corollary]{cor.mono}
@@ -775,7 +790,7 @@
 		The interest of \eqref{eqn.mono2} is the normaliser: it involves the current jump, and \eqref{eqn.mono2} requires no integrability of $J_T$. This is the point at which the left limit in the definition of $X^\sharp$ is used. With $X_{r}$ in place of $X_{r-}$ the identity in the proof fails and the estimate becomes false: for a compound Poisson process with a single large claim the ratio $X_t/(\varepsilon+J_{t-}+2K)$ is unbounded, while with $J_t$ it is at most one.
 	\end{remark}
 
-	The following statement sharpens \eqref{eqn.mono2} in the class of Corollary~\ref{cor.mono}, at the price of a stronger hypothesis on the budget. \emph{It is not a consequence of \cref{cor.maximaldagger}}: its proof is independent and uses only the structure \eqref{eqn.mono1} together with a positive supermartingale. What \cref{cor.maximaldagger} supplies is the choice of normaliser.
+	The following statement sharpens \eqref{eqn.mono2} in the class of Corollary~\ref{cor.mono}, at the price of a stronger hypothesis on the budget; it is the first-order case of the sharp theorem below, the same supermartingale argument at a fixed $\lambda$, and we keep it separate because it is the shortest route to the order $u\log u$ and because the exact exponential moment and the sharp mean are read off from it. \emph{It is not a consequence of \cref{cor.maximaldagger}}: its proof is independent and uses only the structure \eqref{eqn.mono1} together with a positive supermartingale. What \cref{cor.maximaldagger} supplies is the choice of normaliser.
 
 	\begin{proposition}\label[proposition]{prop.obja}
 		Let $(\xi_k)_{k\ge1}$ be nonnegative adapted random variables on a filtered space satisfying the usual conditions, put $b_k=\E_{k-1}\xi_k$, $S_k=\sum_{j\le k}\xi_j$ and $J_k=\max_{j\le k}\xi_j$, and assume that for an $\cff_0$-measurable $K$ with $0<K<\infty$
@@ -884,7 +899,7 @@
 		that is, $\log F$ Lipschitz on $[0,\infty)$. Then \eqref{eqn.incr} and \eqref{eqn.testfun} give $\E_{k-1}F(R_k)\le F(R_{k-1})\big(1+C_Fb_k/(K+J_{k-1})\big)$, so $F(R_k)\exp(-C_FB_k/K)$ is a positive supermartingale. The exponential $F(x)=e^{\lambda x}$ satisfies \eqref{eqn.testfun} with $C_F=e^\lambda-1$ by convexity on $[0,1]$, and this is what the proof of Proposition~\ref{prop.obja} does; the family $F_p(x)=(1+x)^p$, $p\in(0,1]$, satisfies it with $C_F=p$ and yields $\PP(Z_n>u)\le e^p/(1+u)^p$, whose $p=1$ member is Remark~\ref{rmk.log}. By contrast $F(x)=e^{\lambda x^\alpha}$ with $\alpha>1$ violates \eqref{eqn.testfun}: $\log F=\lambda x^\alpha$ grows superlinearly, so at level $x$ an increment of size $h$ multiplies $F$ by $e^{\lambda\alpha x^{\alpha-1}h}$, which is unbounded in $x$. The budget $\E_{k-1}\Delta R\le b_k/(K+J_{k-1})$ is linear in the increment and cannot pay for a superlinear relative increase. Proposition~\ref{prop.lower} shows that this is not a defect of the argument.
 	\end{remark}
 
-	\begin{proposition}[Models attaining the order $u\log u+u\log\log u$]\label[proposition]{prop.lower}
+	\begin{proposition}[The matching construction: extremal models]\label[proposition]{prop.lower}
 		There is an absolute constant $C$ such that for all sufficiently large $u$ there are $n$, $K$ and adapted nonnegative $\xi_1,\dots,\xi_n$ satisfying \eqref{eqn.budget} with
 		\begin{align}\label{eqn.lower2}
 			\PP(Z_n>u)\ \ge\ \exp\Big(-u\log u-u\log\log u-\frac{u\log\log u}{\log u}-C\Big(\frac{u}{\log^2u}+\log u\Big)\Big).
@@ -926,7 +941,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		which tends to $+\infty$ as $n\to\infty$ whenever $\alpha>1$.
 	\end{proof}
 
-		\begin{theorem}[Refined upper tail: the exponent to its constant]\label{thm.refined}
+		\begin{theorem}[The sharp upper tail: one supermartingale and its saddle]\label{thm.refined}
 		Let $n\ge1$, let \eqref{eqn.budget} hold for an $\cff_0$-measurable $K$ with $0<K<\infty$, let $u\ge e^{20}$, put $\ell=\log u$ and let $t_H$ be the root of $t=\ell+\log t$. Then
 		\begin{align}\label{eqn.refined}
 			\PP(Z_n>u)\ \le\ \exp\Big(-u\,t_H-\frac1{t_H-1}+O\Big(\frac1u\Big)\Big),
@@ -959,7 +974,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		that is $\Phi=ut_H+\frac1{t_H-1}+O(1/u)$, because $u\big(t_H+\frac1{u(1-1/t_H)}\big)-1=ut_H+\frac{t_H}{t_H-1}-1=ut_H+\frac1{t_H-1}$. The weaker display follows from $t_H=\ell+h+\frac h\ell+O(h^2/\ell^2)$.
 	\end{proof}
 
-	\begin{corollary}[The second order in the exponent is $u\log\log u$]\label[corollary]{cor.second}
+	\begin{corollary}[Sharp logarithmic asymptotics of the extremal tail]\label[corollary]{cor.second}
 		As $u\to\infty$, uniformly over all models satisfying \eqref{eqn.budget}, with $\ell=\log u$, $h=\log\log u$ and $t_H$ the root of $t=\ell+\log t$,
 		\begin{align}\label{eqn.secondorder}
 			\PP(Z_n>u)\ \le\ \exp\big(-u\log u-u\log\log u\big),
