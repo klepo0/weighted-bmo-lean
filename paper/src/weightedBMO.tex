@@ -281,6 +281,24 @@
 		\end{align}
 		Additionally, \eqref{ineq.JNweighted}-\eqref{est.jnexpwei} hold with $V_{r-}$ in place of $V_r$.
 	\end{theorem}
+	\begin{corollary}[The maximal function of a weighted BMO process]\label[corollary]{cor.maximalbmo}
+		Let $V$ be a process in $\bmo_\phi$ on $[0,\tau]$ and put $V^*_t=\sup_{r\le t}|V_r-V_0|$. Then $V^*\in\bmo_{\phi^*}$, where $\phi^*_{s,t}=\sup_{r\in[s,t]}\phi_r$: for $0\le S\le T\le\tau$,
+		\begin{align}\label{est.maxbmo}
+			\E_S|V^*_T-V^*_{S-}|\ \le\ \big(1+c_1\big)\,[V]_{\bmo_\phi}\,\phi^*_{S,\tau},
+		\end{align}
+		with $c_1$ the constant of \eqref{ineq.JNweighted} at $m=1$; more generally, for every $m\in(0,\infty)$,
+		\begin{align}\label{est.maxbmom}
+			\E_S\sup_{S\le t\le T}\Big(\frac{|V^*_t-V^*_{S-}|}{\phi^*_{S,t}}\Big)^m\le\big([V]_{\bmo_\phi}+c_mm\,\rho^\phi_{S,\tau}(V)\big)^m .
+		\end{align}
+	\end{corollary}
+	\begin{proof}
+		Since $V^*$ is nondecreasing and $|V_{S-}-V_0|\le V^*_{S-}$, one has $V^*_T-V^*_{S-}\le\sup_{S\le t\le T}|V_t-V_{S-}|$, and
+		\[
+			|V_t-V_{S-}|\ \le\ |V_S-V_{S-}|+|V_t-V_S|,\qquad S\le t\le T,
+		\]
+		the second term vanishing at $t=S$. The first is $\cff_S$-measurable, so \eqref{ineq.JNweighted} at $T=S$ gives $|V_S-V_{S-}|\le[V]_{\bmo_\phi}\phi_S$. For the second, note that $\phi^*_{S,t}\ge\phi^*_{S,r}$ whenever $r\le t$, so that $\sup_{S\le t\le T}\frac{|V^*_t-V^*_{S-}|}{\phi^*_{S,t}}\le[V]_{\bmo_\phi}+\sup_{S\le r\le T}\frac{|V_r-V_S|}{\phi^*_{S,r}}$; taking $\E_S(\cdot)^m$ and using \eqref{est.jnweight2}, together with Minkowski's inequality for $m\ge1$ and with $(a+b)^m\le a^m+b^m\le(a+b)^m$ for $m\le1$, gives \eqref{est.maxbmom}, and \eqref{est.maxbmo} is its case $m=1$, where $\rho^\phi_{S,\tau}(V)\le[V]_{\bmo_\phi}$ and $\phi_S\le\phi^*_{S,\tau}$.
+	\end{proof}
+
 	Although not stated,
 	\cref{cor.maximaldagger,thm.bmophi} have natural discrete analogues. 
 	Neither one of \eqref{ineq.JNweighted} and \eqref{est.jnweight2} implies the other. However, \eqref{est.jnweight2} has an advantage of being meaningful even when $\phi^*_{r,\tau}$ is not $L^m$-integrable. While \eqref{ineq.JNweighted} may be comparable to \cite[Theorem 1]{MR2136865}, \cite[Theorem III.5.2]{MR0448538} and \cite[Lemma A.1.2]{MR2190038}, the estimates \eqref{est.jnweight2} and \eqref{est.jnexpwei} are genuine and inspired from similar phenomenon in the theory of singular integrals \cite{MR1913610,MR3124931}. Normalised estimates such as \eqref{est.jnexpwei} play important roles in the theory of self-normalised processes \cite{MR2488094} and self-normalised large deviations \cite{MR1428510,MR2016616}.
