@@ -1040,7 +1040,12 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 	The results of \cref{sec:monotone} are stated for sequences, but their proofs use only three ingredients: the increment bound $\Delta R\le\min\{1,\xi/(K+J_{-})\}$, the identity $\E[\xi\,|\,\cff_{-}]=b$, and additivity of the costs. All three are available in continuous time for a purely discontinuous increasing process with a compensator, with $\sum_kb_k$ replaced by the total compensator. We state the outcome, since it is the form in which the result is likely to be used.
 
 	\begin{proposition}\label[proposition]{prop.cont}
-		Let $X$ be nondecreasing, purely discontinuous, RCLL, adapted and integrable on $[0,T]$ with $X_0=0$, let $B$ be its compensator, assumed predictable, nondecreasing with $B_0=0$, and assume that $B_T\le K$ almost surely for a finite $K>0$. Assume furthermore that $X$ has finitely many jumps on $[0,T]$, and put $J_t=\sup_{s\in[0,t]}\Delta X_s$ and $Z=\sup_{t\in[0,T]}X_t/(K+J_t)$. Then for every $\lambda>0$ and $u\ge0$,
+		Let $X$ be nondecreasing, purely discontinuous, RCLL, adapted and integrable on $[0,T]$ with $X_0=0$, let $\mu^X(dt,dx)$ be its jump measure and $\nu^X(dt,dx)$ the predictable compensator of $\mu^X$, so that $\mu^X-\nu^X$ is a martingale measure. Assume that
+		\begin{align}\label{eqn.jumpbudget}
+			\int_{[0,T]\times(0,\infty)}x\,\nu^X(dt,dx)\ \le\ K\qquad\text{a.s.}
+		\end{align}
+		for a finite $K>0$, and put $J_t=\sup_{s\in[0,t]}\Delta X_s$ and $Z=\sup_{t\in[0,T]}X_t/(K+J_t)$.
+ Then for every $\lambda>0$ and $u\ge0$,
 		\begin{gather}\label{eqn.cont1}
 			\PP(Z>u)\le\exp\big(e^\lambda-1-\lambda u\big),
 			\\\shortintertext{hence}
@@ -1057,11 +1062,17 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		If moreover $B_T\le\Phi$ for an $\cff_0$-measurable $\Phi\in(0,\infty)$, then \eqref{eqn.cont1}, \eqref{eqn.cont2} and \eqref{eqn.cont3} hold with $K$ replaced by $\Phi$, that is for $\sup_{t\in[0,T]}X_t/(\Phi+J_t)$: the proofs are those above applied conditionally on $\cff_0$, under which $\Phi$ is a constant. \Cref{rmk.randomphi} names the models that provide such a $\Phi$ and says what is not covered.
 	\end{proposition}
 	\begin{proof}
-		Let $\tau$ be the first $t\le T$ with $R_t:=X_t/(K+J_t)>u$, and $\tau=\infty$ if there is none. At a jump time $t$ the algebra of the proof of \cref{prop.obja} gives
+		Let $\tau$ be the first $t\le T$ with $R_t:=X_t/(K+J_t)>u$, and $\tau=\infty$ if there is none. At a jump time $t$ with $\Delta X_t=x$ the algebra of the proof of \cref{prop.obja} gives
 		\[
-			R_t-R_{t-}\ \le\ \min\Big\{1,\frac{\Delta X_t}{K+J_{t-}}\Big\},
+			R_t-R_{t-}\ \le\ \min\Big\{1,\frac{x}{K+J_{t-}}\Big\},
 		\]
-		and $\E[\Delta X_t\,|\,\cff_{t-}]=\Delta B_t$, because $X-B$ is a martingale. Since $X$ is purely discontinuous and $X_0=0$, $\sum_{s\le t}\Delta X_s=X_t$ for every $t$.
+		and the compensation formula $\E\int f\,d\mu^X=\E\int f\,d\nu^X$, valid for nonnegative predictable $f$, identifies the compensator of $X$ as
+		\begin{align}\label{eqn.jumpcompensator}
+			B_t=\int_{[0,t]\times(0,\infty)}x\,\nu^X(ds,dx),\qquad
+			X_t=\int_{[0,t]\times(0,\infty)}x\,\mu^X(ds,dx),
+		\end{align}
+		the second identity because $X$ is purely discontinuous with $X_0=0$; $\int x\,\nu^X$ is the quantity bounded in \eqref{eqn.jumpbudget}.
+
 
 		\emph{The exponential estimate.} Put $C_t=(e^\lambda-1)\sum_{s\le t}\Delta B_s/(K+J_{s-})$ and $V_t=e^{\lambda R_t-C_t}$. At each jump time $\E[V_t\,|\,\cff_{t-}]\le V_{t-}$ by the chord inequality of \cref{prop.obja}, and $V$ is constant between jumps, so $V$ is a positive supermartingale with $V_0=1$; and $C_T\le(e^\lambda-1)B_T/K\le e^\lambda-1$. On $\{Z>u\}$ one has $V_t>e^{\lambda u-e^\lambda+1}$ for some $t$, and Doob's maximal inequality gives \eqref{eqn.cont1}. When $B_T\le\Phi$ the same computation gives $C_T\le e^\lambda-1$ with $K$ replaced by $\Phi$.
 
@@ -1084,11 +1095,13 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 			\PP\Big\{\sup_{t\le T}\frac{X_t}{B_T+J_t}>u\Big\}\ >\ 1-\varepsilon .
 		\end{align}
 		Take blocks $[k,k+1)$ on which jumps of size $R_k=2^k$ arrive at rate one, so that the compensator has slope $R_k$ and $b_{k+1}=2^{k+1}-1$, and stop $X$ and $B$ at the first time $\tau$ with $X_t>u(b_t+j_t)$, where $b,j$ belong to the raw process. Then $B$ is continuous adapted, hence predictable, and $X-B$ is the stopped martingale. On block $k$ one has $b_t+j_t\le3R_k-1$, while $\lfloor3u\rfloor+1$ jumps give $X_t\ge(\lfloor3u\rfloor+1)R_k>u(3R_k-1)$; each block therefore crosses with probability at least $q_u=\PP(\mathrm{N}(1)\ge\lfloor3u\rfloor+1)$, independently of the past, so that $N$ blocks give \eqref{eqn.vacuous} once $(1-q_u)^N\le\varepsilon$. The event is a ratio, so rescaling all jumps and the compensator by one constant leaves it unchanged while making $B_T\le K_0$ for any prescribed $K_0$; and choosing $N$ through an $\cff_0$-measurable random variable mixes these models into a single one with $B_T\le1$, $\E X_T\le1$ and arbitrarily slow tails. Consequently the sharp mean $\E Z\le1$ of \eqref{eqn.objamean} also fails here, so the defect is in the normaliser and not in the tail estimate.
-		What survives is a bracket on the record scale. If $0<\delta\le a$ are $\cff_0$-measurable and $\eta=\delta/a$, then on the passage event
+		What survives is a bracket on the record scale, with an explicit price. If $0<a\le b$ are $\cff_0$-measurable and the record lies in $[a,b]$, then
 		\begin{align}\label{eqn.bracket}
-			\PP\big(A_u,\ \delta\le J_T\le a\big)\ \le\ \E\exp\big\{-u\log(1+uL\eta)\big\},\qquad e^L=1+uL,
+			\PP\big(A_u,\ a\le J_T\le b\big)\ \le\ \Big(1+uL\,\frac ab\Big)^{-u}\ =\ \exp\Big\{-u\log\Big(1+uL\,\frac ab\Big)\Big\},
 		\end{align}
-		the truncation costing only $\PP(J_T>a)+\PP(0<J_T<\delta)$; the argument uses a concave envelope in $B_T/J_T$ and $J_T/a$, which is why the bracket and not the record has to be $\cff_0$-measurable. At $\eta=1$ the right-hand side is $e^{-uL}$, that is the sharp rate with its constant, and it holds for an arbitrary predictable budget; as $\eta\downarrow0$ the exponent vanishes, so \eqref{eqn.vacuous} is the degenerate endpoint of \eqref{eqn.bracket}. A predictable budget is therefore harmless exactly when the record scale is bracketed in advance. Since $uL=ut_H+\frac1{t_H-1}+O(1/u)$, the constant of \cref{cor.second} survives the loss of $\cff_0$-measurability whenever the bracket does.
+		the loss against the sharp exponent $uL$ being $u\log\frac{1+uL}{1+uLa/b}$. Thus the rate is retained, up to $o(u)$, for every bracket with $\log(b/a)=o(L)$, and even for $\log(b/a)\asymp L$ it stays of order $u\log u$; at $a=b$ the two sides are $e^{-uL}$ and the sharp bound is recovered, while for $a/b\downarrow0$ the exponent vanishes, so \eqref{eqn.vacuous} is the degenerate endpoint of \eqref{eqn.bracket}. Equivalently, $\delta\le J_T\le a$ with $\eta=\delta/a$ gives the same display with $\eta$ in place of $a/b$.
+
+A predictable budget is therefore harmless exactly when the record scale is bracketed in advance. Since $uL=ut_H+\frac1{t_H-1}+O(1/u)$, the constant of \cref{cor.second} survives the loss of $\cff_0$-measurability whenever the bracket does.
 	\end{remark}
 
 
@@ -1114,9 +1127,13 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		\]
 		for \eqref{eqn.cont2}, and \eqref{eqn.cont1} with $u-1$ in place of $u$. The shift is needed and not an artefact: the banded argument as written fails on the first band for such $X$, because there the jumps alone would have to exceed $uK$ while a continuous part may have consumed the whole budget without raising $J$.
 
-		\emph{(ii) Local boundedness of the jumps is essential, not technical.} Infinite activity alone does not force $J_t=\infty$: jumps of size $2^{-n}$ arriving at the times of a Poisson process of rate one have infinite activity and $J_t\le1$. If however the jumps are unbounded above, as for a L\'evy process with infinite activity whose L\'evy measure is unbounded on $(0,\infty)$, then $\sup_{s\le t}\Delta X_s=+\infty$ almost surely for every $t>0$, so $J_t=\infty$ and $Z=0$: the normaliser degenerates and the statement is empty. Local boundedness of the jumps, or finite activity, is therefore part of the model and not a convenience; it is in any case the natural hypothesis for cumulative costs which arrive in lumps.
-
-		\emph{(iii) Horizon and shape.} If the total compensator is finite, $B_\infty\le K$, the same argument applies on $[0,\infty)$ and \eqref{eqn.cont1}--\eqref{eqn.cont3} hold for $\sup_{t<\infty}$. The random-budget form of \cref{prop.cont} is exactly the shape of \eqref{est.X2} and \eqref{est.X3} with the model-computed weight $\Phi+J_t$, and it improves on \eqref{eqn.mono2}: the exponent $e^{\lambda u-(e^\lambda-1)}$, valid for every $\lambda>0$, replaces the constant $M$ and the restriction $\lambda\le(2e^3)^{-1}$.
+				\emph{(ii) The normaliser is automatically finite, and infinite activity is harmless.} Under \eqref{eqn.jumpbudget},
+		\[
+			\E\int_{[0,T]\times(1,\infty)}\mu^X(dt,dx)=\int_{[0,T]\times(1,\infty)}\nu^X(dt,dx)\ \le\ \int x\,\nu^X\ \le\ K,
+		\]
+		so there are finitely many jumps exceeding $1$ on $[0,T]$ almost surely, while every remaining jump is at most $1$; hence $J_t<\infty$ almost surely for every $t$ and, being a supremum over the countably many atoms of $\mu^X$ on $[0,t]$, measurable; no bounded support, finite activity or local boundedness of the jumps has to be assumed. For a L\'evy process the compensator is $\nu^X(dt,dx)=dt\,\mu(dx)$ with $\mu$ its L\'evy measure, and \eqref{eqn.jumpbudget} reads $T\int_{(0,\infty)}x\,\mu(dx)\le K$: finite mean per unit time. Since a L\'evy measure always satisfies $\mu((\varepsilon,\infty))<\infty$ for $\varepsilon>0$, unbounded support by itself never makes $J_t$ infinite --- there are only finitely many jumps above $\varepsilon$ in a finite interval; what can fail is \eqref{eqn.jumpbudget} itself, that is the finiteness of the mean. So the budget carries the whole hypothesis, and $Z$ is never vacuous.
+		
+\emph{(iii) Horizon and shape.} If the total compensator is finite, $B_\infty\le K$, the same argument applies on $[0,\infty)$ and \eqref{eqn.cont1}--\eqref{eqn.cont3} hold for $\sup_{t<\infty}$. The random-budget form of \cref{prop.cont} is exactly the shape of \eqref{est.X2} and \eqref{est.X3} with the model-computed weight $\Phi+J_t$, and it improves on \eqref{eqn.mono2}: the exponent $e^{\lambda u-(e^\lambda-1)}$, valid for every $\lambda>0$, replaces the constant $M$ and the restriction $\lambda\le(2e^3)^{-1}$.
 	\end{remark}
 
 	\begin{remark}[Random initial budgets]\label[remark]{rmk.randomphi}
