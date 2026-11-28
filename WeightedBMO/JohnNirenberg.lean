@@ -99,7 +99,7 @@ theorem cadlag_bounded {f : ℝ → ℝ} {a T : ℝ}
   · rintro _ ⟨u,hu,rfl⟩
     exact hu
 
-/-- The small-scale oscillation modulus in (1.10). -/
+/-- The small-scale oscillation modulus in `est.jnexpwei`. -/
 noncomputable def smallScaleModulus (ρ : ℝ → ℝ → ℝ) (a T : ℝ) :=
   sInf (smallScaleBounds ρ a T)
 
@@ -139,7 +139,7 @@ theorem tendsto_meshOscillation {ρ : ℝ → ℝ → ℝ} {a T B : ℝ} (ha : a
     rintro _ ⟨s,t,hs,hst,ht,hlen,rfl⟩
     exact hmesh s t hs hst ht (hlen.trans (le_of_lt (show h < δ from hlt)))
 
-/-- Equation (1.10) on [a,T] for a weighted BMO process, including the endpoint rate.
+/-- `est.jnexpwei` on [a,T] for a weighted BMO process, including the endpoint rate.
 The stopping-time BMO hypothesis is in initial-event integral form. -/
 theorem weightedBMO_exponential {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measure Ω)
     [IsFiniteMeasure μ] (ℱ : Filtration ℝ m) (hℱ : RightContinuousFiltration ℱ)
@@ -209,7 +209,7 @@ theorem weightedBMOOn_iff_condExp {Ω : Type*} [m : MeasurableSpace Ω]
       hm hi (fun _ => abs_nonneg _) hw (fun ω => hp ω _ ⟨ha ω,(hSU ω).trans (hT ω)⟩) B).1
       (h S U hS hU ha hSU hT)
 
-/-- Equation (1.8) on a real interval, with the oscillation modulus as its
+/-- `ineq.JNweighted` on a real interval, with the oscillation modulus as its
 coefficient. Testing on every initial event expresses the conditional comparison. -/
 theorem weightedBMO_maximal_moments {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measure Ω)
     [IsFiniteMeasure μ] (ℱ : Filtration ℝ m) (hℱ : RightContinuousFiltration ℱ)
@@ -240,7 +240,7 @@ theorem weightedBMO_maximal_moments {Ω : Type*} [m : MeasurableSpace Ω] (μ : 
   exact real_weighted_maximal_moments μ ℱ hℱ v vLeft φ hr modulusNonneg hp hv hw hφ
     mv mw cv cw lv (stoppedBound_of_modulus hB.1 bound le_rfl) hE
 
-/-- Conditional expectation form of (1.8) when the terminal weight has
+/-- Conditional expectation form of `ineq.JNweighted` when the terminal weight has
 a finite p-th moment. The estimate on initial events needs no moment assumption. -/
 theorem weightedBMO_conditional_maximal_moments {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measure Ω)
     [IsFiniteMeasure μ] (ℱ : Filtration ℝ m) (hℱ : RightContinuousFiltration ℱ)

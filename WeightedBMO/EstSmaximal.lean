@@ -4,8 +4,8 @@ import WeightedBMO.ContinuousDoob
 /-!
 # `est.Smaximal` end to end
 
-Khoa Lê, *Maximal inequalities and weighted BMO processes*
-(arXiv:2211.15550v3), Theorem 1.1, the two-sided estimate `est.Smaximal`:
+Khoa Lê, *Maximal inequalities, weighted BMO processes and the largest-jump normaliser*
+(arXiv:2211.15550), Theorem 1.1, the two-sided estimate `est.Smaximal`:
 
   `(p-1)/(2p-1) ‖X^♯_T‖_p ≤ ‖sup_{t∈[0,T]} d(X_0, X_t)‖_p ≤ c_p p²/(p-1) ‖X^♯_T‖_p`.
 

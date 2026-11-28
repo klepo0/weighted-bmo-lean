@@ -4,8 +4,8 @@ import WeightedBMO.Kuhn
 /-!
 # `est.Smax01`: Theorem 1.1 for exponents below one
 
-Khoa Lê, *Maximal inequalities and weighted BMO processes*
-(arXiv:2211.15550v3), Theorem 1.1, the last estimate:
+Khoa Lê, *Maximal inequalities, weighted BMO processes and the largest-jump normaliser*
+(arXiv:2211.15550), Theorem 1.1, the last estimate:
 
   `‖sup_{t∈[0,T]} d(X_0,X_t)‖_p ≤ 2c_p p (1-p)^{-1/p} ‖E_0 X^♯_T‖_p` for `0 < p < 1`.
 

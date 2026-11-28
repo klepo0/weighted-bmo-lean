@@ -7,7 +7,7 @@ Mathlib has the weak-type maximal inequality for nonnegative *sub*martingales
 (`MeasureTheory.maximal_ineq`) but not for supermartingales.  This file supplies
 the discrete-time supermartingale form, which is the input to the
 `p < 1` (`est.Smax01`) branch of Theorem 1.1 in Khoa Lê,
-*Maximal inequalities and weighted BMO processes* (arXiv:2211.15550v3):
+*Maximal inequalities, weighted BMO processes and the largest-jump normaliser* (arXiv:2211.15550):
 
   `α · μ{α ≤ max_{k ≤ N} X_k} ≤ ∫ X_0`  for `α > 0`.
 

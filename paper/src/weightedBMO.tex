@@ -106,10 +106,10 @@
 
 \allowdisplaybreaks
 
-\hypersetup{pdftitle={Maximal inequalities and weighted BMO processes}, pdfauthor={Khoa L\^e}}
+\hypersetup{pdftitle={Maximal inequalities, weighted BMO processes and the largest-jump normaliser}, pdfauthor={Khoa L\^e}}
 
 \begin{document}
-	\title{Maximal inequalities and weighted BMO processes}
+	\title{Maximal inequalities, weighted BMO processes and the largest-jump normaliser}
 	% \date{\today}
 	% \date{October 1, 2022}
 	
@@ -164,6 +164,17 @@
 	 	\tand M=1+\sum_{m=1}^\infty \frac{(c_mm)^m }{m!}e^{-3m}.
 	\end{align}
 	Note that  $\sup_{m\ge1}c_m<\infty$ and $M$ is finite by the ratio test.
+
+	The note answers two questions, and they are its two main results. \emph{Question A.} For a general adapted RCLL process, which quantity should normalise its maximal function? The answer is the conditional sharp function $X^\sharp_{t,\tau}=\sup_{s\in[t,\tau]}\E_sd(X_{s-},X_\tau)$: the maximal function lies between constant multiples of $\sup_t\E_tX^\sharp_{t,\tau}$, and the upper comparison is a consequence of John--Nirenberg inequalities for weighted BMO processes (\cref{cor.maximaldagger,thm.bmophi}). \emph{Question B.} When that normaliser becomes observable, as it does for nondecreasing paths, where it is the accumulated conditional mean of the increments together with the largest increment observed so far, how sharp can the resulting inequality be? The answer is \eqref{eqn.introtail}: the exponent of the extremal tail is determined to its constant and grows like $u\log u$, where the general theory reaches only the exponential scale $e^{-\lambda u}$ with $\lambda\le(2e^3)^{-1}$. In one line,
+	\[
+	\begin{aligned}
+	&\text{sharp-function inequality}\\
+	&\qquad\Longrightarrow\ \text{largest-jump normaliser}\\
+	&\qquad\Longrightarrow\ \text{independent sharp analysis of that normaliser},
+	\end{aligned}
+	\]
+	and the second arrow is not a derivation. The general maximal inequality identifies the normaliser and bounds the path once the normaliser is known; its constants, and the restriction $\lambda\le(2e^3)^{-1}$ of \eqref{est.X3}, are what its generality costs. The monotone structure then permits a substantially sharper analysis than is available in the general theory. \emph{Generality identifies the scale; structure determines the sharp law}: that is the organising principle of the note, and it is why its second half reads as a sharpness theory and not as an application. The first question is answered by the next theorem, the second by \eqref{eqn.introtail} and \cref{sec:applications}.
+
 	\begin{theorem}\label{cor.maximaldagger}
 		Let $(\cee,d)$ be a metric space and $X:[0,\infty)\times \Omega\to(\cee,d)$ be a RCLL adapted integrable process. We define for each $t\le \tau$,
 		\begin{align}\label{def.dagger}
@@ -219,6 +230,11 @@
 
 	We note that the estimate $\|\sup_{t\in[0,\tau]}d(X_0,X_t)\|_m\le c(m)\|\sup_{t\in[0,\tau]}\E_td(X_{t},X_\tau)\|_m $ fails for $m>2$ even for a discrete martingale. A counterexample given by Os\c{e}kowski in \cite{MR3426632} is the martingale $g=(0,g_1,g_1,g_1,\ldots)$ with $\PP(g_1=-\varepsilon)=1-\PP(g_1=\varepsilon^{-1})=(1+\varepsilon^2)^{-1}$.
 
+	The second question is the subject of the second half of the note, and its answer is the second main result. It arises as soon as the normaliser of \cref{cor.maximaldagger} can be computed from the model. For nondecreasing paths the sharp function is evaluated in closed form: if $K$ bounds the conditional mean of the remaining increment, $\E_t(X_T-X_t)\le K$, then $\E_sX^\sharp_{s,T}\le\Delta X_s+2K$, so that the abstract normaliser $\sup_{s\in[0,T]}\E_sX^\sharp_{s,T}$ becomes the largest jump so far together with the budget, $J_t+2K$, and \eqref{est.X2} and \eqref{est.X3} become \eqref{eqn.mono2} of \cref{cor.mono}. The general theory identifies that normaliser but does not evaluate it sharply: the constants of \eqref{eqn.mono2} are those of a modulus of oscillation and its exponential range stops at $\lambda\le(2e^3)^{-1}$. In the notation of \cref{sec:monotone}, where $\xi_1,\xi_2,\dots$ are the increments, $K$ bounds $\sum_{k\le n}\E_{k-1}\xi_k$ pathwise, $S_k=\sum_{j\le k}\xi_j$, $J_k=\max_{j\le k}\xi_j$ and $Z_n=\max_{k\le n}S_k/(K+J_k)$, writing $\ell=\log u$, letting $t_H$ be the root of $t=\ell+\log t$ and writing $P^\star(u)$ for the supremum of $\PP(Z_n>u)$ over all such models,
+	\begin{align}\label{eqn.introtail}
+	-\log P^\star(u)\ =\ u\,t_H+\frac1{t_H-1}+O(\log u),
+	\end{align}
+	uniformly in the model and in the horizon, by \cref{thm.refined,cor.second}; expanding $t_H$ gives $u\log u+u\log\log u+\frac{u\log\log u}{\log u}+\frac1{\log u}+O\big(\frac{u(\log\log u)^2}{\log^2u}+\log u\big)$. The continuous-time version has the same exponent to its constant (\cref{prop.cont}), and the factor in front of the exponential is bounded between $u^{-1/2}/\sqrt{2\pi}$ and $1$ (\cref{rmk.prefactor}). The chain that produces it is traced in \cref{rmk.mechanism}: the sharp function selects the current jump; the self-normalisation feeds the largest increment back into the denominator, so that one huge increment cannot by itself produce a large ratio; the extremal event is therefore carried by a count of comparable increments; and that count is what replaces $u\log u$ by $u\log u+u\log\log u+\cdots$. None of this is available to a method that has to work for an arbitrary adapted process, which is why the second half needs an argument of its own.
 
 	We will derive \cref{cor.maximaldagger} from John--Nirenberg inequalities for stochastic processes of bounded weighted mean oscillation (weighted BMO). 
 	\begin{definition}\label{def.bmophi}
@@ -304,17 +320,14 @@
 	Neither one of \eqref{ineq.JNweighted} and \eqref{est.jnweight2} implies the other. However, \eqref{est.jnweight2} has an advantage of being meaningful even when $\phi^*_{r,\tau}$ is not $L^m$-integrable. While \eqref{ineq.JNweighted} may be comparable to \cite[Theorem 1]{MR2136865}, \cite[Theorem III.5.2]{MR0448538} and \cite[Lemma A.1.2]{MR2190038}, the estimates \eqref{est.jnweight2} and \eqref{est.jnexpwei} are genuine and inspired from similar phenomenon in the theory of singular integrals \cite{MR1913610,MR3124931}. Normalised estimates such as \eqref{est.jnexpwei} play important roles in the theory of self-normalised processes \cite{MR2488094} and self-normalised large deviations \cite{MR1428510,MR2016616}.
 	The proofs of \cref{cor.maximaldagger,thm.bmophi} are presented in \cref{sec:weighted_bmo_processes}.
 
+	\cref{sec:applications} contains the two applications. The first is stable Volterra processes (\cref{sec:stable}), where the sharp function has infinite essential supremum and no unweighted estimate is available. The second is the increasing case, and it is developed in stages: the emergence of the normaliser $K+J_t$ in \cref{sec:monotone}, the distribution-free inequality attached to it in \cref{sec:largestjump}, the extremal problem in \cref{sec:extremal}, its sharp asymptotics in \cref{sec:sharptail}, and the continuous-time version in \cref{sec:continuous}; the comparison with the domination inequalities for predictable dominators is \cref{rmk.GS}.
 
 	To put \cref{thm.bmophi} into a perspective, we apply it to martingales for which many classical inequalities are readily available. We rediscover in a systematic and natural way the close relations between a martingale with its square functions, which is the heart of the works of Burkholder, Davis and Gundy \cite{MR0400380,MR365692,davis1970intergrability}. Although we are not able to recover all of the known results solely on this method, \cref{thm.bmophi} turns out to be very robust and we discover new inequalities for martingales. These results are presented in \cref{sec:inequalities_for_martingales}. \cref{cor.maximaldagger} could also be used here, however, we have learned that applying \cref{thm.bmophi} directly to martingales gives better results.
 
 	A discussion on weighted BMO processes would be incomplete without mentioning processes with vanishing weighted mean oscillation. Results for these processes are of independent interests and are presented in \cref{sec:weighted_vmo_spaces}. 
 	For further applications of BMO processes, we refer to the companion paper \cite{le2022stochastic} and the references therein.
-	Applications of the estimates above are given in \cref{sec:applications}: stable Volterra processes in \cref{sec:stable}, monotone processes in \cref{sec:monotone}, the continuous-time form of the monotone case in \cref{sec:continuous}, and the comparison with the domination inequalities for predictable dominators in \cref{sec:dominators}.	For nondecreasing paths the sharp function selects a normaliser built from the accumulated conditional means of the increments and the largest cost observed so far, and for that normaliser the exponent of the tail of the maximal statistic is determined to its constant. In the notation of \cref{sec:monotone}, where $K$ bounds the total of the conditional means pathwise and $J_t$ is the largest cost up to $t$, writing $\ell=\log u$ and letting $t_H$ be the root of $t=\ell+\log t$,
-	\begin{align}\label{eqn.introtail}
-		-\log\sup\PP\Big(\sup_{t\le T}\frac{X_t}{K+J_t}>u\Big)\ =\ u\,t_H+\frac1{t_H-1}+O(\log u),
-	\end{align}
-	uniformly in the model and in the horizon, by \cref{thm.refined,cor.second}; expanding $t_H$ gives $u\log u+u\log\log u+\frac{u\log\log u}{\log u}+\frac1{\log u}+O\big(\frac{u(\log\log u)^2}{\log^2u}+\log u\big)$. The continuous-time version has the same exponent to its constant (\cref{prop.cont}), and the factor in front of the exponential is bounded between $u^{-1/2}/\sqrt{2\pi}$ and $1$ (\cref{rmk.prefactor}).
 
+	Two methods are used in this note, and both are necessary. Sharp functions together with weighted BMO apply to an arbitrary adapted RCLL process with values in a metric space, and they are the source of every statement of \cref{sec:weighted_bmo_processes,sec:inequalities_for_martingales}; the price of that generality is that the argument cannot use positivity or additivity, which is why it produces the constants $2c_mm$ and the exponential range $\lambda\le(2e^3)^{-1}$ of \cref{cor.maximaldagger}, and why it is blind to the feedback between an increment and the denominator. The second method, positive supermartingales built from the product $\prod_{j\le k}(1+\lambda\xi_j)$ together with a minimisation over the size of the record, uses only that the increments are nonnegative, additively accumulating and bounded in conditional mean, and it gives \eqref{eqn.introtail}. Neither replaces the other: the first identifies the normaliser, the second evaluates it.
 
 	% \khoa{mention natural discrete versions}
 
@@ -339,7 +352,7 @@
 	John--Nirenberg inequalities are often derived for BMO martingales and their validity for other processes is rarely discussed. Some connections between weighted BMO martingales and BDG inequalities can be found in \cite{MR0448538} through a different point of view from the current article.
 
 % section introduction (end)
-\section{Proofs of main results} % (fold)
+\section{Sharp-function and weighted BMO inequalities: proofs} % (fold)
 \label{sec:weighted_bmo_processes}
 	% When $\phi$ is clear from the context, we simply write $\rho(V)$ for $\rho^\phi(V)$. 
 	% By definitions, for every deterministic times $s\le t$ and every stopping times $S,T$ with $s\le S\le T\le t$, we have
@@ -429,7 +442,6 @@
 		% \end{align*}
 		Since $G$ is arbitrary in $\cff_r$, we obtain \eqref{ineq.JNweighted}.
 
-
 		To show \eqref{est.jnweight2}, we follow a similar argument. This time, for $\alpha,\beta>0$, we define
 		\begin{align*}
 			&S=\tau\wedge\inf\{t\in[r,\tau]:(\phi^*_{r,t})^{-1} |V_t-V_{r}|> \alpha\}, 
@@ -446,7 +458,6 @@
 		From here, we obtain \eqref{est.jnweight2} through \cref{lem.xy} using similar arguments as previously.
 
 		Inequalities \eqref{ineq.JNweighted} and \eqref{est.jnweight2} with  $V_{r-}$ in place of $V_r$ are obtain analogously.
-
 
 		For $\lambda  \kappa^\phi_{r,\tau}(V)<e^{-3}$, there is an $h_0>0$ such that $\lambda \rho^\phi_{s,t}(V)\le e^{-3}$ whenever $t-s\le h_0$ and $s,t\in[r,\tau]$. For such $s,t$, we have by Taylor's expansion and \eqref{est.jnweight2} that 
 		\begin{align*}
@@ -531,140 +542,25 @@
 	% Next, we discuss weighted VMO spaces. 
 	
 	
-\section{Inequalities for martingales} % (fold)
-\label{sec:inequalities_for_martingales}	
-	In order to reveal the role of weighted BMO processes, we apply \cref{thm.bmophi} to martingales and positive sequences.
-	We discover new ranges for  classical inequalities from the works of Burkholder, Davis and Gundy.
-	% It is possible to combine with other techniques to strengthen the results, however
-	We start with the following result, which is the dual of Doob's martingale inequality.
-	\begin{proposition}
-		Let $z_1,z_2,\ldots$ be positive random variables. Then for every $m\in(0,\infty)$, we have
-		\begin{align}\label{doob0}
-			\|\sum_{i=1}^\infty\E_{i}z_i\|_m\le 2c_mm\|\sup_{k}\E_k\sum_{i=k}^\infty z_i\|_m.
-		\end{align}
-		If $m\in(1,\infty)$ and $m'=m/(m-1)$,
-		\begin{align}\label{doob1}
-			\|\sum_{i=1}^\infty\E_{i}z_i\|_m\le 2c_mmm'\|\sum_{i=1}^\infty z_i\|_m.
-		\end{align}
-	\end{proposition}
-	\begin{proof} 
-		Define $V_k=\sum_{i=1}^k\E_{i}z_i$. From $\E_{k}(V_n-V_{k-1})=\E_{k}\sum_{i=k}^nz_i$,
-		% \begin{align*}
-		% 	\E_{k}(V_n-V_{k-1})=\E_{k}\sum_{i=k}^nz_i
-		% \end{align*}
-		we see that $(V_k)_{k\le n}$ is BMO with the weight $(\phi_k=\E_k\sum_{i=k}^n z_i)_{k\le n}$. Applying \cref{thm.bmophi}, we have for every $m\in(0,\infty)$
-		\begin{align*}
-			\|\sum_{i=1}^n\E_{i}z_i\|_m\le 2c_mm\|\sup_{k\le n}\E_k\sum_{i=k}^n z_i\|_m.
-		\end{align*}
-		Sending $n\to\infty$ yields the first claim. The second claim follows from the first and Doob's maximal inequality.	
-	\end{proof}
-	In \cite{MR0400380}, Burkholder--Davis--Gundy  show \eqref{doob1}  with a different constant for all $m\in[1,\infty)$ (note that the case $m=1$ is trivial). The estimate \eqref{doob0} appears to be new. We take the chance to mention that it is shown in \cite[Theorem 20.1]{MR365692} that
-	\begin{align*}
-		\|\sum_{i=1}^\infty\E_{i}z_i\|_m\ge 2^{-1/m} \|\sum_{i=1}^\infty z_i\|_m, \quad m\in(0,1).
-	\end{align*}
-	
-
-	Let $f=(f_{k})_{k\ge0}$ be a square integrable discrete martingale, $f_{-1}=0$. Define for each $k\le n$
-	\begin{gather*}
-		df_n=f_n-f_{n-1},\quad f^*_{k,n}=\sup_{k\le j\le n}|f_j-f_k|, \quad f^*_n=f^*_{0,n},
-		\\ [f]_{k,n}=\sum_{j=k}^{n}|df_j|^2, \quad [f]_n=[f]_{0,n},
-		\\\wei{f}_{k,n}= \sum_{j=k+1}^{n+1}\E_{j-1}|df_j|^2,\quad \wei{f}_n=\wei{f}_{0,n}.
-		% \\ f^\sharp_{k,n}=\sup_{k\le i\le n}\E_i|f_n-f_{i-1}|, \quad f^\sharp_n=f^\sharp_{0,n}
-	\end{gather*}
-	From the martingale property, we have the following relations 
-	\begin{gather}\label{id.isometry}
-	 	\E_i|f_k-f_{i-1}|^2= \E_i[f]_{i,k}=\E_i([f]_k-[f]_{i-1}),
-	 	% \\\label{id.iso2}
-	 	% \E_i|f_k-f_{i-1}|^2=\E_i|f_k-f_{i}|^2+ |df_i|^2=\E_i\wei{f}_{i,k-1}+|df_i|^2,
-	 	\\\shortintertext{and}
-	 	\label{id.condiso}
-	 	\E_{i}(\wei{f}_k-\wei{f}_{i-1})=\E_i\wei{f}_{i,k}=\E_i|f_{k+1}-f_i|^2=\E_i[f]_{i+1,k+1}.
-	\end{gather}
-	\begin{theorem}\label{thm.dismart}
-		For $m\in(0,\infty)$
-		\begin{gather}
-			\sup_{k\le n}\|f^*_{k,n}\|_{2m}\le 4c_{2m}m\Big\|\sup_{k\le n}\E_k[f]_{k,n}\Big\|_{m}^{1/2}\le 4c_{2m}m\Big\|\sup_{k\le n}(\E_k\wei{f}_{k,n-1}+|df_k|^2)\Big\|_{m}^{1/2},
-			\label{bdg.f10}
-			\\\|[f]_{n}\|_m\le 2c_mm\Big\|\sup_{k\le n}\E_k|f^*_{k,n}|^2\Big\|_m,
-			\label{bdg.fbk0}
-			\\\|\wei{f}_{n}\|_m\le 2c_mm\min\left\{\Big\|\sup_{k\le n}\E_k[f]_{k+1,n+1}\Big\|_m,\ \Big\|\sup_{k\le n}\E_k|f^*_{k,n+1}|^2\Big\|_m\right\}.
-			\label{bdg.fweisup0}
-		\end{gather}
-		If $m\in(1,\infty)$, we have
-		\begin{gather}
-			\sup_{k\le n}\|f^*_{k,n}\|_m\le 4c_{2m}mm'\|[f]_{n}\|_{m}^{1/2},
-			\label{bdg.f11}
-			\\\sup_{k\le n}\|f^*_{k,n}\|_{2m}\le 4c_{2m}m\left((m')^{1/2}\|\wei{f}_{n-1}\|_{m}^{1/2}+\|\sup_{k\le n}|df_k|\|_{2m}\right),\label{bdg.rosenthal}
-			\\\|[f]_n\|_m\le 8c_mmm'\|f^*_{n}\|^2_{2m},
-			\label{bdg.fbk1}
-			\\\|\wei{f}_n\|_m\le 8c_mmm'\min\left\{\|[f]_{n+1}\|_m,\ \|f^*_{n+1}\|^2_{2m}\right\}.
-			\label{bdg.fweisup1}
-		\end{gather}
-		In addition, there is a universal constant $\lambda>0$ such that for every $n\ge k\ge0$ and each pair $(V_{k},\Phi_{k,n})$ in 
-		$$
-			\left\{\left(f_k,\sup_{i\le k}(\E_i[f]_{i,n})^{\frac12}\right),\left([f]_{k},\sup_{i\le k}\E_i|f^*_{i,n}|^2\right), \left(\wei{f}_{k},\sup_{i\le k}\min(\E_i[f]_{i+1,n+1},\E_i|f^*_{i,n+1}|^2)\right) \right\},
-		$$
-		we have $\sup_{\varepsilon>0}\E e^{\lambda\sup_{k\le n}\frac{|V_{k}|}{\varepsilon+\Phi_{k,n}}}\le M$.
-	\end{theorem}
-	\begin{proof}
-		Because $\E_i[f]_{i,k}\le\E_i[f]_{i,n}$ whenever $i\le k\le n$, we deduce from \eqref{id.isometry} that $(f_k)_{k\le n}$ is BMO with  weight $\left((\E_k[f]_{k,n})^{1/2}\right)_{k\le n}$.
-		Identity \eqref{id.isometry} can also be read from right to left. In particular, because $\E_i|f_k-f_{i-1}|^2\le \E_i|f^*_{i-1,n}|^2$, it implies that $([f]_k)_{k\le n}$ is BMO with weight $(\E_k|f^*_{k-1,n}|^2)_{k\le n}$.
-		Similarly, \eqref{id.condiso} implies that $(\wei{f}_k)_{k\le n}$ is BMO with either weight $(\E_k[f]_{k+1,n+1})_{k\le n}$ or weight $(\E_k|f^*_{k,n+1}|^2)_{k\le n}$.
-		Applying \cref{thm.bmophi}, we obtain \eqref{bdg.f10}-\eqref{bdg.fweisup0}. The second estimate in \eqref{bdg.f10} is due to $\E_k[f]_{k,n}=\E_k\wei{f}_{k,n-1}+|df_k|^2$.
-		We note that $[f]_{k,n}\le[f]_n$ and $f^*_{k,n}\le 2f^*_n$. Hence, applying Doob's martingale inequality, we obtain \eqref{bdg.f11}-\eqref{bdg.fweisup1} from \eqref{bdg.f10}-\eqref{bdg.fweisup0}.  The exponential integrability of $V/\Phi$ is a direct consequence of \eqref{est.jnexpwei}.
-	\end{proof}
-	We observe that necessary conditions for \cref{thm.dismart} are the identities \eqref{id.isometry} and \eqref{id.condiso}, which are valid as long as $\E_i df_j df_k=0$ whenever $i\le j< k$. In a more general case, one would need to control $\E_i\sum_{j<k} df_j df_k$ by a suitable weight, however we have not explored this idea.
-	The continuous-time counterpart of \cref{thm.dismart} is the following.
-	\begin{theorem}\label{thm.contmart}
-		Let $(X_t)_{t\ge0}$ be a square integrable continuous martingale with quadratic variation $(\wei{X}_t)_{t\ge0}$, and put $\wei{X}_{s,\tau}=\wei{X}_\tau-\wei{X}_s$ for $s\le\tau$. Define $X^*_{s,\tau}=\sup_{s\le r\le \tau}|X_r-X_s|$.
-		% We put $X^*_{t,\tau}=\sup_{r\in[t,\tau]}|X_r-X_t|$ and $X^*_\tau=X^*_{0,\tau}$.
-		% Then for every $\tau>0$ and $m\in(0,\infty)$
-		% \begin{gather}
-		% 	\|X^*_\tau\|_{2m}\le 4c_{2m}m\|\sup_{t\le \tau}\E_t\wei{X}_{t,\tau}\|_{m}^{1/2}
-		% 	\tand
-		% 	\|\wei{X}_\tau\|_m\le 2c_mm\|\sup_{t\le \tau}\E_t|X^*_{t,\tau}|^2\|_m.
-		% \end{gather}
-		% If $m\in(1,\infty)$, then
-		% \begin{gather}
-		% 	\|X^*_\tau\|_{2m}\le 4c_{2m}mm'\|\wei{X}_{\tau}\|_{m}^{1/2}
-		% 	\tand
-		% 	\|\wei{X}_\tau\|_m\le 8c_mm\|X^*_{\tau}\|_{2m}^2.
-		% \end{gather}
-		% In addition, 
-		There is a universal constant $\lambda>0$  such that for every $\tau>0$,
-		\begin{align}
-			\sup_{\varepsilon>0}\E \exp\left\{\lambda\sup_{t\le \tau}\frac{|X_t-X_0|}{\varepsilon+\sup_{s\in[0,t]}(\E_s\wei{X}_{s,\tau})^{1/2}}\right\}\le M
-			\\\shortintertext{and}
-			\sup_{\varepsilon>0}\E \exp\left\{\lambda\sup_{t\le \tau}\frac{\wei{X}_t}{\varepsilon+\sup_{s\in[0,t]}\E_s|X^*_{s,\tau}|^2}\right\}\le M.
-		\end{align}		
-	\end{theorem}
-	\begin{proof}
-		Since $X$ is continuous, $X_{S-}=X_S$ at every stopping time $S$. For stopping times $S\le T\le\tau$ the martingale isometry gives
-		\[
-			\E_S|X_T-X_S|\le\big(\E_S|X_T-X_S|^2\big)^{1/2}=\big(\E_S(\wei{X}_T-\wei{X}_S)\big)^{1/2}\le\big(\E_S\wei{X}_{S,\tau}\big)^{1/2},
-		\]
-		so that $X-X_0$ belongs to $\bmo_\phi$ with weight $\phi_S=(\E_S\wei{X}_{S,\tau})^{1/2}$ and $[X-X_0]_{\bmo_\phi}\le1$. Likewise $\E_S(\wei{X}_T-\wei{X}_S)=\E_S|X_T-X_S|^2\le\E_S|X^*_{S,\tau}|^2$, so that $\wei{X}$ belongs to $\bmo_\psi$ with weight $\psi_S=\E_S|X^*_{S,\tau}|^2$ and modulus at most one. For a weight whose modulus of oscillation is at most one, no subdivision of $[0,\tau]$ is needed in the argument of \cref{thm.bmophi}: the inequality $\lambda\rho^\phi_{s,t}(V)\le e^{-3}$ holds on the whole interval as soon as $\lambda\le e^{-3}$, and \eqref{est.jnexpwei} with $r=0$ therefore gives the two displays, since inserting $\varepsilon>0$ in the denominators only decreases the ratios.
-	\end{proof}
-	Estimates \eqref{bdg.f10}-\eqref{bdg.fweisup0} for the range $m\in(0,1)$ and the exponential integrability appear to be new, to the author's knowledge. Estimates with the conditional square functions can be found in \cite{MR0448538,MR365692,MR1127721}. 
-	Inequality \eqref{bdg.rosenthal} is also known as Burkholder--Rosenthal inequality which is valid for $m\in[1,\infty)$ (\cite{MR365692}). Although we did not recover the case $m=1$ from John--Nirenberg inequality, we have obtained its weak form, namely \eqref{bdg.f10}, which is valid for all $m\in(0,\infty)$.
-	The exponential estimates in \cref{thm.dismart,thm.contmart,cor.maximaldagger} are complementary to known estimates for self-normalised processes in \cite[Chapter 12]{MR2488094}. 
-	Two of the estimates above admit a companion, self-normalised form when the total conditional mean of the underlying increasing process is bounded pathwise. For the quadratic variation, and for the dual of Doob's inequality \eqref{doob0}, the normaliser produced in \cref{sec:monotone} is computed from the budget and from the costs realised so far rather than from a conditional mean of the future path, the corresponding exponential moment bound then holds for every $\lambda>0$, and the extremal tail is determined to sublinear precision. This is \cref{cor.square} and \cref{rmk.dualdoob}, and \cref{prop.lower} shows that the rate obtained there cannot be improved. Neither statement replaces the corresponding estimate here: both require the pathwise budget, and both control a ratio rather than an $L^m$ norm.
-	
-	
-	
-	
-
-% section inequalities_for_martingales (end)
-
-\section{Applications} % (fold)
+\section{Applications and sharp self-normalisation} % (fold)
 \label{sec:applications}
 
-	The sharp function in \cref{cor.maximaldagger} is usually read as a device internal to the proof: it is the quantity one has to control in order to control the path. In the applications below it plays a different role, namely it identifies the quantity by which the path has to be normalised, and that quantity is computable from the model. In \cref{sec:stable} it is a prediction error which no deterministic weight can replace, since the sharp function has infinite essential supremum; in \cref{sec:monotone} it is a mean budget together with the largest cost observed so far. That an order one bound holds for exactly the latter normaliser, while the constants of \cref{cor.maximaldagger} are $e^{-3}$-degraded, is evidence that the sharp function selects the correct object and not merely a sufficient one.
+	The sharp function in \cref{cor.maximaldagger} is usually read as a device internal to the proof: it is the quantity one has to control in order to control the path. In the applications below it plays a different role, namely it identifies the quantity by which the path has to be normalised, and that quantity is computable from the model. In \cref{sec:stable} it is a prediction error which no deterministic weight can replace, since the sharp function has infinite essential supremum. In \cref{sec:monotone} it is a mean budget together with the largest cost observed so far, and there the identification is precise enough to pose a further question: the normaliser being known, what is the sharpest inequality that holds for it? The chain is
+	\[
+	\begin{aligned}
+	X^\sharp\ &\longrightarrow\ \text{the current-jump normaliser }K+J_t\\
+	&\longrightarrow\ \text{feedback of the largest cost into the denominator}\\
+	&\longrightarrow\ \text{a many-jump extremiser},
+	\end{aligned}
+	\]
+	and its output is \eqref{eqn.introtail}.
+
+	The relation of what follows to the general theory changes once, at \cref{prop.obja}, and the change is worth announcing. The estimate \eqref{eqn.RLmain} of \cref{thm.RL} and the estimates \eqref{eqn.mono2} of \cref{cor.mono} are direct consequences of the general theory: they are instances of \eqref{est.X2} and \eqref{est.X3} with the weight evaluated on the model. The statements from \cref{prop.obja} onwards are not, and cannot be. They ask for the optimal inequality attached to a normaliser that the general theory has already identified, and the answer uses precisely what the general theory ignores --- that the costs are nonnegative, additively accumulating and bounded in conditional mean --- so that \crefrange{sec:largestjump}{sec:sharptail} determine the sharpness of the special case singled out by \cref{cor.maximaldagger} rather than a further consequence of it.
 
 	Both applications take values in $\R$; the metric space formulation of \cref{cor.maximaldagger} is not needed for either of them.
 
 	\begin{remark}[What is machine-checked]\label[remark]{rmk.verification}
-		In the Lean~4 formalisation that accompanies this note (\url{https://github.com/klepo0/weighted-bmo-lean}), the estimates of \cref{thm.bmophi} and the five displays \eqref{est.upperbound}--\eqref{est.Smax01} of \cref{cor.maximaldagger} are proved. Nothing in the present section is: \cref{lem.RLint}, \cref{lem.RLsharp}, \cref{thm.RL}, \cref{cor.mono}, \cref{prop.obja}, \cref{prop.lower}, \cref{thm.refined}, \cref{cor.finite}, \cref{cor.second}, \cref{cor.square} and \cref{prop.cont} are stated and proved here only, as are the examples and the remarks.
+		In the Lean~4 formalisation that accompanies this note (\url{https://github.com/klepo0/weighted-bmo-lean}), the estimates of \cref{thm.bmophi} and the five displays \eqref{est.upperbound}--\eqref{est.Smax01} of \cref{cor.maximaldagger} are proved. Nothing in the present section is: \cref{lem.RLint}, \cref{lem.RLsharp}, \cref{thm.RL}, \cref{cor.mono}, \cref{prop.obja}, \cref{prop.lower}, \cref{thm.refined}, \cref{cor.finite}, \cref{cor.second} and \cref{prop.cont} are stated and proved here only, as are the examples and the remarks; \cref{cor.square} and \cref{rmk.dualdoob} are unverified as well.
 
 		Two steps of the verification of \cref{cor.maximaldagger} are still hypotheses in it, and both are used below. First, $X^\sharp_{t,\tau}$ is defined there as a supremum over the rational grid, and is not identified with the supremum over $[t,\tau]$. Second, the weight $t\mapsto\E_tX^\sharp_{t,\tau}$ enters the verified statements as a hypothesis: the existence of a right-continuous version of a conditional-expectation process (Dellacherie--Meyer II (2.9)) is not formalised, and neither are the domination estimates $\E_Sd(X_U,X_\tau)\le\E_SX^\sharp_{S,\tau}$ at arbitrary stopping times. The estimates of \cref{thm.RL} and \eqref{eqn.mono2} of \cref{cor.mono} pass from \eqref{est.X2} and \eqref{est.X3} to a normaliser computed from the model, so they are conditional on the second step; the statements from \cref{prop.obja} onwards do not depend on it, but are unverified in their own right.
 	\end{remark}
@@ -746,27 +642,14 @@
 	\medskip
 	\noindent\textit{Relation to the literature.} Maximal inequalities for stable processes, and the moment theory behind the constants of \eqref{eqn.malpha}, are covered in \cite{MR1280932}; for fractional Brownian motion, maximal inequalities under moment hypotheses go back to \cite{NV99}. Both traditions bound unnormalised suprema, and their moment results stop at the index of the noise, which is why neither is available for \eqref{eqn.RLmain}: the estimate here is self-normalised and holds for every $m\in(0,\infty)$. The normaliser, on the other hand, is a functional of the driver $(L_s)_{s\le r}$ and of the kernel rather than of the observed process $X$, as \cref{rmk.RLobserv} records, so what is claimed is a statement about the model and not a statistic computable from observations of $X$ alone. To our knowledge no self-normalised maximal statement of this form for Riemann--Liouville stable processes appears in \cite{MR1280932} or in the fractional-stable maximal literature it summarises, and the novelty of \cref{thm.RL} should be read as conditional on that check.
 
-\subsection{Monotone processes} % (fold)
+\subsection{Increasing processes: emergence of the largest-jump normaliser} % (fold)
 \label{sec:monotone}
 
-	We now specialise to nondecreasing paths, the case in which the sharp function can be evaluated in closed form and the normaliser becomes observable. We use the discrete notation $\E_k=\E(\cdot\,|\cff_k)$, $\xi_0=0$.
-
-	\textit{The extremal problem.} Throughout this subsection, $\mathcal C$ denotes the class of models
-	\begin{align}\label{eqn.class}
-		\mathcal C=\Big\{(\xi_1,\dots,\xi_n):\ n\ge1,\ \xi_k\ge0\ \text{adapted},\ \sum_{k\le n}\E_{k-1}\xi_k\le K\ \text{a.s.}\Big\},
-	\end{align}
-	with $K$ a constant, or an $\cff_0$-measurable random variable in which case every statement is read conditionally on $\cff_0$, and
-	\begin{align}\label{eqn.Pstar}
-		P^\star(u)=\sup_{\mathcal C}\PP\Big(\max_{0\le k\le n}\frac{S_k}{K+J_k}>u\Big),
-	\end{align}
-	where $S_k=\sum_{j\le k}\xi_j$ and $J_k=\max_{j\le k}\xi_j$. This subsection determines the extremal tail $P^\star$ to sublinear precision. With $\ell=\log u$, $h=\log\log u$ and $t_H$ the root of $t=\ell+\log t$,
-	\begin{align}\label{eqn.mainresult}
-		-\log P^\star(u)\ =\ u\,t_H+\frac1{t_H-1}+O(\log u),
-	\end{align}
-	the expansion of $t_H$ being displayed in \eqref{eqn.secondorder3}. The proof is a single line of argument and the results below follow it in order: the sharp supermartingale and its variational saddle give the upper bound (\cref{thm.refined}), a two-point model supplies the matching construction (\cref{prop.lower}), and the two together give \eqref{eqn.mainresult} in the form \eqref{eqn.secondorder3} (\cref{cor.second}), whose factor in front of the exponential is bounded in \cref{rmk.prefactor}. Read without the expansion, the same infimum is \cref{cor.finite}, which is the form of the bound to use at finite $u$. The single-scale estimate $\PP(Z_n>u)\le e^{u-1}u^{-u}$ of \cref{prop.obja} is the accessible first-order case of the same supermartingale argument, at a fixed $\lambda$; \cref{cor.mono} is the form with the degraded constants of \cref{cor.maximaldagger}; and $\mathcal C$ also carries the moment bounds of \cref{rmk.moments} and the quadratic-variation statement of \cref{cor.square}.
-
+	We now specialise to nondecreasing paths, the case in which the sharp function can be evaluated in closed form and the normaliser becomes observable. We use the discrete notation $\E_k=\E(\cdot\,|\,\cff_k)$, $\xi_0=0$.
 
 	We call the increments $\xi_k$ costs and the constant $K$ a budget only for definiteness of language: in the notation of \cref{sec:introduction} the costs are the increments of an increasing process and $K$ bounds the total of its compensator, so that $K$ is a deterministic dominator in the sense of \cite{MR0471069}; the quantity $\beta^T_t$ below is the conditional expected remaining increment, the object of \cite{MR0448538}. Both words are used in the applied literature on cumulative claims and on workload, where the statements of this section take their natural form.
+
+	\emph{The normaliser.} The evaluation is the computation in the proof below: every jump of $X$ after $s$ is part of the increment $X_T-X_{s-}$, so that $\E_r|X_T-X_{r-}|=\beta^T_r+\Delta X_r$ and $\E_sX^\sharp_{s,T}\le\Delta X_s+2K$. The abstract normaliser $\sup_{s\in[0,T]}\E_sX^\sharp_{s,T}$ of \cref{cor.maximaldagger} is thereby replaced by the largest jump so far together with the budget, and \eqref{est.X2} and \eqref{est.X3} become \eqref{eqn.mono2}: \emph{the maximal inequality of this subsection is a direct consequence of the general theory}. What is new is the object rather than the estimate, and \emph{the general theory identifies the normaliser, while the monotone structure then permits a substantially sharper analysis than is available in the general theory}. The three subsections that follow are that analysis.
 
 	\begin{corollary}\label[corollary]{cor.mono}
 		Let $(X_t)_{t\in[0,T]}$ be a nondecreasing RCLL adapted integrable process and put $J_t=\sup_{s\in[0,t]}\Delta X_s$, $\Delta X_s=X_s-X_{s-}$. Assume that there is $K\in(0,\infty)$ with $\beta^T_t:=\E_t(X_T-X_t)\le K$ for all $t\in[0,T]$. Then
@@ -790,7 +673,16 @@
 		The interest of \eqref{eqn.mono2} is the normaliser: it involves the current jump, and \eqref{eqn.mono2} requires no integrability of $J_T$. This is the point at which the left limit in the definition of $X^\sharp$ is used. With $X_{r}$ in place of $X_{r-}$ the identity in the proof fails and the estimate becomes false: for a compound Poisson process with a single large claim the ratio $X_t/(\varepsilon+J_{t-}+2K)$ is unbounded, while with $J_t$ it is at most one.
 	\end{remark}
 
-	The following statement sharpens \eqref{eqn.mono2} in the class of Corollary~\ref{cor.mono}, at the price of a stronger hypothesis on the budget; it is the first-order case of the sharp theorem below, the same supermartingale argument at a fixed $\lambda$, and we keep it separate because it is the shortest route to the order $u\log u$ and because the exact exponential moment and the sharp mean are read off from it. \emph{It is not a consequence of \cref{cor.maximaldagger}}: its proof is independent and uses only the structure \eqref{eqn.mono1} together with a positive supermartingale. What \cref{cor.maximaldagger} supplies is the choice of normaliser.
+	\begin{remark}[Optional and predictable dominators]\label[remark]{rmk.GS}
+		Lenglart's domination inequality \cite{MR0471069} compares a nonnegative adapted process with a nondecreasing \emph{predictable} dominator $G$, and its sharp monotone form \cite{GS21} has constant $p^{-p}$. Predictability is indispensable: \cite[Remark 2.7]{GS21} records that for an optional $G$, and no further assumptions, no finite constant exists in that inequality. The normaliser $J_t+2K$ of \cref{cor.mono}, and equally $J_t+K$ of \cref{prop.obja}, is optional and not predictable, since it contains the current jump; so the classical domination inequalities cannot be applied to it. There is nevertheless no contradiction, and the reason is that \eqref{est.X2}, \eqref{est.X3} and \eqref{eqn.obja} are not domination inequalities: they bound a \emph{self-normalised} ratio, in which the optional quantity appears in the denominator, and they do not compare the moments of $\sup X$ with those of $\sup G$. In this sense the sharp maximal function of \cref{cor.maximaldagger} produces a usable statement in exactly the situation where the sharpest known domination inequality has no constant at all, and Proposition~\ref{prop.obja} shows that in the monotone class even the constants can be brought to order one for that optional normaliser.
+	\end{remark}
+
+	This is as far as the general theory goes in the monotone case. It identifies the normaliser $K+J_t$ --- a functional of the budget and of the largest cost realised, optional rather than predictable, hence outside the domination theory by \cref{rmk.GS} --- and it gives the estimates \eqref{eqn.mono2} for it, whose exponential range is $\lambda\le(2e^3)^{-1}$ and whose constants are not sharp. \emph{The remainder of this section asks for the optimal inequality associated with this normaliser. The answer requires a different argument and is not a consequence of the general maximal theorem.}
+
+\subsection{The distribution-free largest-jump inequality} % (fold)
+\label{sec:largestjump}
+
+	The following statement sharpens \eqref{eqn.mono2} at the price of a stronger hypothesis on the budget. It is the first-order case of the sharp theorem of \cref{sec:sharptail}, the same supermartingale argument at a fixed $\lambda$, and we keep it separate because it is the shortest route to the order $u\log u$ and because the exact exponential moment and the sharp mean are read off from it. What \cref{cor.maximaldagger} supplies is the choice of normaliser; the argument from here on is independent of it, and this is the change of method announced in \cref{sec:applications}.
 
 	\begin{proposition}\label[proposition]{prop.obja}
 		Let $(\xi_k)_{k\ge1}$ be nonnegative adapted random variables on a filtered space satisfying the usual conditions, put $b_k=\E_{k-1}\xi_k$, $S_k=\sum_{j\le k}\xi_j$ and $J_k=\max_{j\le k}\xi_j$, and assume that for an $\cff_0$-measurable $K$ with $0<K<\infty$
@@ -849,7 +741,7 @@
 		\begin{align}\label{eqn.mgf}
 			R(t)=\max_{0\le q\le1}\frac{1-q}{q}\big(e^{tq}-1\big).
 		\end{align}
-		Then $\sup_\mathcal{C}\E e^{tZ_n}=e^{R(t)}$, the supremum over the models of \eqref{eqn.budget}. For the upper bound it suffices that $e^{tf(y)}\le1+R(t)y$ for $y\ge0$, where $f(y)=y/(1+y)$: with $\eta_k=\xi_k/(K+\xi_k)$ this gives $\E[e^{t\eta_k}\mid\cff_{k-1}]\le1+R(t)b_k/K\le e^{R(t)b_k/K}$, and since $Z_n\le T_n$ by \eqref{eqn.objamean}, iteration yields $\E e^{tZ_n}\le\E e^{tT_n}\le\E\prod_{k\le n}\big(1+R(t)\eta_k\big)\le e^{R(t)B_n/K}\le e^{R(t)}$. For the lower bound, i.i.d.\ costs in $\{0,a\}$ with $a=q/(1-q)$ and $p=K/(na)$ give $Z_n=qN$ with $N$ binomial of mean $\frac{1-q}{q}$, so $\E e^{tZ_n}=\big(1+\frac{h(q,t)}{n}\big)^n\to e^{h(q,t)}$ with $h(q,t)=\frac{1-q}{q}(e^{tq}-1)$, and the maximum over $q$ is \eqref{eqn.mgf}. The value is informative only for moderate $t$. One has $R(t)=t$ for $0\le t\le2$ and $R(t)>t$ for $t>2$, since $\frac{h(q,t)}{t}$ increases in $t$ and $h(q,2)\le2$ is $\log\frac{1+q}{1-q}\ge2q$; at $t=1$ this is the sharp form of \eqref{eqn.objamean}, by Jensen. For large $t$ the maximiser is $q=1-\frac{\gamma}{t}$ with $\gamma=\frac{t-\sqrt{t^2-4t}}{2}=1+\frac1t+O(t^{-2})$, whence $R(t)=\frac{\gamma}{t-\gamma}\big(e^{t-\gamma}-1\big)\sim\frac{e^{t-1}}{t}$: the supremum is attained by a single cost of size $\asymp tK$ appearing with mean count $\asymp1/t$, and \eqref{eqn.mgf} does not improve \eqref{eqn.obja}.
+		Then $\sup\E e^{tZ_n}=e^{R(t)}$, the supremum being over the models of \eqref{eqn.budget}. For the upper bound it suffices that $e^{tf(y)}\le1+R(t)y$ for $y\ge0$, where $f(y)=y/(1+y)$: with $\eta_k=\xi_k/(K+\xi_k)$ this gives $\E[e^{t\eta_k}\mid\cff_{k-1}]\le1+R(t)b_k/K\le e^{R(t)b_k/K}$, and since $Z_n\le T_n$ by \eqref{eqn.objamean}, iteration yields $\E e^{tZ_n}\le\E e^{tT_n}\le\E\prod_{k\le n}\big(1+R(t)\eta_k\big)\le e^{R(t)B_n/K}\le e^{R(t)}$. For the lower bound, i.i.d.\ costs in $\{0,a\}$ with $a=q/(1-q)$ and $p=K/(na)$ give $Z_n=qN$ with $N$ binomial of mean $\frac{1-q}{q}$, so $\E e^{tZ_n}=\big(1+\frac{h(q,t)}{n}\big)^n\to e^{h(q,t)}$ with $h(q,t)=\frac{1-q}{q}(e^{tq}-1)$, and the maximum over $q$ is \eqref{eqn.mgf}. The value is informative only for moderate $t$. One has $R(t)=t$ for $0\le t\le2$ and $R(t)>t$ for $t>2$, since $\frac{h(q,t)}{t}$ increases in $t$ and $h(q,2)\le2$ is $\log\frac{1+q}{1-q}\ge2q$; at $t=1$ this is the sharp form of \eqref{eqn.objamean}, by Jensen. For large $t$ the maximiser is $q=1-\frac{\gamma}{t}$ with $\gamma=\frac{t-\sqrt{t^2-4t}}{2}=1+\frac1t+O(t^{-2})$, whence $R(t)=\frac{\gamma}{t-\gamma}\big(e^{t-\gamma}-1\big)\sim\frac{e^{t-1}}{t}$: the supremum is attained by a single cost of size $\asymp tK$ appearing with mean count $\asymp1/t$, and \eqref{eqn.mgf} does not improve \eqref{eqn.obja}.
 
 		It also gives the range of \eqref{eqn.objamean}. Let $\Phi(t)=t/(1-e^{-t})$, which increases from $1$ to $\Phi(2)=\frac2{1-e^{-2}}$ on $(0,2]$, since $(1-e^{-y})^2\Phi'(y)=1-(1+y)e^{-y}>0$, and put $H(x)=\log(e^{tx}-1)-\Phi(t)\log x$ for $x>0$. Then $H'(x)=\big(\Phi(tx)-\Phi(t)\big)/x$, so $H$ decreases on $(0,1)$ and increases on $(1,\infty)$, and is minimised at $x=1$; hence
 		\[
@@ -857,19 +749,6 @@
 		\]
 		Since $\E e^{tZ_n}\le e^{R(t)}=e^t$ for $t\le2$, this gives $\E Z_n^{\Phi(t)}\le\big(\E e^{tZ_n}-1\big)/(e^t-1)\le1$ for every $t\in(0,2]$, that is $\E Z_n^m\le1$ for every $m\le\Phi(2)$ and not merely for $m\le1$, the value $1$ remaining sharp by the two-point models.
 	\end{remark}
-
-	\begin{remark}[The moments of order above one]\label[remark]{rmk.moments}
-		Write $M_m=\sup_\mathcal{C}\E Z_n^m$, and let $L_m=\sup_{0<q<1}q^m\mathcal T_m\big(\frac{1-q}{q}\big)$ be the value approached by the two-point models, where $\mathcal T_m(\lambda)=\E N_\lambda^m$ for $N_\lambda$ Poisson of mean $\lambda$. Besides $M_m=1$ on $\big(0,\frac2{1-e^{-2}}\big]$ one has
-		\begin{align}\label{eqn.mombrackets}
-			1\le M_3\le1.1353,\qquad 1.2246\le M_4\le1.9087 .
-		\end{align}
-		The upper bounds come from $z^m\le A_m(e^{tz}-1)$ with $A_m=y_m^m/(e^{y_m}-1)$ and $m(1-e^{-y_m})=y_m$, optimised over $t\le2$ and then read off \eqref{eqn.mgf}. The lower bound for $M_3$ is the value $1-q^2(2-q)$ of the two-point family. That for $M_4$ is not: the same family gives only $1.2110$. Instead, let an early phase of $h$ trials carry a cost $a$ with probability $\lambda/h$ each, consuming $a\lambda$ of the budget, and let $B=1-a\lambda$; then, if some early cost occurred, make the further costs of size $a$ with probability $B/(na)$, and if none occurred, of size $b$ with probability $B/(nb)$. On either branch the budget is spent exactly and all nonzero costs share one size, so the fourth moment is a binomial sum, and its limit at $a=0.25705$, $\lambda=0.97775$ and $b/(1+b)=0.32665$ is $1.22115$, rising to $1.2246$ when the branch with no early cost is itself restarted. Adaptivity in the size of a cost, not in its timing, is what gains: for costs of one size the factorial moments satisfy $\E(N)_r\le\lambda^r$, and independent menus cannot exceed $L_m$ for $m\le4$. For large $m$ the two agree: with $D=\log m$,
-		\[
-			\log M_m=\log L_m+O\Big(\frac m{D^3}\Big)=m\big(D-\log D-1\big)+\frac m{2D^2}+O\Big(\frac m{D^3}\Big),
-		\]
-		so $M_m^{1/m}\sim m/(e\log m)$ and the two-point family is asymptotically optimal, while the essential supremum of $Z_n$ over the class is infinite.
-	\end{remark}
-
 
 	\begin{example}[Heavy-tailed costs]\label{ex.pareto}
 		Let $\xi_1,\dots,\xi_n$ be i.i.d.\ with finite mean $\mu$, so that $b_k=\mu$ and \eqref{eqn.budget} holds with $K=n\mu$. Then \eqref{eqn.obja} bounds the running maximum of $\sum_{j\le k}\xi_j/(n\mu+\max_{j\le k}\xi_j)$ uniformly over all such laws. For a Pareto law with tail index $\alpha\in(1,2)$ the variance is infinite and $\E e^{\theta S_n}=\infty$ for every $\theta>0$, and the deviation is subexponential, $\PP(S_n\ge nx)\sim x^{-\alpha}n^{1-\alpha}$ as $n\to\infty$ for every fixed $x>\mu$; no estimate of Chernoff type, with or without the truncation that makes the method applicable to heavy tails, can therefore be exponentially small in $n$, and no variance-based maximal inequality is available either. The estimates \eqref{eqn.obja} and \eqref{eqn.objamom} hold nevertheless, uniformly in the law. $\E Z_n\le1$ by \eqref{eqn.objamean}, and the two-point models with $a\le\varepsilon K$ have $\E Z_n=\frac K{K+a}\ge1-\varepsilon$, so the mean bound is sharp here; \eqref{eqn.objamom} at $\lambda=W(1)=0.5671$ gives only $\E Z_n\le3.783$. Taking $u=2.163$ in \cref{cor.finite} gives the simultaneous envelope $S_k\le2.163(K+J_k)$, $k\le n$, with probability at least $0.95$; the estimate \eqref{eqn.obja} needs $u=4.317$ for the same level.
@@ -898,6 +777,44 @@
 		\end{align}
 		that is, $\log F$ Lipschitz on $[0,\infty)$. Then \eqref{eqn.incr} and \eqref{eqn.testfun} give $\E_{k-1}F(R_k)\le F(R_{k-1})\big(1+C_Fb_k/(K+J_{k-1})\big)$, so $F(R_k)\exp(-C_FB_k/K)$ is a positive supermartingale. The exponential $F(x)=e^{\lambda x}$ satisfies \eqref{eqn.testfun} with $C_F=e^\lambda-1$ by convexity on $[0,1]$, and this is what the proof of Proposition~\ref{prop.obja} does; the family $F_p(x)=(1+x)^p$, $p\in(0,1]$, satisfies it with $C_F=p$ and yields $\PP(Z_n>u)\le e^p/(1+u)^p$, whose $p=1$ member is Remark~\ref{rmk.log}. By contrast $F(x)=e^{\lambda x^\alpha}$ with $\alpha>1$ violates \eqref{eqn.testfun}: $\log F=\lambda x^\alpha$ grows superlinearly, so at level $x$ an increment of size $h$ multiplies $F$ by $e^{\lambda\alpha x^{\alpha-1}h}$, which is unbounded in $x$. The budget $\E_{k-1}\Delta R\le b_k/(K+J_{k-1})$ is linear in the increment and cannot pay for a superlinear relative increase. Proposition~\ref{prop.lower} shows that this is not a defect of the argument.
 	\end{remark}
+
+\subsection{The extremal tail problem} % (fold)
+\label{sec:extremal}
+
+	Throughout the rest of this section, $\mathcal C$ denotes the class of models
+	\begin{align}\label{eqn.class}
+	\mathcal C=\Big\{(\xi_1,\dots,\xi_n):\ n\ge1,\ \xi_k\ge0\ \text{adapted},\ \sum_{k\le n}\E_{k-1}\xi_k\le K\ \text{a.s.}\Big\},
+	\end{align}
+	with $K$ a constant, or an $\cff_0$-measurable random variable in which case every statement is read conditionally on $\cff_0$, and
+	\begin{align}\label{eqn.Pstar}
+	P^\star(u)=\sup_{\mathcal C}\PP\Big(\max_{0\le k\le n}\frac{S_k}{K+J_k}>u\Big),
+	\end{align}
+	where $S_k=\sum_{j\le k}\xi_j$ and $J_k=\max_{j\le k}\xi_j$. \Cref{sec:largestjump} bounds $P^\star$ from above by $e^{u-1}u^{-u}$, at a fixed $\lambda$ and without using any information about the size of the record. The extremal problem is to determine $P^\star$ itself, and it is a problem rather than an evaluation because two mechanisms act in opposite directions: a larger ratio needs larger costs, while a larger cost raises the denominator. With $\ell=\log u$, $h=\log\log u$ and $t_H$ the root of $t=\ell+\log t$, the determination is
+	\begin{align}\label{eqn.mainresult}
+	-\log P^\star(u)\ =\ u\,t_H+\frac1{t_H-1}+O(\log u),
+	\end{align}
+	the expansion of $t_H$ being displayed in \eqref{eqn.secondorder3}.
+
+	The determination occupies \cref{sec:sharptail} and its two halves are independent: the sharp supermartingale together with its variational saddle gives the upper bound (\cref{thm.refined}), a two-point model supplies the matching construction (\cref{prop.lower}), and the two together give \eqref{eqn.mainresult} in the form \eqref{eqn.secondorder3} (\cref{cor.second}), whose factor in front of the exponential is bounded in \cref{rmk.prefactor}. Read without the expansion, the same infimum is \cref{cor.finite}, which is the form of the bound to use at finite $u$. The quadratic-variation and dual-Doob versions of these statements, which follow from the same two results under a pathwise budget, are in \cref{sec:inequalities_for_martingales}.
+
+	The tail is not the only functional for which the class admits an extremal question. The moment version, for which the near-extremal models turn out to be asymptotically optimal, is the following.
+
+	\begin{remark}[The moments of order above one]\label[remark]{rmk.moments}
+		Write $M_m=\sup_\mathcal{C}\E Z_n^m$, and let $L_m=\sup_{0<q<1}q^m\mathcal T_m\big(\frac{1-q}{q}\big)$ be the value approached by the two-point models, where $\mathcal T_m(\lambda)=\E N_\lambda^m$ for $N_\lambda$ Poisson of mean $\lambda$. Besides $M_m=1$ on $\big(0,\frac2{1-e^{-2}}\big]$ one has
+		\begin{align}\label{eqn.mombrackets}
+			1\le M_3\le1.1353,\qquad 1.2246\le M_4\le1.9087 .
+		\end{align}
+		The upper bounds come from $z^m\le A_m(e^{tz}-1)$ with $A_m=y_m^m/(e^{y_m}-1)$ and $m(1-e^{-y_m})=y_m$, optimised over $t\le2$ and then read off \eqref{eqn.mgf}. The lower bound for $M_3$ is the value $1-q^2(2-q)$ of the two-point family. That for $M_4$ is not: the same family gives only $1.2110$. Instead, let an early phase of $h$ trials carry a cost $a$ with probability $\lambda/h$ each, consuming $a\lambda$ of the budget, and let $B=1-a\lambda$; then, if some early cost occurred, make the further costs of size $a$ with probability $B/(na)$, and if none occurred, of size $b$ with probability $B/(nb)$. On either branch the budget is spent exactly and all nonzero costs share one size, so the fourth moment is a binomial sum, and its limit at $a=0.25705$, $\lambda=0.97775$ and $b/(1+b)=0.32665$ is $1.22115$, rising to $1.2246$ when the branch with no early cost is itself restarted. Adaptivity in the size of a cost, not in its timing, is what gains: for costs of one size the factorial moments satisfy $\E(N)_r\le\lambda^r$, and independent menus cannot exceed $L_m$ for $m\le4$. For large $m$ the two agree: with $D=\log m$,
+		\[
+			\log M_m=\log L_m+O\Big(\frac m{D^3}\Big)=m\big(D-\log D-1\big)+\frac m{2D^2}+O\Big(\frac m{D^3}\Big),
+		\]
+		so $M_m^{1/m}\sim m/(e\log m)$ and the two-point family is asymptotically optimal, while the essential supremum of $Z_n$ over the class is infinite.
+	\end{remark}
+
+\subsection{Sharp asymptotics and near-extremal models} % (fold)
+\label{sec:sharptail}
+
+	We give the construction first, since it exhibits the models that attain the rate and shows at the same time that no sub-Gaussian bound can hold in the class; the sharp upper bound follows.
 
 	\begin{proposition}[The matching construction: extremal models]\label[proposition]{prop.lower}
 		There is an absolute constant $C$ such that for all sufficiently large $u$ there are $n$, $K$ and adapted nonnegative $\xi_1,\dots,\xi_n$ satisfying \eqref{eqn.budget} with
@@ -1015,7 +932,6 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		The factor $\sqrt u$ separating the two sides of \eqref{eqn.prefactorwindow} is the local Stirling factor of the passage count, and it cannot be recovered from the exponential family of test functions: a positive mixture of the supermartingales $\{M^\lambda\}$ of \cref{thm.refined} is bounded on every path by its total mass times the pointwise maximum of the integrands, which supplies no Gaussian factor. Closing the gap --- a local limit statement for the passage count inside the maximum --- is left open, as is the question whether the ratio has a limit at all.
 	\end{remark}
 
-
 \begin{remark}[Mechanism]\label{rmk.mechanism}
 		The term $u\log\log u$ is not an artefact of the proof, and the two halves explain each other. To have $Z_n>u$ one needs $S_k>u(K+J_k)$, and since a single huge cost raises $J$ and saturates the ratio at one, the cheapest configuration is $r\asymp u$ costs of comparable size $a$, which forces $a>uK/(r-u)$; the conditional mean budget caps the probability of such a cost by a multiple of $K/(na)$, hence $-\log\PP\approx r\log(1/p)$ with $p\lesssim\frac{r-u}{nu}$. Writing $r=(1+\varepsilon)u$ this becomes $(1+\varepsilon)u(\log u+\log\frac1\varepsilon+O(1))$, minimal at $\varepsilon\asymp1/\log u$ with value $u\log u+u\log\log u+O(u)$. Keeping instead of discarding the excess $\varepsilon u\log(1/\varepsilon)$, the value at that $\varepsilon$ is $u\log u+u\log\log u+\frac{u\log\log u}{\log u}+O\big(\frac u{\log u}\big)$, which is the three-term expansion of \eqref{eqn.secondorder3}; that is \eqref{eqn.lower2}. A single scale already carries the whole three-term exponent: if the costs take at most $m$ values, then, partitioning the passage event by the record size $J_\tau$ and applying the supermartingale argument bandwise to each record value, $\PP(Z_n>u)\le m\,e^{-M_u}$ with $M_u=u(\rho_*+1)-1$ and $\rho_*+1-\log\big(u(1+\rho_*)\big)=1/u$; the two-point models attain $M_u+O(\log u)$, and $\rho_*=\ell+h-1+\frac h\ell+O\big(\frac{h^2}{\ell^2}\big)$ gives $M_u=u\ell+uh+\frac{uh}{\ell}+O\big(\frac{uh^2}{\ell^2}\big)$. No finite menu improves the coefficient, and \eqref{eqn.refined} gives the matching bound in the full class. In the other direction, the single-scale argument behind \eqref{eqn.obja} is blind to the fact that a cost of size comparable to $K+J$ also raises $J$, and therefore the denominator; optimising over the record size, as the product supermartingale of \cref{thm.refined} does, is what recovers the $\log\log$ term: its saddle has $J=K(t_H-1)$, so the extremal largest cost exceeds the budget by $t_H-1=\log(u\log u)+O(1)$.	\end{remark}
 
@@ -1025,45 +941,8 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		The value is not a universal number and should not be expected to be one, because it is a property of the class of models admitted and not of the inequality alone. In the predictable case the corresponding sharp constant is known and equals $p^{-p}$ \cite{GS21}; here the class itself is different, and the constant moves with it. The dependence is easy to see and is not merely a matter of constants in the proofs. The construction behind \eqref{eqn.lower2} uses costs of size $a=1$ while $K=1/\log u$, so its individual costs exceed the accumulated mean budget by a factor $\log u$; any additional hypothesis tying the size of a single cost to the budget, for instance $\xi_k\le K$ for all $k$, which holds whenever each individual cost is small compared with the total admissible mean, excludes that construction and weakens the lower side. That class is understood exactly: if $\xi_k\le cK$ for all $k$, then $-\log\sup_\mathcal{C}\PP(Z_n>u)=H\big(u(1+c)\big)/c+O_c(\log u)$ with $H(z)=z\log z-z+1$, the upper bound from the exponential supermartingale at truncation level $cK$ and the lower one from costs in $\{0,cK\}$; at $c=1$ the coefficient of $u\log u$ is $2$ rather than $1$. Enlarging the class has the opposite effect. By \cref{thm.refined} the exponent carries no term of order $u$ at all, and by \eqref{eqn.lower2} neither does the construction, so the coefficient of $u$ in \eqref{eqn.secondorder} is $0$. \Cref{cor.second} goes further: the two sides already meet at the next term, both carrying $u\log\log u/\log u$, so the exponent is now determined to its constant and what remains undetermined is only the factor in front of it, which \cref{rmk.prefactor} confines to $[1/\sqrt{2\pi},1]$ in units of $u^{-1/2}$. The rate in \eqref{eqn.secondorder} is therefore a property of the class of \eqref{eqn.budget}, and the constant, here $0$, is a property of that class as well: imposing further structure on the class can only change it, which is why it is stated here for the class and not as a universal number.
 	\end{remark}
 
-	The class of \eqref{eqn.budget} contains more than costs. The increments of the quadratic variation of a discrete martingale are nonnegative, and their conditional means add up to its conditional quadratic variation, so \cref{prop.obja} and \cref{thm.refined} apply to $[f]$. They replace the conditional-mean weight and the restricted exponent of \cref{thm.dismart} by an observable normaliser and an unrestricted one.
-
-	\begin{corollary}\label[corollary]{cor.square}
-		Let $(f_k)_{k\ge0}$ be a square integrable martingale with $f_0=0$, let $[f]$ and $\wei{f}$ be as in \cref{sec:inequalities_for_martingales}; fix $n\ge1$, put $J_k=\max_{j\le k}|df_j|^2$ and $Z_n=\max_{k\le n}[f]_k/(K+J_k)$, and let $K$ be $\cff_0$-measurable with $0<K<\infty$ and
-		\begin{align}\label{eqn.squarebudget}
-			\sum_{j=1}^n\E_{j-1}|df_j|^2\le K\quad\text{a.s.}
-		\end{align}
-		This hypothesis is implied by $\wei{f}_n\le K$, since $\wei{f}_n=\sum_{j=1}^{n+1}\E_{j-1}|df_j|^2$. Then for every $\lambda>0$ and every $u\ge0$,
-		\begin{gather}\label{eqn.squaretail}
-			\PP(Z_n>u)\le\exp\big(e^\lambda-1-\lambda u\big),
-			\\\shortintertext{hence}
-			\PP(Z_n>u)\le e^{u-1}u^{-u}\qquad(u>1),
-		\end{gather}
-		for every $u\ge e^{20}$,
-		\begin{align}\label{eqn.squarerefined}
-			\PP(Z_n>u)\le\exp\big(-u\log u-u\log\log u\big),
-		\end{align}
-		and for every $m>0$, every $\lambda>0$ and every $q<\lambda$,
-		\begin{align}\label{eqn.squaremom}
-			\E Z_n^m\le e^{e^\lambda-1}\frac{\Gamma(m+1)}{\lambda^m},
-			\qquad
-			\E e^{qZ_n}\le1+\frac{q}{\lambda-q}e^{e^\lambda-1}.
-		\end{align}
-		The rate in \eqref{eqn.squarerefined} cannot be improved in this class: the models of \cref{prop.lower} are square functions, so \eqref{eqn.lower2} holds for $\PP(Z_n>u)$ here, and together with \eqref{eqn.refined} it gives the two-sided statement \eqref{eqn.secondorder3} in this class; and \eqref{eqn.nosuper} holds with the supremum taken over the martingales of this corollary.
-	\end{corollary}
-	\begin{proof}
-		We apply \cref{prop.obja} and \cref{thm.refined} to $\xi_k=|df_k|^2$, $k\ge1$. The costs are nonnegative and adapted, $S_k=\sum_{j\le k}|df_j|^2=[f]_k$ by additivity of $[f]$, and $b_k=\E_{k-1}|df_k|^2$, so the budget \eqref{eqn.budget} is \eqref{eqn.squarebudget}.
-
-		For the sharpness it is enough to realise the models of \cref{prop.lower} as square functions. Let $a>0$ and $p\in(0,1)$, let $df_1,\dots,df_n$ be independent with $\PP(df_k=a^{1/2})=\PP(df_k=-a^{1/2})=p/2$ and $\PP(df_k=0)=1-p$, and let $f$ be constant after $n$. Then $f$ is a square integrable martingale, $|df_k|^2$ takes the values $a$ and $0$ with probabilities $p$ and $1-p$, and $\E_{k-1}|df_k|^2=pa$, so that \eqref{eqn.squarebudget} holds with $K=npa$ and $(S_k,J_k)=([f]_k,\max_{j\le k}|df_j|^2)$ is the pair to which \cref{prop.lower} is applied.
-	\end{proof}
-
-	\begin{remark}[The dual of Doob's inequality]\label[remark]{rmk.dualdoob}
-		The same argument applies to the dual of Doob's inequality \eqref{doob0}. For integrable nonnegative $z_i$ the process $V_k=\sum_{i\le k}\E_i z_i$ is nondecreasing, and conversely every nonnegative adapted nondecreasing $(\xi_k)$ is of this form, with $z_k=\xi_k$, because $\E_k z_k=\xi_k$ by adaptedness. Hence \cref{prop.obja} and \cref{thm.refined} apply to $(V_k)$ whenever $\sum_{k\le n}\E_{k-1}z_k\le K$, with $J_k=\max_{j\le k}\E_j z_j$, and \cref{prop.lower} again shows that the rate cannot be improved there and that no sub-Gaussian bound can hold.
-
-		As in \cref{cor.square}, what changes relative to \cref{sec:inequalities_for_martingales} is the normaliser: it is $K+J_k$, formed from the budget and from the costs observed so far, where \eqref{doob0} carries $\sup_k\E_k\sum_{i\ge k}z_i$, a conditional mean of the future costs. A ratio form of \eqref{doob0} with the latter weight is already available from \cref{thm.bmophi}, through \eqref{est.jnweight2} and \eqref{est.jnexpwei}, together with the restriction on $\lambda$ in \eqref{est.jnexpwei}. Neither estimate implies the other.
-	\end{remark}
-
 	\medskip
-	\noindent\textit{Relation to the literature.} The discrete counterparts of the statements of this subsection are the exponential inequalities for sums. Those for independent variables normalise a deviation of $S_n$ by the number of terms together with either the range of a summand, as in Hoeffding's inequality, or a bound on the variances, as in the Bennett and Bernstein inequalities, the maximal versions following from Doob's inequality. For martingales the sharpest such result with a predictable-variation normaliser is Freedman's \cite{Fre75}, which bounds the maximal function by the predictable quadratic variation $\langle M\rangle$ together with an almost sure bound on the increments. Each of these normalisers is computed from a conditional variance or from an a priori range, and \eqref{eqn.budget} supplies neither. The costs need not be martingale differences and no conditional second moment is assumed finite, so that even the exponential moment of $S_n$ may fail to exist (Example~\ref{ex.pareto}); and the normaliser $K+J_k$ carries the largest cost actually realised, which is where the information sits when the second moment is infinite. Conversely, an almost sure bound $\xi_k\le K\ell$ with $\ell\ge1$ puts $J_k\le K\ell$, so that the normaliser is a constant multiple of $K$, and restores a conditional-variance bound, $\sum_{k\le n}\E_{k-1}\xi_k^2\le K\ell\,B_n\le K^2\ell$, hence Freedman's inequality for $M_k=S_k-B_k$, whose increments are bounded by $2K\ell$: since $\{Z_n>u\}\subset\{M_n>(u-1)K\}$, that gives a tail which is exponentially small in $u$ for fixed $\ell$. Such a tail is weaker than \eqref{eqn.obja} for large $u$, but it needs no jump in the normaliser; and the models of \cref{prop.lower}, which use a cost larger than $K$, are excluded by the hypothesis, as \cref{rmk.constant} records. What \cref{prop.obja} and \cref{thm.refined} add is accordingly the case in which no a priori bound on a single cost is available, with the largest cost replacing it --- the discrete counterpart of the bounded-jump case of \cref{sec:continuous}.
+	\noindent\textit{Relation to the literature.} The discrete counterparts of the statements of this section are the exponential inequalities for sums. Those for independent variables normalise a deviation of $S_n$ by the number of terms together with either the range of a summand, as in Hoeffding's inequality, or a bound on the variances, as in the Bennett and Bernstein inequalities, the maximal versions following from Doob's inequality. For martingales the sharpest such result with a predictable-variation normaliser is Freedman's \cite{Fre75}, which bounds the maximal function by the predictable quadratic variation $\langle M\rangle$ together with an almost sure bound on the increments. Each of these normalisers is computed from a conditional variance or from an a priori range, and \eqref{eqn.budget} supplies neither. The costs need not be martingale differences and no conditional second moment is assumed finite, so that even the exponential moment of $S_n$ may fail to exist (Example~\ref{ex.pareto}); and the normaliser $K+J_k$ carries the largest cost actually realised, which is where the information sits when the second moment is infinite. Conversely, an almost sure bound $\xi_k\le K\ell$ with $\ell\ge1$ puts $J_k\le K\ell$, so that the normaliser is a constant multiple of $K$, and restores a conditional-variance bound, $\sum_{k\le n}\E_{k-1}\xi_k^2\le K\ell\,B_n\le K^2\ell$, hence Freedman's inequality for $M_k=S_k-B_k$, whose increments are bounded by $2K\ell$: since $\{Z_n>u\}\subset\{M_n>(u-1)K\}$, that gives a tail which is exponentially small in $u$ for fixed $\ell$. Such a tail is weaker than \eqref{eqn.obja} for large $u$, but it needs no jump in the normaliser; and the models of \cref{prop.lower}, which use a cost larger than $K$, are excluded by the hypothesis, as \cref{rmk.constant} records. What \cref{prop.obja} and \cref{thm.refined} add is accordingly the case in which no a priori bound on a single cost is available, with the largest cost replacing it --- the discrete counterpart of the bounded-jump case of \cref{sec:continuous}.
 
 	\medskip
 	\noindent\textit{The exact tail and the normaliser.} The exponent of \eqref{eqn.secondorder3} is a Chernoff exponent, and passing from it to \eqref{eqn.prefactorwindow} is the exact asymptotics of a deviation, whose classical form for an independent sum, local factor included, is \cite{BR60}; the difference is that here it is evaluated at the two-point law of \cref{prop.lower} rather than at a given law. The factor $u^{-1/2}\sqrt{1-1/t_H}$ of \cref{rmk.prefactor} is the saddlepoint factor of the passage count in the sense of \cite{Jen95}, and it is the only place where the argument leaves the exponential scale. In the subexponential literature the tail of a sum is described by its largest term \cite{AK96}, whereas the normaliser $K+J_k$ removes exactly that channel --- a single cost $a$ gives $a/(K+a)<1$ --- so that the statements above describe the complementary regime, in which the excess over the budget is carried by a count of comparable costs. Exponential inequalities for self-normalised processes, whose normaliser is computed from the increments, are surveyed in \cite{dlPnKL07}; the normaliser here is the budget together with the largest cost realised, which is optional rather than predictable and therefore not a weight the analyst can choose, and that is where the two-sided statements of this subsection come from.\footnote{The searches were made on 27 November 2026; on that date zbMATH Open returned 61 records for \texttt{ti:``self-normalized'' cc:60F10}, 13 for \texttt{ab:``one big jump''} and 22 for \texttt{ab:saddlepoint cc:60F10}. Absence of \eqref{eqn.secondorder3} from those lists is not evidence that no comparable statement exists, and for the class in which a single cost is bounded a priori the comparison with Freedman's inequality above is the relevant one and nothing beyond it is claimed.}
@@ -1071,7 +950,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 \subsection{Continuous time} % (fold)
 \label{sec:continuous}
 
-	The results of \cref{sec:monotone} are stated for sequences, but their proofs use only three ingredients: the increment bound $\Delta R\le\min\{1,\xi/(K+J_{-})\}$, the identity $\E[\xi\,|\,\cff_{-}]=b$, and additivity of the costs. All three are available in continuous time for a purely discontinuous increasing process with a compensator, with $\sum_kb_k$ replaced by the total compensator. We state the outcome, since it is the form in which the result is likely to be used.
+	The results of \crefrange{sec:monotone}{sec:sharptail} are stated for sequences, but their proofs use only three ingredients: the increment bound $\Delta R\le\min\{1,\xi/(K+J_{-})\}$, the identity $\E[\xi\,|\,\cff_{-}]=b$, and additivity of the costs. All three are available in continuous time for a purely discontinuous increasing process with a compensator, with $\sum_kb_k$ replaced by the total compensator. We state the outcome, since it is the form in which the result is likely to be used.
 
 	\begin{proposition}\label[proposition]{prop.cont}
 		Let $X$ be nondecreasing, purely discontinuous, RCLL, adapted and integrable on $[0,T]$ with $X_0=0$, let $\mu^X(dt,dx)$ be its jump measure and $\nu^X(dt,dx)$ the predictable compensator of $\mu^X$, so that $\mu^X-\nu^X$ is a martingale measure. Assume that
@@ -1107,7 +986,6 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		\end{align}
 		the second identity because $X$ is purely discontinuous with $X_0=0$; $\int x\,\nu^X$ is the quantity bounded in \eqref{eqn.jumpbudget}.
 
-
 		\emph{The exponential estimate.} Put $A_t=\int_{[0,t]}dB_s/(K+J_{s-})$, the integral being with respect to the increasing process \eqref{eqn.jumpcompensator} and the integrand being predictable, and $C_t=(e^\lambda-1)A_t$, $V_t=e^{\lambda R_t-C_t}$. Then $C$ is predictable and nondecreasing with $C_0=0$, so $V$ is nonincreasing between jumps of $X$, and $C_T\le(e^\lambda-1)B_T/K\le e^\lambda-1$. At a jump with $\Delta X_t=x$ the increment of $R$ may be negative, since a new record lowers $R$, but $0\le(\Delta R_t)_+\le\min\{1,x/(K+J_{t-})\}$, so the chord inequality of \cref{prop.obja} on $[0,1]$ gives \[e^{\lambda\Delta R_t}-1\ \le\ (e^\lambda-1)(\Delta R_t)_+\ \le\ \frac{(e^\lambda-1)x}{K+J_{t-}},\] and hence $\E[e^{\lambda\Delta R_t}\,|\,\cff_{t-}]\le1+\Delta C_t\le e^{\Delta C_t}$, which at a time $t$ at which $B$ has an atom, where the jump and the whole increment $\Delta C_t$ occur together, is the complete conditional bound. For the diffuse part, let $y_s(x)\le x/(K+J_{s-})$ be the jump of $R$ produced by a jump $x$ of $X$ at $s$, which is predictable in $(s,x)$, so that $e^{\lambda y_s(x)}-1\le(e^\lambda-1)x/(K+J_{s-})$, the same bound holding when the jump lowers $R$. On an interval $[a,b]$ carrying no atom of $B$ the process $C$ is continuous there, so the jumps of $e^{\lambda R}$ and those of $e^{-\lambda C}$ never coincide and $e^{\lambda R_s}$ may be replaced by $e^{\lambda R_{s-}}$ in a Stieltjes integral against the continuous $dC$; hence \begin{gather*}V_b-V_a=\sum_{a<s\le b}V_{s-}\big(e^{\lambda\Delta R_s}-1\big)-\int_a^bV_{s-}\,dC_s,\\ \E[V_b-V_a\,|\,\cff_a]\le\E\Big[\int_{]a,b]}\int V_{s-}\big(e^{\lambda y_s(x)}-1\big)\,\nu^X(ds,dx)-\int_a^bV_{s-}\,dC_s\Big|\cff_a\Big]\le0,\end{gather*} the compensation formula applied to the predictable $(s,x)\mapsto V_{s-}(e^{\lambda y_s(x)}-1)$ turning the sum into the $\nu^X$-integral of the second display, whose integrand is at most $V_{s-}(e^\lambda-1)dB_s/(K+J_{s-})=V_{s-}dC_s$ term by term in $x$. Hence, together with the atom case above, $V$ is a nonnegative supermartingale with $V_0=1$. On $\{Z>u\}$ one has $V_t\ge e^{\lambda R_t-C_T}>e^{\lambda u-e^\lambda+1}$ for some $t$, and Doob's maximal inequality gives \eqref{eqn.cont1}. When $B_T\le\Phi$ the same computation gives $C_T\le e^\lambda-1$ with $K$ replaced by $\Phi$.
 
 				\emph{The sharp estimate.} The argument of \cref{thm.refined} transfers verbatim. Put $M_t=e^{-\lambda B_t}\prod_{s\le t}(1+\lambda\Delta X_s)=e^{-\lambda B^c_t}\prod_{s\le t}Y_s$ with $Y_s=(1+\lambda\Delta X_s)e^{-\lambda\Delta B_s}$ and $B^c$ the continuous part of $B$. At a time $t$ at which $B$ has an atom, $\E[Y_t\mid\cff_{t-}]=e^{-\lambda\Delta B_t}(1+\lambda\Delta B_t)\le1$; on the diffuse part $\sum_{s\le t}(Y_s-1)=\lambda\sum_{s\le t}\Delta X_s$ has compensator $\lambda B^c_t$, which cancels the factor $e^{-\lambda B^c}$. Since in addition $Y_s>0$, the process $-\lambda B^c+\sum_s(Y_s-1)$ is a local supermartingale whose jumps exceed $-1$, so its Dol\'eans exponential $M$ is a nonnegative supermartingale with $M_0=1$. On $\{\tau\le T\}$ every jump up to $\tau$ lies in $[0,J_\tau]$, $X_\tau>u(K+J_\tau)$ and $B_\tau\le K$, so concavity of $\log(1+\lambda x)$ on $[0,J_\tau]$ gives the same lower bound for $\log M_\tau$ as in \cref{thm.refined}; optional stopping at $\tau\wedge T$, the minimisation over $\lambda$ and the record size, and the same saddle then give \eqref{eqn.cont3} with the value $ut_H+\frac1{t_H-1}+O(1/u)$, and \eqref{eqn.cont2} follows from it. The discrete and the continuous version therefore have the same exponent to its constant.
@@ -1142,7 +1020,6 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 A predictable budget is therefore harmless exactly when the record scale is bracketed in advance. Since $uL=ut_H+\frac1{t_H-1}+O(1/u)$, the constant of \cref{cor.second} survives the loss of $\cff_0$-measurability whenever the bracket does.
 	\end{remark}
 
-
 	\begin{remark}[Comparison with John--Nirenberg]\label[remark]{rmk.fartailjn}
 		Take an increasing process whose compensator is pathwise bounded, $B_T\le K$, and whose jumps are at most $K$, and let $V^*=\sup_{r\le\cdot}d(X_0,X_r)$ for a BMO process $V=d(X_0,X_\cdot)$ with that $V^*$. Then $V^*$ satisfies the hypotheses of \cref{cor.fartail} and, since its compensator budget and the BMO norm are comparable, $\|V\|_{\bmo}\asymp K$; so
 		\[
@@ -1150,7 +1027,6 @@ A predictable budget is therefore harmless exactly when the record scale is brac
 		\]
 		against the John--Nirenberg estimate $e^{-cv/\|V\|_{\bmo}}$. The two are of the same order in the bulk $v\asymp K$, and \eqref{eqn.fartail} is strictly thinner in the far range, by the $\log(v/K)$ in the exponent; consistently with this, all exponential moments of $V^*$ are then finite, whereas John--Nirenberg gives finiteness only for $\lambda<\|V\|^{-1}_{\bmo}$. No contradiction arises: the sharpness of John--Nirenberg lives in the bulk, and the regime it describes includes martingales with unbounded jumps, excluded here by the convention that $|\Delta V_S|\le[V]_{\bmo_\phi}\phi_S$ (take $T=S$ in \eqref{ineq.JNweighted}'s hypothesis) and by $J_T\le K$. The bound \eqref{eqn.fartail} is not free: it needs the compensator to be bounded pathwise, whereas a weighted BMO hypothesis supplies only $\E_t(B^*_T-B^*_t)\le c_1\E_t\phi^*_{t,\tau}$ through \cref{thm.bmophi}, which bounds the mean of the remaining compensator and not the compensator itself.
 	\end{remark}
-
 
 	\begin{remark}\label{rmk.contlimits}
 		Three points about the hypotheses, in increasing order of importance.
@@ -1191,12 +1067,168 @@ A predictable budget is therefore harmless exactly when the record scale is brac
 	\medskip
 	\noindent\textit{Relation to the literature.} Continuous-time maximal inequalities are surveyed in \cite{kuhn2022maximal}, which covers martingales, L\'evy, L\'evy-type, Markov and Gaussian processes in continuous time and finite dimension, and deliberately leaves large deviations aside. Exponential bounds for increasing processes in that tradition are obtained by domination \cite{MR0471069,LLP80}, with sharp constants when the dominator is predictable \cite{GS21}. If the jumps of $X$ are bounded by a deterministic $j$, then $J_t\le j$ and the normaliser $K+J_t$ of \cref{prop.cont} is essentially constant, so the estimates reduce to a raw exponential moment bound for $\sup_tX_t$ and nothing beyond that body of results is obtained. The content of \cref{prop.cont} is therefore the case of unbounded jumps, where $J$ carries genuinely new information and no such reduction is available. Self-normalised exponential inequalities for martingales exist, with normalisers built from conditional variances or sums of squares \cite{BT08,FGL15,MR2488094}; their proofs use martingale structure, and their normalisers are predictable functionals of the past, neither of which is available here. Good-$\lambda$ and Lenglart-type tail comparisons for adapted, not necessarily martingale, processes go back at least to \cite{dlaP93}; their normalisers are dominating quantities in the sense of \cite{MR0471069}, not a mean budget together with the largest jump. The quantity $J_t=\sup_{s\le t}\Delta X_s$ itself appears in the L\'evy literature as the maximal jump process, where it is used to dominate a path rather than to normalise a maximal inequality \cite{BFM16}. What we claim as new in this subsection is accordingly narrow: a maximal inequality for cumulative costs whose normaliser is optional and jump-based, valid without bounded jumps and without a predictable dominator, and with the second-order exponent of \eqref{eqn.cont2}. A search of zbMATH Open for combinations of ``maximal inequality'', ``compensator'', ``exponential inequality'', ``largest jump'', ``self-normalized'' and ``counting process'' returned the works cited here and no statement of this form, and the forward-citation lists of \cite{MR0471069} and \cite{kuhn2022maximal} contain none either\footnote{The searches were made on 26 November 2026; on that date the two lists held 207 and 30 citing works.}; absence from a survey is not absence from the literature, and \eqref{eqn.cont1} should not be claimed as new in the bounded-jump case.
 
-\subsection{Optional and predictable dominators} % (fold)
-\label{sec:dominators}
+\section{Martingale consequences} % (fold)
+\label{sec:inequalities_for_martingales}	
+	In order to reveal the role of weighted BMO processes, we apply \cref{thm.bmophi} to martingales and positive sequences.
+	We discover new ranges for  classical inequalities from the works of Burkholder, Davis and Gundy.
+	% It is possible to combine with other techniques to strengthen the results, however
+	We start with the following result, which is the dual of Doob's martingale inequality.
+	\begin{proposition}
+		Let $z_1,z_2,\ldots$ be positive random variables. Then for every $m\in(0,\infty)$, we have
+		\begin{align}\label{doob0}
+			\|\sum_{i=1}^\infty\E_{i}z_i\|_m\le 2c_mm\|\sup_{k}\E_k\sum_{i=k}^\infty z_i\|_m.
+		\end{align}
+		If $m\in(1,\infty)$ and $m'=m/(m-1)$,
+		\begin{align}\label{doob1}
+			\|\sum_{i=1}^\infty\E_{i}z_i\|_m\le 2c_mmm'\|\sum_{i=1}^\infty z_i\|_m.
+		\end{align}
+	\end{proposition}
+	\begin{proof} 
+		Define $V_k=\sum_{i=1}^k\E_{i}z_i$. From $\E_{k}(V_n-V_{k-1})=\E_{k}\sum_{i=k}^nz_i$,
+		% \begin{align*}
+		% 	\E_{k}(V_n-V_{k-1})=\E_{k}\sum_{i=k}^nz_i
+		% \end{align*}
+		we see that $(V_k)_{k\le n}$ is BMO with the weight $(\phi_k=\E_k\sum_{i=k}^n z_i)_{k\le n}$. Applying \cref{thm.bmophi}, we have for every $m\in(0,\infty)$
+		\begin{align*}
+			\|\sum_{i=1}^n\E_{i}z_i\|_m\le 2c_mm\|\sup_{k\le n}\E_k\sum_{i=k}^n z_i\|_m.
+		\end{align*}
+		Sending $n\to\infty$ yields the first claim. The second claim follows from the first and Doob's maximal inequality.	
+	\end{proof}
+	In \cite{MR0400380}, Burkholder--Davis--Gundy  show \eqref{doob1}  with a different constant for all $m\in[1,\infty)$ (note that the case $m=1$ is trivial). The estimate \eqref{doob0} appears to be new. We take the chance to mention that it is shown in \cite[Theorem 20.1]{MR365692} that
+	\begin{align*}
+		\|\sum_{i=1}^\infty\E_{i}z_i\|_m\ge 2^{-1/m} \|\sum_{i=1}^\infty z_i\|_m, \quad m\in(0,1).
+	\end{align*}
+	
 
-	\begin{remark}\label{rmk.GS}
-		Lenglart's domination inequality \cite{MR0471069} compares a nonnegative adapted process with a nondecreasing \emph{predictable} dominator $G$, and its sharp monotone form \cite{GS21} has constant $p^{-p}$. Predictability is indispensable: \cite[Remark 2.7]{GS21} records that for an optional $G$, and no further assumptions, no finite constant exists in that inequality. The normaliser $J_t+2K$ of \cref{cor.mono}, and equally $J_t+K$ of \cref{prop.obja}, is optional and not predictable, since it contains the current jump; so the classical domination inequalities cannot be applied to it. There is nevertheless no contradiction, and the reason is that \eqref{est.X2}, \eqref{est.X3} and \eqref{eqn.obja} are not domination inequalities: they bound a \emph{self-normalised} ratio, in which the optional quantity appears in the denominator, and they do not compare the moments of $\sup X$ with those of $\sup G$. In this sense the sharp maximal function of \cref{cor.maximaldagger} produces a usable statement in exactly the situation where the sharpest known domination inequality has no constant at all, and Proposition~\ref{prop.obja} shows that in the monotone class even the constants can be brought to order one for that optional normaliser.
+	Let $f=(f_{k})_{k\ge0}$ be a square integrable discrete martingale, $f_{-1}=0$. Define for each $k\le n$
+	\begin{gather*}
+		df_n=f_n-f_{n-1},\quad f^*_{k,n}=\sup_{k\le j\le n}|f_j-f_k|, \quad f^*_n=f^*_{0,n},
+		\\ [f]_{k,n}=\sum_{j=k}^{n}|df_j|^2, \quad [f]_n=[f]_{0,n},
+		\\\wei{f}_{k,n}= \sum_{j=k+1}^{n+1}\E_{j-1}|df_j|^2,\quad \wei{f}_n=\wei{f}_{0,n}.
+		% \\ f^\sharp_{k,n}=\sup_{k\le i\le n}\E_i|f_n-f_{i-1}|, \quad f^\sharp_n=f^\sharp_{0,n}
+	\end{gather*}
+	From the martingale property, we have the following relations 
+	\begin{gather}\label{id.isometry}
+	 	\E_i|f_k-f_{i-1}|^2= \E_i[f]_{i,k}=\E_i([f]_k-[f]_{i-1}),
+	 	% \\\label{id.iso2}
+	 	% \E_i|f_k-f_{i-1}|^2=\E_i|f_k-f_{i}|^2+ |df_i|^2=\E_i\wei{f}_{i,k-1}+|df_i|^2,
+	 	\\\shortintertext{and}
+	 	\label{id.condiso}
+	 	\E_{i}(\wei{f}_k-\wei{f}_{i-1})=\E_i\wei{f}_{i,k}=\E_i|f_{k+1}-f_i|^2=\E_i[f]_{i+1,k+1}.
+	\end{gather}
+	\begin{theorem}\label{thm.dismart}
+		For $m\in(0,\infty)$
+		\begin{gather}
+			\sup_{k\le n}\|f^*_{k,n}\|_{2m}\le 4c_{2m}m\Big\|\sup_{k\le n}\E_k[f]_{k,n}\Big\|_{m}^{1/2}\le 4c_{2m}m\Big\|\sup_{k\le n}(\E_k\wei{f}_{k,n-1}+|df_k|^2)\Big\|_{m}^{1/2},
+			\label{bdg.f10}
+			\\\|[f]_{n}\|_m\le 2c_mm\Big\|\sup_{k\le n}\E_k|f^*_{k,n}|^2\Big\|_m,
+			\label{bdg.fbk0}
+			\\\|\wei{f}_{n}\|_m\le 2c_mm\min\left\{\Big\|\sup_{k\le n}\E_k[f]_{k+1,n+1}\Big\|_m,\ \Big\|\sup_{k\le n}\E_k|f^*_{k,n+1}|^2\Big\|_m\right\}.
+			\label{bdg.fweisup0}
+		\end{gather}
+		If $m\in(1,\infty)$, we have
+		\begin{gather}
+			\sup_{k\le n}\|f^*_{k,n}\|_m\le 4c_{2m}mm'\|[f]_{n}\|_{m}^{1/2},
+			\label{bdg.f11}
+			\\\sup_{k\le n}\|f^*_{k,n}\|_{2m}\le 4c_{2m}m\left((m')^{1/2}\|\wei{f}_{n-1}\|_{m}^{1/2}+\|\sup_{k\le n}|df_k|\|_{2m}\right),\label{bdg.rosenthal}
+			\\\|[f]_n\|_m\le 8c_mmm'\|f^*_{n}\|^2_{2m},
+			\label{bdg.fbk1}
+			\\\|\wei{f}_n\|_m\le 8c_mmm'\min\left\{\|[f]_{n+1}\|_m,\ \|f^*_{n+1}\|^2_{2m}\right\}.
+			\label{bdg.fweisup1}
+		\end{gather}
+		In addition, there is a universal constant $\lambda>0$ such that for every $n\ge k\ge0$ and each pair $(V_{k},\Phi_{k,n})$ in 
+		$$
+			\left\{\left(f_k,\sup_{i\le k}(\E_i[f]_{i,n})^{\frac12}\right),\left([f]_{k},\sup_{i\le k}\E_i|f^*_{i,n}|^2\right), \left(\wei{f}_{k},\sup_{i\le k}\min(\E_i[f]_{i+1,n+1},\E_i|f^*_{i,n+1}|^2)\right) \right\},
+		$$
+		we have $\sup_{\varepsilon>0}\E e^{\lambda\sup_{k\le n}\frac{|V_{k}|}{\varepsilon+\Phi_{k,n}}}\le M$.
+	\end{theorem}
+	\begin{proof}
+		Because $\E_i[f]_{i,k}\le\E_i[f]_{i,n}$ whenever $i\le k\le n$, we deduce from \eqref{id.isometry} that $(f_k)_{k\le n}$ is BMO with  weight $\left((\E_k[f]_{k,n})^{1/2}\right)_{k\le n}$.
+		Identity \eqref{id.isometry} can also be read from right to left. In particular, because $\E_i|f_k-f_{i-1}|^2\le \E_i|f^*_{i-1,n}|^2$, it implies that $([f]_k)_{k\le n}$ is BMO with weight $(\E_k|f^*_{k-1,n}|^2)_{k\le n}$.
+		Similarly, \eqref{id.condiso} implies that $(\wei{f}_k)_{k\le n}$ is BMO with either weight $(\E_k[f]_{k+1,n+1})_{k\le n}$ or weight $(\E_k|f^*_{k,n+1}|^2)_{k\le n}$.
+		Applying \cref{thm.bmophi}, we obtain \eqref{bdg.f10}-\eqref{bdg.fweisup0}. The second estimate in \eqref{bdg.f10} is due to $\E_k[f]_{k,n}=\E_k\wei{f}_{k,n-1}+|df_k|^2$.
+		We note that $[f]_{k,n}\le[f]_n$ and $f^*_{k,n}\le 2f^*_n$. Hence, applying Doob's martingale inequality, we obtain \eqref{bdg.f11}-\eqref{bdg.fweisup1} from \eqref{bdg.f10}-\eqref{bdg.fweisup0}.  The exponential integrability of $V/\Phi$ is a direct consequence of \eqref{est.jnexpwei}.
+	\end{proof}
+	We observe that necessary conditions for \cref{thm.dismart} are the identities \eqref{id.isometry} and \eqref{id.condiso}, which are valid as long as $\E_i df_j df_k=0$ whenever $i\le j< k$. In a more general case, one would need to control $\E_i\sum_{j<k} df_j df_k$ by a suitable weight, however we have not explored this idea.
+	The continuous-time counterpart of \cref{thm.dismart} is the following.
+	\begin{theorem}\label{thm.contmart}
+		Let $(X_t)_{t\ge0}$ be a square integrable continuous martingale with quadratic variation $(\wei{X}_t)_{t\ge0}$, and put $\wei{X}_{s,\tau}=\wei{X}_\tau-\wei{X}_s$ for $s\le\tau$. Define $X^*_{s,\tau}=\sup_{s\le r\le \tau}|X_r-X_s|$.
+		% We put $X^*_{t,\tau}=\sup_{r\in[t,\tau]}|X_r-X_t|$ and $X^*_\tau=X^*_{0,\tau}$.
+		% Then for every $\tau>0$ and $m\in(0,\infty)$
+		% \begin{gather}
+		% 	\|X^*_\tau\|_{2m}\le 4c_{2m}m\|\sup_{t\le \tau}\E_t\wei{X}_{t,\tau}\|_{m}^{1/2}
+		% 	\tand
+		% 	\|\wei{X}_\tau\|_m\le 2c_mm\|\sup_{t\le \tau}\E_t|X^*_{t,\tau}|^2\|_m.
+		% \end{gather}
+		% If $m\in(1,\infty)$, then
+		% \begin{gather}
+		% 	\|X^*_\tau\|_{2m}\le 4c_{2m}mm'\|\wei{X}_{\tau}\|_{m}^{1/2}
+		% 	\tand
+		% 	\|\wei{X}_\tau\|_m\le 8c_mm\|X^*_{\tau}\|_{2m}^2.
+		% \end{gather}
+		% In addition, 
+		There is a universal constant $\lambda>0$  such that for every $\tau>0$,
+		\begin{align}
+			\sup_{\varepsilon>0}\E \exp\left\{\lambda\sup_{t\le \tau}\frac{|X_t-X_0|}{\varepsilon+\sup_{s\in[0,t]}(\E_s\wei{X}_{s,\tau})^{1/2}}\right\}\le M
+			\\\shortintertext{and}
+			\sup_{\varepsilon>0}\E \exp\left\{\lambda\sup_{t\le \tau}\frac{\wei{X}_t}{\varepsilon+\sup_{s\in[0,t]}\E_s|X^*_{s,\tau}|^2}\right\}\le M.
+		\end{align}		
+	\end{theorem}
+	\begin{proof}
+		Since $X$ is continuous, $X_{S-}=X_S$ at every stopping time $S$. For stopping times $S\le T\le\tau$ the martingale isometry gives
+		\[
+			\E_S|X_T-X_S|\le\big(\E_S|X_T-X_S|^2\big)^{1/2}=\big(\E_S(\wei{X}_T-\wei{X}_S)\big)^{1/2}\le\big(\E_S\wei{X}_{S,\tau}\big)^{1/2},
+		\]
+		so that $X-X_0$ belongs to $\bmo_\phi$ with weight $\phi_S=(\E_S\wei{X}_{S,\tau})^{1/2}$ and $[X-X_0]_{\bmo_\phi}\le1$. Likewise $\E_S(\wei{X}_T-\wei{X}_S)=\E_S|X_T-X_S|^2\le\E_S|X^*_{S,\tau}|^2$, so that $\wei{X}$ belongs to $\bmo_\psi$ with weight $\psi_S=\E_S|X^*_{S,\tau}|^2$ and modulus at most one. For a weight whose modulus of oscillation is at most one, no subdivision of $[0,\tau]$ is needed in the argument of \cref{thm.bmophi}: the inequality $\lambda\rho^\phi_{s,t}(V)\le e^{-3}$ holds on the whole interval as soon as $\lambda\le e^{-3}$, and \eqref{est.jnexpwei} with $r=0$ therefore gives the two displays, since inserting $\varepsilon>0$ in the denominators only decreases the ratios.
+	\end{proof}
+	Estimates \eqref{bdg.f10}-\eqref{bdg.fweisup0} for the range $m\in(0,1)$ and the exponential integrability appear to be new, to the author's knowledge. Estimates with the conditional square functions can be found in \cite{MR0448538,MR365692,MR1127721}. 
+	Inequality \eqref{bdg.rosenthal} is also known as Burkholder--Rosenthal inequality which is valid for $m\in[1,\infty)$ (\cite{MR365692}). Although we did not recover the case $m=1$ from John--Nirenberg inequality, we have obtained its weak form, namely \eqref{bdg.f10}, which is valid for all $m\in(0,\infty)$.
+	The exponential estimates in \cref{thm.dismart,thm.contmart,cor.maximaldagger} are complementary to known estimates for self-normalised processes in \cite[Chapter 12]{MR2488094}. 
+	Two of the estimates above admit a companion, self-normalised form, which arises when the total conditional mean of the underlying increasing process is bounded pathwise. There the normaliser is computed from the budget and from the costs realised so far rather than from a conditional mean of the future path, the exponential moment bound then holds for every $\lambda>0$, and the extremal tail is determined to sublinear precision (\cref{sec:largestjump}--\cref{sec:sharptail}). The two instances that concern martingales are the subject of the rest of this section. Neither replaces the corresponding estimate above: both require the pathwise budget, and both control a ratio rather than an $L^m$ norm.
+
+	The class of \eqref{eqn.budget} contains more than costs. The increments of the quadratic variation of a discrete martingale are nonnegative, and their conditional means add up to its conditional quadratic variation, so \cref{prop.obja} and \cref{thm.refined} apply to $[f]$. They replace the conditional-mean weight and the restricted exponent of \cref{thm.dismart} by an observable normaliser and an unrestricted one.
+
+	\begin{corollary}[The quadratic variation of a discrete martingale]\label[corollary]{cor.square}
+		Let $(f_k)_{k\ge0}$ be a square integrable martingale with $f_0=0$, let $[f]$ and $\wei{f}$ be as above; fix $n\ge1$, put $J_k=\max_{j\le k}|df_j|^2$ and $Z_n=\max_{k\le n}[f]_k/(K+J_k)$, and let $K$ be $\cff_0$-measurable with $0<K<\infty$ and
+		\begin{align}\label{eqn.squarebudget}
+			\sum_{j=1}^n\E_{j-1}|df_j|^2\le K\quad\text{a.s.}
+		\end{align}
+		This hypothesis is implied by $\wei{f}_n\le K$, since $\wei{f}_n=\sum_{j=1}^{n+1}\E_{j-1}|df_j|^2$. Then for every $\lambda>0$ and every $u\ge0$,
+		\begin{gather}\label{eqn.squaretail}
+			\PP(Z_n>u)\le\exp\big(e^\lambda-1-\lambda u\big),
+			\\\shortintertext{hence}
+			\PP(Z_n>u)\le e^{u-1}u^{-u}\qquad(u>1),
+		\end{gather}
+		for every $u\ge e^{20}$,
+		\begin{align}\label{eqn.squarerefined}
+			\PP(Z_n>u)\le\exp\big(-u\log u-u\log\log u\big),
+		\end{align}
+		and for every $m>0$, every $\lambda>0$ and every $q<\lambda$,
+		\begin{align}\label{eqn.squaremom}
+			\E Z_n^m\le e^{e^\lambda-1}\frac{\Gamma(m+1)}{\lambda^m},
+			\qquad
+			\E e^{qZ_n}\le1+\frac{q}{\lambda-q}e^{e^\lambda-1}.
+		\end{align}
+		The rate in \eqref{eqn.squarerefined} cannot be improved in this class: the models of \cref{prop.lower} are square functions, so \eqref{eqn.lower2} holds for $\PP(Z_n>u)$ here, and together with \eqref{eqn.refined} it gives the two-sided statement \eqref{eqn.secondorder3} in this class; and \eqref{eqn.nosuper} holds with the supremum taken over the martingales of this corollary.
+	\end{corollary}
+	\begin{proof}
+		We apply \cref{prop.obja} and \cref{thm.refined} to $\xi_k=|df_k|^2$, $k\ge1$. The costs are nonnegative and adapted, $S_k=\sum_{j\le k}|df_j|^2=[f]_k$ by additivity of $[f]$, and $b_k=\E_{k-1}|df_k|^2$, so the budget \eqref{eqn.budget} is \eqref{eqn.squarebudget}.
+
+		For the sharpness it is enough to realise the models of \cref{prop.lower} as square functions. Let $a>0$ and $p\in(0,1)$, let $df_1,\dots,df_n$ be independent with $\PP(df_k=a^{1/2})=\PP(df_k=-a^{1/2})=p/2$ and $\PP(df_k=0)=1-p$, and let $f$ be constant after $n$. Then $f$ is a square integrable martingale, $|df_k|^2$ takes the values $a$ and $0$ with probabilities $p$ and $1-p$, and $\E_{k-1}|df_k|^2=pa$, so that \eqref{eqn.squarebudget} holds with $K=npa$ and $(S_k,J_k)=([f]_k,\max_{j\le k}|df_j|^2)$ is the pair to which \cref{prop.lower} is applied.
+	\end{proof}
+
+	\begin{remark}[A sharp companion of \eqref{doob0}]\label[remark]{rmk.dualdoob}
+		The same argument applies to the dual of Doob's inequality \eqref{doob0}. For integrable nonnegative $z_i$ the process $V_k=\sum_{i\le k}\E_i z_i$ is nondecreasing, and conversely every nonnegative adapted nondecreasing $(\xi_k)$ is of this form, with $z_k=\xi_k$, because $\E_k z_k=\xi_k$ by adaptedness. Hence \cref{prop.obja} and \cref{thm.refined} apply to $(V_k)$ whenever $\sum_{k\le n}\E_{k-1}z_k\le K$, with $J_k=\max_{j\le k}\E_j z_j$, and \cref{prop.lower} again shows that the rate cannot be improved there and that no sub-Gaussian bound can hold.
+
+		As in \cref{cor.square}, what changes relative to \eqref{doob0} is the normaliser: it is $K+J_k$, formed from the budget and from the costs observed so far, where \eqref{doob0} carries $\sup_k\E_k\sum_{i\ge k}z_i$, a conditional mean of the future costs. A ratio form of \eqref{doob0} with the latter weight is already available from \cref{thm.bmophi}, through \eqref{est.jnweight2} and \eqref{est.jnexpwei}, together with the restriction on $\lambda$ in \eqref{est.jnexpwei}. Neither estimate implies the other.
 	\end{remark}
+	
+	
+	
+	
+
+% section inequalities_for_martingales (end)
+
 \section{Weighted VMO processes} % (fold)
 	\label{sec:weighted_vmo_spaces}
 	

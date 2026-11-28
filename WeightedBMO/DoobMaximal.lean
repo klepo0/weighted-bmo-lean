@@ -11,9 +11,9 @@ import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 
 Mathlib has Doob's weak-type `(1,1)` maximal inequality
 (`MeasureTheory.maximal_ineq`) but not its `L^p` consequence. The weighted
-BMO estimates of Khoa Lê, *Maximal inequalities and weighted BMO processes*,
-arXiv:2211.15550v3, use the `L^p` form with the sharp constant `m/(m-1)` to
-deduce Theorem 1.1 from the John--Nirenberg inequality (1.8).
+BMO estimates of Khoa Lê, *Maximal inequalities, weighted BMO processes and the largest-jump normaliser*,
+arXiv:2211.15550, use the `L^p` form with the sharp constant `m/(m-1)` to
+deduce Theorem 1.1 from the John--Nirenberg inequality `ineq.JNweighted`.
 
 For a nonnegative submartingale `f` on a finite measure space we prove
 

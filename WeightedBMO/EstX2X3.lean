@@ -3,8 +3,8 @@ import WeightedBMO.EstSmaximal
 /-!
 # `est.X2` and `est.X3`
 
-Khoa Lê, *Maximal inequalities and weighted BMO processes*
-(arXiv:2211.15550v3), Theorem 1.1.  These are the normalized and exponential
+Khoa Lê, *Maximal inequalities, weighted BMO processes and the largest-jump normaliser*
+(arXiv:2211.15550), Theorem 1.1.  These are the normalized and exponential
 forms of the maximal inequality.  With the sharp maximal function `ψ` supplied
 as a hypothesis (as in `WeightedBMO/EstSmaximal.lean`):
 
@@ -12,7 +12,7 @@ as a hypothesis (as in `WeightedBMO/EstSmaximal.lean`):
 
   `‖sup_t d(X_0,X_t) / (ε + sup_{s≤t} ψ_s)‖_p ≤ 2 c_p p ‖1‖`,
 
-  uniformly in `ε`.  It is (1.9) applied with the weight `2ψ`, whose
+  uniformly in `ε`.  It is `est.jnweight2` applied with the weight `2ψ`, whose
   oscillation modulus is at most `1`, together with the observation that
   `sup_{s≤t}(2ψ_s) = 2 sup_{s≤t} ψ_s` bounds the denominator from below.
 
@@ -151,7 +151,7 @@ theorem estX2 {E : Type*} [PseudoMetricSpace E]
     intro ω u hu
     obtain ⟨l, hl⟩ := lw ω u hu
     exact ⟨2 * l, hl.const_mul 2⟩
-  -- (1.9) with the weight `2ψ`
+  -- `est.jnweight2` with the weight `2ψ`
   have hB := weightedBMOOfSharpMaximal (ℱ := ℱ) X Xl ψ hψpos hdom hdomL hdata
   have hmean := stoppedBound_of_bmo hB le_rfl le_rfl hφ hφbdd
   have hmain := real_interval_moments (μ := μ) ℱ hℱ
@@ -253,7 +253,7 @@ theorem estX2 {E : Type*} [PseudoMetricSpace E]
 
 /-- **`est.X3`**: the exponential form, at the rate `λ ≤ (2e³)⁻¹`, with the
 bound `M · μ(univ)`. On a probability measure the factor `μ(univ)` is one and
-this is the paper's `M`, the constant of (1.1) (`exponentialBound`; its term of
+this is the paper's `M`, the constant of `def.M` (`exponentialBound`; its term of
 index zero is one, so it is `1 + Σ_{m ≥ 1} (c_m m)^m e^{-3m}/m!`). -/
 theorem estX3 {E : Type*} [PseudoMetricSpace E]
     (X Xl : Ω → ℝ → E) (ψ : Ω → ℝ → ℝ) {T : ℝ} (hT : 0 ≤ T)

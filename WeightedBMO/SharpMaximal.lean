@@ -2,11 +2,11 @@ import WeightedBMO.JohnNirenberg
 import WeightedBMO.DoobMaximal
 
 /-!
-# Theorem 1.1 of *Maximal inequalities and weighted BMO processes*
+# Theorem 1.1 of *Maximal inequalities, weighted BMO processes and the largest-jump normaliser*
 
-Khoa Lê, arXiv:2211.15550v3, deduces the maximal inequality
+Khoa Lê, arXiv:2211.15550, deduces the maximal inequality
 `est.upperbound`/`est.Smaximal` for an RCLL adapted integrable process `X` in a
-metric space from the John--Nirenberg inequality (1.8) applied to the path
+metric space from the John--Nirenberg inequality `ineq.JNweighted` applied to the path
 `V_t = d(X_a, X_t)`. Its two ingredients are:
 
 * (b) `V` lies in weighted BMO with weight `2X^♯`, where
@@ -22,7 +22,7 @@ metric space from the John--Nirenberg inequality (1.8) applied to the path
   turns `‖sup_t E_t X^♯_{t,T}‖_p` into `p/(p-1) ‖X^♯_T‖_p`.
 
 This file proves both steps. `weightedBMOOfSharpMaximal` is (b).
-`sharpMaximal_eLpNorm_le` is (1.8) for the path of increments, with the exact
+`sharpMaximal_eLpNorm_le` is `ineq.JNweighted` for the path of increments, with the exact
 costant `goodLambdaConstant p = p c_p` on the weight `2ψ`.
 `martingale_eLpNorm_maximal_le_of_terminal` is Doob's step in the form the
 paper uses. The continuous-time formulation of the Doob step still needs a

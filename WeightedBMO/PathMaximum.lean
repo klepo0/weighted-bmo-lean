@@ -8,7 +8,7 @@ namespace WeightedBMO
 /-- Supremum of a real path on a nonempty closed time interval. -/
 noncomputable def intervalSup (f : ℝ → ℝ) (s t : ℝ) := sSup (f '' Icc s t)
 
-/-- The pathwise random variable inside (1.9) and (1.10). -/
+/-- The pathwise random variable inside `est.jnweight2` and `est.jnexpwei`. -/
 noncomputable def normalizedMaximum (v φ : ℝ → ℝ) (s t : ℝ) :=
   intervalSup (fun u => |v u - v s| / intervalSup φ s u) s t
 
@@ -149,7 +149,7 @@ theorem measurable_normalizedMaximum {Ω : Type*} [MeasurableSpace Ω] {v φ : �
       (left_mem_Icc.mpr hu.1))).ne'
 
 /-- The conditional exponential bound for the paper's normalized maximum,
-using the initial-event integer moment form of (1.9). -/
+using the initial-event integer moment form of `est.jnweight2`. -/
 theorem path_exponential_of_interval_moments {Ω : Type*} [m : MeasurableSpace Ω]
     (μ : Measure Ω) [IsFiniteMeasure μ] (ℱ : Filtration ℝ m)
     (v φ : Ω → ℝ → ℝ) (ρ : ℝ → ℝ → ℝ) {a T rate : ℝ}

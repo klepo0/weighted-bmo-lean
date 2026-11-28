@@ -8,8 +8,8 @@ import Mathlib.Tactic.Ring
 /-!
 # A good-λ inequality for moments
 
-Lemma 2.1 of Khoa Lê, *Maximal inequalities and weighted BMO processes*,
-arXiv:2211.15550v3.
+Lemma 2.1 of Khoa Lê, *Maximal inequalities, weighted BMO processes and the largest-jump normaliser*,
+arXiv:2211.15550.
 -/
 
 open MeasureTheory Set
@@ -19,7 +19,7 @@ namespace WeightedBMO
 
 variable {Ω : Type*} [MeasurableSpace Ω]
 
-/-- The full coefficient `p * c_p` in Lemma 2.1, with `c_p` from (1.1). -/
+/-- The full coefficient `p * c_p` in Lemma 2.1, with `c_p` from `def.M`. -/
 noncomputable def goodLambdaConstant (p : ℝ) : ℝ :=
   p * (p * (1 + 1 / p) ^ ((p + 1) ^ (2 : ℕ))) ^ (1 / p)
 
@@ -178,7 +178,7 @@ private theorem eLpNorm_eq_moment_rpow {μ : Measure Ω} {f : Ω → ℝ}
   unfold moment
   simp_rw [Real.enorm_of_nonneg (hf₀ _), ENNReal.ofReal_rpow_of_nonneg (hf₀ _) hp.le]
 
-/-- **Lemma 2.1** of *Maximal inequalities and weighted BMO processes*.
+/-- **Lemma 2.1** of *Maximal inequalities, weighted BMO processes and the largest-jump normaliser*.
 
 A good-λ tail bound for two nonnegative random variables implies a bound on
 their extended `Lᵖ` seminorms. No moment finiteness hypothesis is required. -/

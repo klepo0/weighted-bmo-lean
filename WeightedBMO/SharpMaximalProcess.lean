@@ -3,8 +3,8 @@ import WeightedBMO.PathMaximum
 /-!
 # The sharp maximal function `X^♯`
 
-`def.dagger` of Khoa Lê, *Maximal inequalities and weighted BMO processes*
-(arXiv:2211.15550v3):
+`def.dagger` of Khoa Lê, *Maximal inequalities, weighted BMO processes and the largest-jump normaliser*
+(arXiv:2211.15550):
 
   `X^♯_{t,τ} = sup_{s∈[t,τ]} E_s d(X_{s-}, X_τ)`,   `X^♯_τ = X^♯_{0,τ}`,
 

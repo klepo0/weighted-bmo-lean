@@ -56,7 +56,7 @@ private theorem crossing_jump {v vLeft φ : ℝ → ℝ} {r T a b : ℝ} (hr : r
   nlinarith [mul_le_mul_of_nonneg_left wd hb.le]
 
 
-/-- Continuous-time (1.9), tested on any event at the start of the interval. -/
+/-- Continuous-time `est.jnweight2`, tested on any event at the start of the interval. -/
 theorem real_interval_moments {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measure Ω)
     [IsFiniteMeasure μ] (ℱ : Filtration ℝ m) (hℱ : RightContinuousFiltration ℱ)
     (v vLeft φ : Ω → ℝ → ℝ) {r T c p : ℝ} (hr : r ≤ T) (hcap : 0 < c) (hp : 0 < p)
@@ -138,7 +138,7 @@ theorem real_interval_moments {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measur
   exact hfinal.trans le_self_add
 
 
-/-- Continuous-time (1.8) as a moment comparison on each initial event. -/
+/-- Continuous-time `ineq.JNweighted` as a moment comparison on each initial event. -/
 theorem real_weighted_maximal_moments {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measure Ω)
     [IsFiniteMeasure μ] (ℱ : Filtration ℝ m) (hℱ : RightContinuousFiltration ℱ)
     (v vLeft φ : Ω → ℝ → ℝ) {r T c p : ℝ} (hr : r ≤ T) (hc : 0 ≤ c) (hp : 0 < p)

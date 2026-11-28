@@ -3,9 +3,10 @@ import WeightedBMO.DoobMaximal
 /-!
 # The continuous-time Doob step
 
-The last step of Theorem 1.1 in Khoa Lê, *Maximal inequalities and weighted
-BMO processes* (arXiv:2211.15550v3) is Doob's maximal inequality for the
-nonnegative martingale `M_t = E_t X^♯_τ`, whose terminal value is `X^♯_τ`:
+The last step of Theorem 1.1 in Khoa Lê, *Maximal inequalities, weighted BMO
+processes and the largest-jump normaliser* (arXiv:2211.15550) is Doob's maximal
+inequality for the nonnegative martingale `M_t = E_t X^♯_τ`, whose terminal value
+is `X^♯_τ`:
 
   `‖sup_{t∈[0,T]} M_t‖_p ≤ p/(p-1) ‖X^♯_τ‖_p`  for `p > 1`.
 

@@ -5,8 +5,8 @@ import WeightedBMO.EstX2X3
 /-!
 # Theorem 1.1 end to end
 
-Khoa Lê, *Maximal inequalities and weighted BMO processes*
-(arXiv:2211.15550v3), Theorem 1.1 (`cor.maximaldagger`), as a single statement:
+Khoa Lê, *Maximal inequalities, weighted BMO processes and the largest-jump normaliser*
+(arXiv:2211.15550), Theorem 1.1 (`cor.maximaldagger`), as a single statement:
 `cor_maximaldagger` concludes the five displayed estimates as the conjuncts of
 one conclusion, from one hypothesis bundle.
 

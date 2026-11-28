@@ -7,7 +7,7 @@ import WeightedBMO.EstSmaximal
 # Towards Kuhn's `L^p` maximal inequality for `p < 1`
 
 For a nonnegative supermartingale `N` on `[0,T]` and `0 < p < 1`, Kuhn's lemma
-(used as `est.Smax01` in arXiv:2211.15550v3, cited there as
+(used as `est.Smax01` in arXiv:2211.15550, cited there as
 [kuhn2022maximal, Lemma 2.22]) states
 
   `‖sup_{t≤T} N_t‖_p ≤ (1-p)^{-1/p} ‖N_0‖_p`.

@@ -58,7 +58,7 @@ private theorem UnitGridOscillation.restrict {Ω : Type*} [m : MeasurableSpace �
   exact h S T hS hT hST hN _ (hG.inter
     ((hS.le_measurableSpace_of_const_le (fun ω => Nat.zero_le (S ω))) _ hE))
 
-/-- Finite-grid versions of (1.8) and (1.9) for unit oscillation, tested
+/-- Finite-grid versions of `ineq.JNweighted` and `est.jnweight2` for unit oscillation, tested
 on each initial measurable event. In the second bound the constant function
 one supplies the mass of the testing event. -/
 theorem grid_johnNirenberg {Ω : Type*} [m : MeasurableSpace Ω] (μ : Measure Ω)

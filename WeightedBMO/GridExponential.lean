@@ -9,7 +9,7 @@ namespace WeightedBMO
 private noncomputable def expTerm (b : ℝ) (n : ℕ) : ℝ :=
   (Real.exp (-b) * goodLambdaConstant n) ^ n / n.factorial
 
-/-- The constant M in (1.1). The term of index zero is one. -/
+/-- The constant M in `def.M`. The term of index zero is one. -/
 noncomputable def exponentialBound : ℝ := ∑' n, expTerm 3 n
 
 private theorem constant_nonneg (n : ℕ) : 0 ≤ goodLambdaConstant n := by
@@ -21,7 +21,7 @@ private theorem term_nonneg (b : ℝ) (n : ℕ) : 0 ≤ expTerm b n := by
   have := constant_nonneg n
   positivity
 
-/-- The moment series has room beyond the endpoint exp(-3) in (1.10). -/
+/-- The moment series has room beyond the endpoint exp(-3) in `est.jnexpwei`. -/
 theorem summable_exponential_coefficients {b : ℝ} (hb : 2 < b) :
     Summable (fun n : ℕ => (Real.exp (-b) * goodLambdaConstant n)^n / n.factorial) := by
   have hg := (summable_pow_mul_geometric_of_norm_lt_one 1

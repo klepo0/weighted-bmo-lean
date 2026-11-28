@@ -35,7 +35,7 @@ theorem condExp_bound_of_event_tests {Ω : Type*} [m : MeasurableSpace Ω]
   rw [Real.enorm_of_nonneg hl, ← ENNReal.ofReal_toReal hC.ne]
   exact ENNReal.ofReal_le_ofReal hu
 
-/-- Equation (1.10) from the interval moments in (1.9), uniformly over start times. -/
+/-- `est.jnexpwei` from the interval moments in `est.jnweight2`, uniformly over start times. -/
 theorem conditional_exponential_of_interval_moments {Ω : Type*} [m : MeasurableSpace Ω]
     (μ : Measure Ω) [IsFiniteMeasure μ] (ℱ : Filtration ℝ m)
     (Z : ℝ → ℝ → Ω → ℝ) (ρ : ℝ → ℝ → ℝ) {a T rate : ℝ}

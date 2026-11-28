@@ -6,10 +6,10 @@ open scoped ENNReal
 
 namespace WeightedBMO
 
-/-- Uniform event-testing version of the implication (1.9) ⇒ (1.10).
+/-- Uniform event-testing version of the implication `est.jnweight2` ⇒ `est.jnexpwei`.
 Z is the normalized interval maximum. Its zero-length and splitting laws
 are explicit so the integration argument is independent of path regularity.
-The moment hypothesis is (1.9) tested on events at the interval start. -/
+The moment hypothesis is `est.jnweight2` tested on events at the interval start. -/
 theorem uniform_exponential_of_interval_moments {Ω : Type*} [m : MeasurableSpace Ω]
     (μ : Measure Ω) [IsFiniteMeasure μ] (ℱ : Filtration ℝ m)
     (Z : ℝ → ℝ → Ω → ℝ) (ρ : ℝ → ℝ → ℝ) {a T rate : ℝ}
