@@ -888,7 +888,15 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		\[
 			\frac{J^2}{u}\,\partial_J\Phi=-K\log R+(K+J)\Big(1-\frac1R\Big)
 		\]
-		vanishes exactly when $\log R=r-\frac1u$, which is the second equation. Since $\Phi\to+\infty$ at both ends of $(0,\infty)$ in $J$, this critical point is the minimum, and the value there is
+		vanishes exactly when $\log R=r-\frac1u$, which is the second equation.
+
+		\emph{The critical point is the minimum.} Write $c=\lambda K$, and recall $R=1+\lambda J$, so that $r=1+J/K=1+\frac{R-1}{c}$; then
+		\[
+			\frac{J^2}{uK}\,\partial_J\Phi\ =\ r\Big(1-\frac1R\Big)-\log R\ =:\ G(R),
+			\qquad
+			R^2G'(R)=\frac{R-1}{c}\,(R+1-c).
+		\]
+		Hence $G$ decreases on $(1,c-1)$ and increases on $(c-1,\infty)$. For the $\lambda$ chosen above $c=\frac{ur-1}{r-1}>2$, so $G$ falls from $G(1)=0$ to its minimum at $R=c-1$ and then increases to $+\infty$; consequently $G$ has exactly one zero in $(1,\infty)$, and that zero is the critical point found above, at which $G=r-\frac ru-\log R=0$ by the second equation. So $\partial_J\Phi<0$ for $J<J_c:=K(r-1)$ and $\partial_J\Phi>0$ for $J>J_c$: $\Phi$ decreases and then increases in $J$, and the critical point is the minimum. The finite limit $(u-1)\lambda K$ at $J\downarrow0$ is not a competitor, since $\Phi$ decreases away from it. The value there is
 		\[
 			\Phi=\frac{ur}{r-1}\Big(r-\frac1u\Big)-\frac{ur-1}{r-1}=\frac{ur(r-1)-(r-1)}{r-1}=ur-1,
 		\]
