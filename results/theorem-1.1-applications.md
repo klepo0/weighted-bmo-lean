@@ -1,8 +1,8 @@
 # Applications of Theorem 1.1 of arXiv:2211.15550 — what a search found
 
-Question posed: find an application of Theorem 1.1 of Khoa Lê, *Maximal inequalities and
-weighted BMO processes* (arXiv:2211.15550v3), that is not in the literature and is worth
-publishing.
+Question posed: find an application of Theorem 1.1 of Khoa Lê, *Maximal inequalities,
+weighted BMO processes and the largest-jump normaliser* (arXiv:2211.15550), that is not in
+the literature and is worth publishing.
 
 Method: an eight-member search (ultramath swarm `smwwvwoh2`, `.ultramath/smwwvwoh2/`) ran 20
 directions over roughly five hours. Each direction had to deliver a fully derived application
@@ -17,10 +17,11 @@ Theorem 1.1 is a synthesis, and the paper says so. In §"Relation to previous wo
 *"cor.maximaldagger and martingale inequalities are consequences of thm.bmophi but not earlier
 results."* The proof bears it out:
 
-- (1.1) is `ineq.JNweighted`, i.e. Theorem 1.3 applied with weight `phi = 2 E_. X^sharp_{.,tau}`;
-- (1.2) is `est.jnweight2`, the self-normalized John–Nirenberg inequality;
-- (1.6) upper is (1.1) plus Doob; (1.6) lower is Doob plus the triangle inequality;
-- (1.7) is a Doob-type bound for the supermartingale `sup_t E_t X^sharp_{t,tau}`.
+- `est.upperbound` is `ineq.JNweighted`, i.e. Theorem 1.3 applied with weight `phi = 2 E_. X^sharp_{.,tau}`;
+- `est.X2` is `est.jnweight2`, the self-normalized John–Nirenberg inequality;
+- the upper half of `est.Smaximal` is `est.upperbound` plus Doob; its lower half is Doob plus
+  the triangle inequality;
+- `est.Smax01` is a Doob-type bound for the supermartingale `sup_t E_t X^sharp_{t,tau}`.
 
 Consequently an "application of Theorem 1.1" is, in one of four ways, a corollary of something
 already known, and every rejected submission was one of these:
@@ -69,10 +70,11 @@ Then
     P( max_{k<=n} S_k/(K+J_k) > u ) <= exp(e^lambda - 1 - lambda u)   for all lambda>0,
     hence                              <= e^{u-1} u^{-u}.
 
-So the statistic is sub-Poisson: `E Z <= 4.78`, 95% envelope `S_k <= 4.316 (K+J_k)` simultaneously
-for all prefixes, all moments and all exponential moments finite, with no independence, variance,
-mixing or mark mgf; the Pareto tail index 1.2 case has `E exp(theta S_n) = infinity` and is
-covered. The mechanism is `(R_k - R_{k-1})_+ <= min{1, xi_k/(K+J_{k-1})}` — a new record cost
+So the statistic is sub-Poisson: `E Z <= 1` (`eqn.objamean`, sharp and not attained), 95%
+envelope `S_k <= 2.163 (K+J_k)` simultaneously (`cor.finite`; the single-scale bound `eqn.obja`
+gives 4.317 at the same level), all moments and all exponential moments finite, with no
+independence, variance, mixing or mark mgf; the Pareto tail index 1.2 case has
+`E exp(theta S_n) = infinity` and is covered. The mechanism is `(R_k - R_{k-1})_+ <= min{1, xi_k/(K+J_{k-1})}` — a new record cost
 raises the quotient by at most one — followed by a chord inequality and a positive supermartingale.
 
 Novelty anchor: Geiss–Scheutzow (arXiv:2101.10884), Theorem 2.2 is sharp for *predictable*
@@ -82,8 +84,9 @@ tails anyway. This is a new inequality, not a corollary: Theorem 1.1 supplies th
 quotient supermartingale supplies the result and beats the imported constants by two orders of
 magnitude.
 
-Honest limits: the pathwise budget `B_n <= K` is stronger than a conditional-mean cost-to-go, and
-no sharpness is claimed for `e^{u-1}u^{-u}` (the open question is which model attains it).
+Honest limits: the pathwise budget `B_n <= K` is stronger than a conditional-mean cost-to-go. No
+sharpness was claimed for `e^{u-1}u^{-u}` at the time; it is settled now — the two-point models
+of `prop.lower` attain the rate, and `cor.second` determines the exponent to its constant.
 
 ## 3. The terrain, direction by direction
 
@@ -98,7 +101,7 @@ Ottaviani plus matrix Doob–BDG); filtering (direct recursion is sharper); occu
 BSVIE (the known part of the terminal increment recreates the original problem).
 
 Rejected by the judge after submission (6): the adapted Kolmogorov–Chentsov criterion (corollary
-of arXiv:2210.15736); the predictive CUSUM/queue bound (one line from Lindley + (1.2), constants
+of arXiv:2210.15736); the predictive CUSUM/queue bound (one line from Lindley + `est.X2`, constants
 2–3× worse than arXiv:2210.15736); quenched subordinated fBm (normalizer dominated below by the
 terminal clock scale, so Borell wins by `sqrt(m)` vs `m`); delayed Riemann quadrature (the adapted
 defect telescopes to `-hZ_{t_{n-1}} - (h/2)Z_{t_n}`, so a three-line union bound beats the
@@ -118,7 +121,9 @@ fiber, so no choice of readout creates a gap.
 2. Write up (A) with the two referee-level additions it still needs: a lower bound showing the
    historical normalizer is nondegenerate, and the explicit statement that the normalizer is a
    functional of the driver, not of the observed `X`.
-3. Treat this as a boundary: the paper's own deferred sentence, "applications of (1.1) will be
-   discussed elsewhere", cannot be discharged by finding an application of (1.1), only by finding
-   results in other fields that the sharp-function method reaches. (B) is the sharpest instance:
-   the method identifies the right normalizer and then the domain-specific argument improves on it.
+3. Treat this as a boundary: the deferred sentence the paper carried when this search began —
+   "applications of Theorem 1.1 will be discussed elsewhere" — cannot be discharged by finding an
+   application of Theorem 1.1, only by finding results in other fields that the sharp-function
+   method reaches. (The paper now carries the applications itself, in §3, so the sentence is
+   moot; the methodological point stands.) (B) is the sharpest instance: the method identifies
+   the right normalizer and then the domain-specific argument improves on it.

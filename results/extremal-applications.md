@@ -1,8 +1,8 @@
 # What the extremal results are for
 
 Question: what would be applications of the results on the extremal problem
-(§4.2, `sec:monotone`: the class `C` of `eqn.class`, the extremal tail `P*` of
-`eqn.Pstar`, the sharp exponent of `thm.refined`/`cor.second`, the matching
+(§3.2–§3.5, starting at `sec:monotone`: the class `C` of `eqn.class`, the extremal tail
+`P*` of `eqn.Pstar`, the sharp exponent of `thm.refined`/`cor.second`, the matching
 construction of `prop.lower`).
 
 Everything below was computed or read in this session; nothing here is a
@@ -31,9 +31,11 @@ the inequality.  Substituting `x_u = r* - 1/u`, `r*` the root `>1` of
 
 ## 2. The applied number in the paper was obsolete (fixed in `6dd7898`)
 
-`ex.pareto` ends: "Taking `u = 4.317` in (4.x) gives the simultaneous envelope
-`S_k <= 4.317 (K+J_k)`, `k<=n`, with probability at least 0.95."  At the same
-level the finite-level form gives `u = 2.163`.  The 4.317 is `e^{u-1}u^{-u} = 0.05`;
+`ex.pareto` then ended: "Taking `u = 4.317` in `eqn.obja` gives the simultaneous envelope
+`S_k <= 4.317 (K+J_k)`, `k<=n`, with probability at least 0.95."  It now reads: "Taking
+`u = 2.163` in `cor.finite` gives the simultaneous envelope `S_k <= 2.163 (K+J_k)`, `k<=n`,
+with probability at least 0.95; the estimate `eqn.obja` needs `u = 4.317` for the same
+level."  The 4.317 is `e^{u-1}u^{-u} = 0.05`;
 the 2.163 is `e^{-u x_u} = 0.05`.  Both are proved, both are uniform over `n` and
 over the whole class, and the second is the better of the two by a factor 2.
 
@@ -57,7 +59,7 @@ different in kind: at its own threshold `u = e^20` it reads
 **(A) Model-free envelopes at levels people use.** The envelope is a statement
 about the ratio, uniform in the horizon, in the number of costs, in dependence,
 in the cost law, and with no moment beyond the budget.  It costs nothing to
-state and it is the only part of §4.2 that a reader outside probability can
+state and it is the only part of §3.2–§3.5 that a reader outside probability can
 consume.
 
 **(B) The extremal model as a stress scenario and a sharpness witness.** The
@@ -158,11 +160,11 @@ the `log log` term as a defect of the proof.
 * Sanitised `pdflatex` build after the edit: 0 errors, 0 overfull, 0 undefined
   references or citations, 2 underfull `\vbox` at page breaks (the last page
   carries only the author's address), 37 pages.
-* Literature check for the §4.2 positioning, 27 Nov 2026: `ti:"self-normalized"
+* Literature check for the §3.2–§3.5 positioning, 27 Nov 2026: `ti:"self-normalized"
   cc:60F10` 61 records, `ab:"one big jump"` 13, `ab:saddlepoint cc:60F10` 22,
   `ab:"worst case" ab:"large deviations"` 17, `ab:"best possible" ab:"tail
   probabilities"` 6.  Four references were verified individually with
-  `zbmath.py show` before being added to §4.2 and to the `.bbl`: Bahadur–Ranga
+  `zbmath.py show` before being added to §3.5 and to the `.bbl`: Bahadur–Ranga
   Rao Zbl 0101.12603, Jensen Zbl 1274.62008, Asmussen–Klüppelberg Zbl
   0879.60020, de la Peña–Klass–Lai Zbl 1189.60057 (Freedman re-checked as Zbl
   0313.60037 against the existing `Fre75` entry).  No sweep of the

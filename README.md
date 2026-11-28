@@ -1,20 +1,20 @@
-# Maximal inequalities and weighted BMO processes in Lean
+# Maximal inequalities, weighted BMO processes and the largest-jump normaliser: Lean formalisation
 
 This project formalizes estimates from Khoa Lê's
-[*Maximal inequalities and weighted BMO processes*](https://arxiv.org/abs/2211.15550v3).
+[*Maximal inequalities, weighted BMO processes and the largest-jump normaliser*](https://arxiv.org/abs/2211.15550).
 
 | Paper | Lean declaration |
 |---|---|
-| Equation (1.1), coefficient `p * c_p` | `WeightedBMO.goodLambdaConstant` |
+| `def.M`, the coefficient `p * c_p` | `WeightedBMO.goodLambdaConstant` |
 | Lemma 2.1 | `WeightedBMO.goodLambda_eLpNorm_le` |
-| Finite-grid (1.8) and (1.9), unit oscillation bound | `WeightedBMO.grid_johnNirenberg` |
+| Finite-grid `ineq.JNweighted` and `est.jnweight2`, unit oscillation bound | `WeightedBMO.grid_johnNirenberg` |
 | Partitioned exponential bound on a finite grid | `WeightedBMO.grid_partition_exponential` |
 | Definition 1.2, equivalence with conditional expectations | `WeightedBMO.weightedBMOOn_iff_condExp` |
-| Continuous-time (1.8) on every initial event | `WeightedBMO.weightedBMO_maximal_moments` |
-| Continuous-time (1.8) in conditional expectation form | `WeightedBMO.weightedBMO_conditional_maximal_moments` |
-| Continuous-time (1.10) from weighted BMO | `WeightedBMO.weightedBMO_exponential` |
-| Continuous-time (1.9) from the stopped oscillation modulus | `WeightedBMO.real_interval_moments` |
-| Real-time (1.9) ⇒ conditional (1.10) | `WeightedBMO.conditional_exponential_of_interval_moments` |
+| Continuous-time `ineq.JNweighted` on every initial event | `WeightedBMO.weightedBMO_maximal_moments` |
+| Continuous-time `ineq.JNweighted` in conditional expectation form | `WeightedBMO.weightedBMO_conditional_maximal_moments` |
+| Continuous-time `est.jnexpwei` from weighted BMO | `WeightedBMO.weightedBMO_exponential` |
+| Continuous-time `est.jnweight2` from the stopped oscillation modulus | `WeightedBMO.real_interval_moments` |
+| Real-time `est.jnweight2` ⇒ conditional `est.jnexpwei` | `WeightedBMO.conditional_exponential_of_interval_moments` |
 | Single-interval exponential bound on a finite grid | `WeightedBMO.grid_exponential` |
 | Doob's weak-type (1,1) maximal inequality | `WeightedBMO.submartingale_weak_type` |
 | Doob's `L^p` maximal inequality, sharp constant `p/(p-1)` | `WeightedBMO.submartingale_eLpNorm_maximal_le` |
@@ -62,7 +62,7 @@ first on `PATH` reproduces the build without `elan`.
 
 ## Doob's `L^p` maximal inequality
 
-The paper deduces Theorem 1.1 from the John--Nirenberg inequality (1.8) and
+The paper deduces Theorem 1.1 from the John--Nirenberg inequality `ineq.JNweighted` and
 Doob's `L^p` maximal inequality with constant `m/(m-1)`. Mathlib has the
 weak-type `(1,1)` inequality `MeasureTheory.maximal_ineq` but not its `L^p`
 consequence, so `WeightedBMO/DoobMaximal.lean` supplies it for discrete-time
@@ -85,7 +85,7 @@ argument.
 ## Theorem 1.1 with the sharp maximal function as a hypothesis
 
 Theorem 1.1 of the paper bounds the maximal function of `t ↦ d(X_0, X_t)` by
-the sharp maximal function `X^♯`. Its proof has two steps beyond (1.8).
+the sharp maximal function `X^♯`. Its proof has two steps beyond `ineq.JNweighted`.
 
 First, the path `V_t = d(X_a, X_t)` lies in weighted BMO with weight `2X^♯`.
 The paper obtains this from the two estimates
@@ -97,7 +97,7 @@ Dellacherie--Meyer II (2.9), not available in this environment),
 `weightedBMOOfSharpMaximal` takes such a process `ψ` with those two domination
 properties as a hypothesis and concludes `WeightedBMOOn … (2ψ) a T 1`.
 
-Second, (1.8) applied to this weighted BMO process gives the maximal estimate
+Second, `ineq.JNweighted` applied to this weighted BMO process gives the maximal estimate
 with the paper's constant. `sharpMaximal_eLpNorm_le` states it on every
 initial event: the maximal function of `t ↦ d(X_a, X_t)` is bounded by
 `goodLambdaConstant p = p c_p` times the `Lᵖ` seminorm of the supremum of the
@@ -125,7 +125,7 @@ convergence, which reproduces the continuous-time statement with the same
 constant. The terminal-value form is `eLpNorm_supOn_le_of_terminal`.
 
 The bridge between the two formulations is `ofReal_intervalSup_le_supOn`: the
-interval supremum used by (1.8) is at most the dyadic supremum `supOn` used by
+interval supremum used by `ineq.JNweighted` is at most the dyadic supremum `supOn` used by
 the Doob step, provided the dominating process is right-continuous.
 
 Putting the three pieces together, `estSmaximal_upper` states the second
@@ -137,7 +137,7 @@ right-continuous martingale `M`:
 ‖sup_{t∈[0,T]} d(X_0, X_t)‖_p ≤ c_p p · p/(p-1) · ‖M_T‖_p ,  p > 1,
 ```
 
-proved from the weighted BMO bound, (1.8) with the weight `2ψ`, and Doob's
+proved from the weighted BMO bound, `ineq.JNweighted` with the weight `2ψ`, and Doob's
 step. Here `ψ_t = E_t X^♯_{t,T}` in the paper and `M = 2 E_· X^♯_T`, so
 `M_T = 2 X^♯_T` and the constant is `2 c_p p²/(p-1)`, as printed in
 `est.Smaximal`.
@@ -165,13 +165,13 @@ sharp maximal function supplied as a hypothesis.
 ## The normalized and exponential forms
 
 `WeightedBMO/EstX2X3.lean` derives the two normalized forms of Theorem 1.1 from
-(1.9) and from `est.Smaximal`. For every `ε > 0` and `p > 0`, `estX2` gives
+`est.jnweight2` and from `est.Smaximal`. For every `ε > 0` and `p > 0`, `estX2` gives
 
 ```
 ‖sup_t d(X_0,X_t) / (ε + sup_{s≤t} ψ_s)‖_p ≤ 2 c_p p ‖1‖,
 ```
 
-uniformly in `ε`: this is (1.9) applied with the weight `2ψ`, whose oscillation
+uniformly in `ε`: this is `est.jnweight2` applied with the weight `2ψ`, whose oscillation
 modulus is at most `1`, and the pointwise bound `sup_{s≤t}(2ψ_s) = 2 sup_{s≤t} ψ_s`.
 `estX3` is the exponential form
 
@@ -352,7 +352,7 @@ measurable at the initial time. The hypothesis `UnitGridOscillation` expresses
 the unit oscillation bound by integration over events in the stopped σ-algebra.
 The single-interval exponential estimate holds on every initial event E for
 rates up to and including exp(−3). Its bound is M times the mass of E, with
-convergence of the series (1.1) proved in `hasSum_exponentialBound`. For a deterministic partition with K blocks, the bound is M^K times the
+convergence of the series `def.M` proved in `hasSum_exponentialBound`. For a deterministic partition with K blocks, the bound is M^K times the
 mass of E when the rate times each block’s oscillation bound is at most
 exp(−3). The block hypothesis uses the centered process divided by its
 positive local bound.
@@ -363,7 +363,7 @@ For a fixed interval [a,T], `conditional_exponential_of_interval_moments`
 proves that the supremum over all starting times r of the conditional
 essential supremum of exp(λ Z(r,T)) is finite. Its hypotheses specify a
 measurable nonnegative interval maximum Z with the splitting inequality,
-the event-tested integer moments of (1.9), and a locally bounded modulus ρ.
+the event-tested integer moments of `est.jnweight2`, and a locally bounded modulus ρ.
 The small-scale modulus is the infimum of uniform upper bounds valid at
 some positive mesh size. The rate condition includes λκ = exp(−3).
 The proof uses convergence at exp(−5/2) to select a single mesh for every r.
@@ -376,7 +376,7 @@ right endpoint, so it also covers a jump at that endpoint.
 
 ## Continuous-time weighted BMO theorem
 
-`WeightedBMO.weightedBMO_exponential` proves (1.10) from the weighted BMO
+`WeightedBMO.weightedBMO_exponential` proves `est.jnexpwei` from the weighted BMO
 stopping-time inequality. It fixes an interval [a,T] and takes the supremum
 over r in that interval. The filtration is right-continuous and the paths of
 the process and its positive weight are càdlàg. The conclusion holds for
@@ -389,12 +389,12 @@ the integral of |V(U) − V(S−)| / φ(S) over G is at most B times its mass.
 [S,U] in the denominator. `tendsto_meshOscillation` identifies the
 small-scale infimum with the paper's right-hand limit.
 
-`real_interval_moments` proves (1.9) using first strict crossings in real
+`real_interval_moments` proves `est.jnweight2` using first strict crossings in real
 time, including terminal jumps. Their stopped increment controls the tail
 by Lemma 2.1. The exponential estimate then follows by the partition and
 conditional expectation arguments above.
 
-For (1.8), the first crossings are of the unnormalized increment
+For `ineq.JNweighted`, the first crossings are of the unnormalized increment
 |V(u) − V(r)|. The good-λ inequality uses the running weight over [r,T]
 and the exact oscillation modulus, including the case where it is zero.
 The event formulation allows infinite moments. The conditional
