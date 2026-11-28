@@ -733,7 +733,24 @@
 		\[
 			Z_n\le T_n:=\sum_{j\le n}\frac{\xi_j}{K+\xi_j}.
 		\]
-		Since $x\mapsto x/(K+x)$ is concave, $\E[\xi_j/(K+\xi_j)\mid\cff_{j-1}]\le b_j/K$, hence $\E[T_n\mid\cff_0]\le B_n/K\le1$ and $\E Z_n\le1$; concavity of $x\mapsto x^m$ gives $\E Z_n^m\le1$ for $0<m\le1$. The value $1$ is not attained: on $\{S_n>0\}$ every nonzero prefix has $J_k>0$, so $Z_n<S_n/K$, and $\E S_n\le\E K$; while i.i.d.\ costs in $\{0,a\}$ with $pa=K/n$ have $\E Z_n=\frac{a}{K+a}\E N=\frac K{K+a}$, which tends to $1$ as $a/K\to0$.
+		Since $x\mapsto x/(K+x)$ is concave, $\E[\xi_j/(K+\xi_j)\mid\cff_{j-1}]\le b_j/K$, hence $\E[T_n\mid\cff_0]\le B_n/K\le1$ and $\E Z_n\le1$; concavity of $x\mapsto x^m$ gives $\E Z_n^m\le1$ for $0<m\le1$.
+
+		For $1<m\le2/(1-e^{-2})$ the bound comes from an exponential moment of $T_n$ together with a change of exponent. Write $y_j=\xi_j/K\ge0$, so that $\eta_j=y_j/(1+y_j)$ and $\E[y_j\mid\cff_{j-1}]=b_j/K$. For $0\le t\le2$ and $y\ge0$,
+		\[
+			e^{t y/(1+y)}\ \le\ 1+ty,
+		\]
+		the difference of the two sides being $N(q)/(1-q)$ with $q=y/(1+y)$ and $N(q)=1+(t-1)q-(1-q)e^{tq}$, for which $N(0)=N'(0)=0$ and $N''(q)=te^{tq}(2-t+tq)\ge0$. Since $Z_n\le T_n=\sum_j\eta_j$, the conditional bound $\E[1+ty_j\mid\cff_{j-1}]=1+tb_j/K\le e^{tb_j/K}$ iterates, and
+		\begin{gather*}
+			\E e^{tZ_n}\ \le\ \E e^{tT_n}\ \le\ \E\prod_{j\le n}(1+ty_j)\ \le\ \prod_{j\le n}\Big(1+t\frac{b_j}{K}\Big)\\
+			\le\ \exp\Big(t\frac{B_n}{K}\Big)\ \le\ e^{\,t}.
+		\end{gather*}
+		Put $\Phi(t)=t/(1-e^{-t})$, which increases from $1$ to $\Phi(2)=\frac2{1-e^{-2}}$ on $(0,2]$, since $(1-e^{-y})^2\Phi'(y)=1-(1+y)e^{-y}>0$, and for fixed $t>0$ put $H(x)=\log(e^{tx}-1)-\Phi(t)\log x$ for $x>0$; then $H'(x)=\big(\Phi(tx)-\Phi(t)\big)/x$, so $H$ decreases on $(0,1)$ and increases on $(1,\infty)$ and is minimised at $x=1$, that is
+		\[
+			e^{tx}-1\ \ge\ (e^t-1)\,x^{\Phi(t)}\quad\text{for }x\ge0 .
+		\]
+		Hence $\E Z_n^{\Phi(t)}\le\big(\E e^{tZ_n}-1\big)/(e^t-1)\le1$ for every $t\in(0,2]$, and as $t$ runs over $(0,2]$ the exponent $\Phi(t)$ runs over $(1,\Phi(2)]$. Together with the case $m\le1$ this is the claimed range.
+
+		The value $1$ is not attained: on $\{S_n>0\}$ every nonzero prefix has $J_k>0$, so $Z_n<S_n/K$, and $\E S_n\le\E K$; while i.i.d.\ costs in $\{0,a\}$ with $pa=K/n$ have $\E Z_n=\frac{a}{K+a}\E N=\frac K{K+a}$, which tends to $1$ as $a/K\to0$.
 	\end{proof}
 
 	\begin{remark}[The exact exponential moment]\label[remark]{rmk.mgf}
@@ -741,13 +758,7 @@
 		\begin{align}\label{eqn.mgf}
 			R(t)=\max_{0\le q\le1}\frac{1-q}{q}\big(e^{tq}-1\big).
 		\end{align}
-		Then $\sup\E e^{tZ_n}=e^{R(t)}$, the supremum being over the models of \eqref{eqn.budget}. For the upper bound it suffices that $e^{tf(y)}\le1+R(t)y$ for $y\ge0$, where $f(y)=y/(1+y)$: with $\eta_k=\xi_k/(K+\xi_k)$ this gives $\E[e^{t\eta_k}\mid\cff_{k-1}]\le1+R(t)b_k/K\le e^{R(t)b_k/K}$, and since $Z_n\le T_n$ by \eqref{eqn.objamean}, iteration yields $\E e^{tZ_n}\le\E e^{tT_n}\le\E\prod_{k\le n}\big(1+R(t)\eta_k\big)\le e^{R(t)B_n/K}\le e^{R(t)}$. For the lower bound, i.i.d.\ costs in $\{0,a\}$ with $a=q/(1-q)$ and $p=K/(na)$ give $Z_n=qN$ with $N$ binomial of mean $\frac{1-q}{q}$, so $\E e^{tZ_n}=\big(1+\frac{h(q,t)}{n}\big)^n\to e^{h(q,t)}$ with $h(q,t)=\frac{1-q}{q}(e^{tq}-1)$, and the maximum over $q$ is \eqref{eqn.mgf}. The value is informative only for moderate $t$. One has $R(t)=t$ for $0\le t\le2$ and $R(t)>t$ for $t>2$, since $\frac{h(q,t)}{t}$ increases in $t$ and $h(q,2)\le2$ is $\log\frac{1+q}{1-q}\ge2q$; at $t=1$ this is the sharp form of \eqref{eqn.objamean}, by Jensen. For large $t$ the maximiser is $q=1-\frac{\gamma}{t}$ with $\gamma=\frac{t-\sqrt{t^2-4t}}{2}=1+\frac1t+O(t^{-2})$, whence $R(t)=\frac{\gamma}{t-\gamma}\big(e^{t-\gamma}-1\big)\sim\frac{e^{t-1}}{t}$: the supremum is attained by a single cost of size $\asymp tK$ appearing with mean count $\asymp1/t$, and \eqref{eqn.mgf} does not improve \eqref{eqn.obja}.
-
-		It also gives the range of \eqref{eqn.objamean}. Let $\Phi(t)=t/(1-e^{-t})$, which increases from $1$ to $\Phi(2)=\frac2{1-e^{-2}}$ on $(0,2]$, since $(1-e^{-y})^2\Phi'(y)=1-(1+y)e^{-y}>0$, and put $H(x)=\log(e^{tx}-1)-\Phi(t)\log x$ for $x>0$. Then $H'(x)=\big(\Phi(tx)-\Phi(t)\big)/x$, so $H$ decreases on $(0,1)$ and increases on $(1,\infty)$, and is minimised at $x=1$; hence
-		\[
-			e^{tx}-1\ \ge\ (e^t-1)\,x^{\Phi(t)},\qquad x\ge0,\ t>0 .
-		\]
-		Since $\E e^{tZ_n}\le e^{R(t)}=e^t$ for $t\le2$, this gives $\E Z_n^{\Phi(t)}\le\big(\E e^{tZ_n}-1\big)/(e^t-1)\le1$ for every $t\in(0,2]$, that is $\E Z_n^m\le1$ for every $m\le\Phi(2)$ and not merely for $m\le1$, the value $1$ remaining sharp by the two-point models.
+		Then $\sup\E e^{tZ_n}=e^{R(t)}$, the supremum being over the models of \eqref{eqn.budget}. For the upper bound it suffices that $e^{tf(y)}\le1+R(t)y$ for $y\ge0$, where $f(y)=y/(1+y)$: with $\eta_k=\xi_k/(K+\xi_k)$ this gives $\E[e^{t\eta_k}\mid\cff_{k-1}]\le1+R(t)b_k/K\le e^{R(t)b_k/K}$, and since $Z_n\le T_n$ by \eqref{eqn.objamean}, iteration yields $\E e^{tZ_n}\le\E e^{tT_n}\le\E\prod_{k\le n}\big(1+R(t)\eta_k\big)\le e^{R(t)B_n/K}\le e^{R(t)}$. For the lower bound, i.i.d.\ costs in $\{0,a\}$ with $a=q/(1-q)$ and $p=K/(na)$ give $Z_n=qN$ with $N$ binomial of mean $\frac{1-q}{q}$, so $\E e^{tZ_n}=\big(1+\frac{h(q,t)}{n}\big)^n\to e^{h(q,t)}$ with $h(q,t)=\frac{1-q}{q}(e^{tq}-1)$, and the maximum over $q$ is \eqref{eqn.mgf}. The value is informative only for moderate $t$. One has $R(t)=t$ for $0\le t\le2$ and $R(t)>t$ for $t>2$, since $\frac{h(q,t)}{t}$ increases in $t$ and $h(q,2)\le2$ is the inequality $e^{ty/(1+y)}\le1+ty$ of the proof of \cref{prop.obja} read at $t=2$ through $q=y/(1+y)$; at $t=1$ this is the sharp form of \eqref{eqn.objamean}, by Jensen. For large $t$ the maximiser is $q=1-\frac{\gamma}{t}$ with $\gamma=\frac{t-\sqrt{t^2-4t}}{2}=1+\frac1t+O(t^{-2})$, whence $R(t)=\frac{\gamma}{t-\gamma}\big(e^{t-\gamma}-1\big)\sim\frac{e^{t-1}}{t}$: the supremum is attained by a single cost of size $\asymp tK$ appearing with mean count $\asymp1/t$, and \eqref{eqn.mgf} does not improve \eqref{eqn.obja}.
 	\end{remark}
 
 	\begin{example}[Heavy-tailed costs]\label{ex.pareto}
