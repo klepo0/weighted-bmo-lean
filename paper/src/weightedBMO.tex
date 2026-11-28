@@ -818,9 +818,14 @@
 
 	\begin{proposition}[The matching construction: extremal models]\label[proposition]{prop.lower}
 		There is an absolute constant $C$ such that for all sufficiently large $u$ there are $n$, $K$ and adapted nonnegative $\xi_1,\dots,\xi_n$ satisfying \eqref{eqn.budget} with
+		\begin{align}\label{eqn.lower2b}
+			\PP(Z_n>u)\ \ge\ \exp\big(-u\,t_H-C\log u\big),
+		\end{align}
+		where $t_H$ is the root of $t=\log u+\log t$; since $ut_H=u\log u+u\log\log u+\frac{u\log\log u}{\log u}+O\big(\frac{u}{\log^2u}\big)$, this gives, after enlarging $C$ if necessary,
 		\begin{align}\label{eqn.lower2}
 			\PP(Z_n>u)\ \ge\ \exp\Big(-u\log u-u\log\log u-\frac{u\log\log u}{\log u}-C\Big(\frac{u}{\log^2u}+\log u\Big)\Big).
 		\end{align}
+
 		For every $\alpha>1$ and every $\lambda>0$,
 		\begin{align}\label{eqn.nosuper}
 			\sup\E\exp\big(\lambda Z_n^\alpha\big)=+\infty,
@@ -832,7 +837,7 @@
 		\[
 			Z_n\ \ge\ \frac{S_n}{K+J_n}=\frac{na}{npa+a}=\frac{n}{np+1}.
 		\]
-		Given $u>1$, put $\mu=1/\log u$, take $p=\mu/n$ and $a=1$, so that $K=npa=\mu$, let $N$ be the number of costs equal to $1$, and let $A=\{N\ge r\}$ with $r=\lceil u(\mu+1)\rceil+1$. At the time of the $r$-th such cost, $S=r$ and $J=1$, hence $Z_n\ge r/(\mu+1)>u$ and $A\subset\{Z_n>u\}$. Since $N$ is binomial with parameters $(n,p)$,
+		Given $u$ large, put $\mu=1/(t_H-1)$, take $p=\mu/n$ and $a=1$, so that $K=npa=\mu$, let $N$ be the number of costs equal to $1$, and let $A=\{N\ge r\}$ with $r=\lceil u(\mu+1)\rceil+1$. At the time of the $r$-th such cost, $S=r$ and $J=1$, hence $Z_n\ge r/(\mu+1)>u$ and $A\subset\{Z_n>u\}$. Since $N$ is binomial with parameters $(n,p)$,
 		\[
 			\PP(A)\ \ge\ \binom nr p^r(1-p)^{n-r}\ \ge\ \Big(\frac{e\mu}{r}\Big)^r\frac{1}{\sqrt{2\pi r}}\,e^{-2\mu}
 		\]
@@ -840,16 +845,15 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		\[
 			-\log\PP(A)\ \le\ r\log\frac{r}{e\mu}+\tfrac12\log(2\pi r)+2\mu,
 		\]
-		and with $r\le u(\mu+1)+2$ and $\mu=1/\log u$, writing $\ell=\log u$ and $h=\log\log u$,
-		\begin{gather*}
-			r\log\frac{r}{e\mu}\ \le\ \Big(u+\frac u\ell+2\Big)\Big(\ell+h-1+\frac1\ell+\frac2u\Big)\\
-			=\ u\ell+uh+\frac{uh}{\ell}+O\Big(\frac{u}{\ell^2}+\ell\Big),
-		\end{gather*}
-		where the first line uses $\log\frac{r}{e\mu}\le\log\big(\ell(u+\frac u\ell+2)\big)-1$ and $\log(1+s)\le s$ with $s=\frac1\ell+\frac2u$, and the second expands. Adding the terms $\frac12\log(2\pi r)$ and $2\mu$ of the display above, which are $O(\ell)$, gives
+		The parameter is placed at the saddle of this exponent, $\mu=1/(t_H-1)$, and not at $\mu\asymp1/\log u$: at the saddle the leading term is exactly $u\,t_H$, whereas any other choice of $\mu$ of that order leaves an excess of order $u/\log^2u$. At $r_*=u(\mu+1)=\frac{ut_H}{t_H-1}$ one has $\frac{r_*}{\mu}=ut_H$, so that $\log\frac{r_*}{\mu}=t_H$ by the defining equation of $t_H$, and therefore
 		\[
-			-\log\PP(A)\ \le\ u\log u+u\log\log u+\frac{u\log\log u}{\log u}+O\Big(\frac{u}{\log^2u}+\log u\Big).
+			r_*\log\frac{r_*}{e\mu}\ =\ r_*\Big(\log\frac{r_*}{\mu}-1\Big)\ =\ r_*(t_H-1)\ =\ u\,t_H .
 		\]
-		The terms of order $u$ cancel: $-u$ comes from the $-1$ in $\ell+h-1$ and $+u$ from $\mu\ell=1$, exactly because $\mu\asymp1/\log u$. What survives is the single excess $\frac{uh}{\ell}=o(u)$, which is exactly the term that the upper bound \eqref{eqn.refined} also carries, since $t_H=\ell+h+\frac h\ell+O(h^2/\ell^2)$. Keeping track of the constants in the two displays above, the total error is at most $C\big(\frac{u}{\ell^2}+\ell\big)$ for an absolute constant $C$, which proves \eqref{eqn.lower2}.
+		Since $s\mapsto s\log\frac{s}{e\mu}$ has derivative $\log\frac{s}{\mu}\le t_H$ on $[r_*,r_*+2]$, and $r\le r_*+2$, this gives $r\log\frac{r}{e\mu}\le ut_H+2t_H$. Adding the terms $\frac12\log(2\pi r)$ and $2\mu$ of the display above, which are at most $\frac12\log u+O(1)$ because $r\le u(1+\mu)+2\le2u$, and $\frac2{t_H-1}$,
+		\[
+			-\log\PP(A)\ \le\ u\,t_H+2t_H+\tfrac12\log u+O(1),
+		\]
+		that is $ut_H+O(\log u)$, which proves \eqref{eqn.lower2b}. Expanding $t_H=\ell+h+\frac h\ell+O\big(\frac{h^2}{\ell^2}\big)$, with $\ell=\log u$ and $h=\log\log u$, turns it into \eqref{eqn.lower2}.
 		For \eqref{eqn.nosuper} take instead $p=n^{-2}$ and $a=n^2$, so that $K=n$. On $A$ we have $J_n=n^2$ and $S_n=n^3$, hence $Z_n=n^3/(n+n^2)=n^2/(n+1)$, and therefore
 		\[
 			\E\exp\big(\lambda Z_n^\alpha\big)\ \ge\ p^n\exp\Big(\lambda\Big(\frac{n^2}{n+1}\Big)^\alpha\Big)
@@ -920,7 +924,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		Both halves carry the terms $u\log u$, $u\log\log u$ and $\frac{u\log\log u}{\log u}$, so the two-sided estimate is closed to order $o(u/\log u)$.
 	\end{corollary}
 	\begin{proof}
-		The upper estimate is \eqref{eqn.refined} and the lower one \eqref{eqn.lower2}, both read through $t_H=\ell+h+\frac h\ell+\frac{h-\frac12h^2}{\ell^2}+O(h^3/\ell^3)$; in the first display of \eqref{eqn.secondorder3} they differ by $O(\log u)$, in the second by the displayed error.
+		The upper estimate is \eqref{eqn.refined} and the lower one \eqref{eqn.lower2b}; both are already in the unexpanded variable $t_H$, and they differ by $O(\log u)$, which is the first display of \eqref{eqn.secondorder3}. Reading both through $t_H=\ell+h+\frac h\ell+\frac{h-\frac12h^2}{\ell^2}+O(h^3/\ell^3)$ gives the second display, with its error.
 	\end{proof}
 
 	\begin{remark}[The factor in front of the exponential]\label[remark]{rmk.prefactor}
@@ -928,7 +932,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 		\begin{align}\label{eqn.prefactorwindow}
 			\frac1{\sqrt{2\pi}}\,u^{-1/2}\big(1-o(1)\big)\ \le\ \frac{P^\star(u)}{\exp\{-ut_H-\frac1{t_H-1}\}}\ \le\ 1+o(1).
 		\end{align}
-		The upper side is \eqref{eqn.refined}. The lower side is the atom of the two-point family of \cref{prop.lower}: with $q=a/(1+a)$ and $\lambda=(1-q)/q$ the passage count is $r=\lfloor u/q\rfloor+1$, the Poisson exponent $D(r)=r\log(r/\lambda)-r+\lambda$ is minimised at $\lambda=1/(t_H-1)+O(1/t_H^2)$ with $D_{\min}=ut_H+\frac1{t_H-1}$, and Stirling's formula at the atom gives $\lambda^r/r!=e^{-D_{\min}}u^{-1/2}\sqrt{1-1/t_H}/\sqrt{2\pi}\,(1+o(1))$, the tail being within $1+O(1/\ell)$ of the atom. Adaptivity in the \emph{timing} of a fixed jump size gains nothing: if the predictable occurrence probabilities satisfy $\sum_kp_k\le\lambda$, then $\E\binom Nj\le\lambda^j/j!$, hence $\PP(Z_n>u)\le\lambda^r/r!$ for every $n$.
+		The upper side is \eqref{eqn.refined}. The lower side is the atom of the two-point family of \cref{prop.lower}, at the parameter $\mu=1/(t_H-1)$ of its proof: with $q=a/(1+a)$ and $\lambda=(1-q)/q$ the passage count is $r=\lfloor u/q\rfloor+1$, the Poisson exponent $D(r)=r\log(r/\lambda)-r+\lambda$ is minimised at $\lambda=1/(t_H-1)+O(1/t_H^2)$ with $D_{\min}=ut_H+\frac1{t_H-1}$, and Stirling's formula at the atom gives $\lambda^r/r!=e^{-D_{\min}}u^{-1/2}\sqrt{1-1/t_H}/\sqrt{2\pi}\,(1+o(1))$, the tail being within $1+O(1/\ell)$ of the atom. Adaptivity in the \emph{timing} of a fixed jump size gains nothing: if the predictable occurrence probabilities satisfy $\sum_kp_k\le\lambda$, then $\E\binom Nj\le\lambda^j/j!$, hence $\PP(Z_n>u)\le\lambda^r/r!$ for every $n$.
 		The factor $\sqrt u$ separating the two sides of \eqref{eqn.prefactorwindow} is the local Stirling factor of the passage count, and it cannot be recovered from the exponential family of test functions: a positive mixture of the supermartingales $\{M^\lambda\}$ of \cref{thm.refined} is bounded on every path by its total mass times the pointwise maximum of the integrands, which supplies no Gaussian factor. Closing the gap --- a local limit statement for the passage count inside the maximum --- is left open, as is the question whether the ratio has a limit at all.
 	\end{remark}
 
@@ -938,7 +942,7 @@ for $n$ large, using $\binom nr\ge n^r/r!$, $r!\le r^re^{-r}\sqrt{2\pi r}$ and $
 	\begin{remark}[The constant in the exponent, and its dependence on the class]\label[remark]{rmk.constant}
 		The bound \eqref{eqn.obja} is exactly the Chernoff bound for a Poisson$(1)$ variable, whose own tail is $\exp(-u\log u+u)/\sqrt{2\pi u}$. The constant in \eqref{eqn.secondorder} therefore measures how much of that Poisson shape the class of \eqref{eqn.budget} can realise. If the coefficient of $u$ could be brought to one, with matching lower order terms, then the supremum of $\PP(Z_n>u)$ over models would agree with $\PP(\mathrm{Poisson}(1)>u)$ up to a factor $1+o(1)$, and the extremal model would be Poisson-like; if it cannot, the budget constraint costs a further factor $e^{Cu}$ and no model is Poisson-like. By \cref{cor.second} the second alternative holds: the coefficient is $0$, so the worst-case tail is smaller than the Poisson tail by the factor $e^{-(1+o(1))u\log\log u}$, and no model is Poisson-like. The budget constraint therefore costs exactly the factor $e^{(1+o(1))u\log\log u}$ in the exponent, and nothing of order $u$.
 
-		The value is not a universal number and should not be expected to be one, because it is a property of the class of models admitted and not of the inequality alone. In the predictable case the corresponding sharp constant is known and equals $p^{-p}$ \cite{GS21}; here the class itself is different, and the constant moves with it. The dependence is easy to see and is not merely a matter of constants in the proofs. The construction behind \eqref{eqn.lower2} uses costs of size $a=1$ while $K=1/\log u$, so its individual costs exceed the accumulated mean budget by a factor $\log u$; any additional hypothesis tying the size of a single cost to the budget, for instance $\xi_k\le K$ for all $k$, which holds whenever each individual cost is small compared with the total admissible mean, excludes that construction and weakens the lower side. That class is understood exactly: if $\xi_k\le cK$ for all $k$, then $-\log\sup_\mathcal{C}\PP(Z_n>u)=H\big(u(1+c)\big)/c+O_c(\log u)$ with $H(z)=z\log z-z+1$, the upper bound from the exponential supermartingale at truncation level $cK$ and the lower one from costs in $\{0,cK\}$; at $c=1$ the coefficient of $u\log u$ is $2$ rather than $1$. Enlarging the class has the opposite effect. By \cref{thm.refined} the exponent carries no term of order $u$ at all, and by \eqref{eqn.lower2} neither does the construction, so the coefficient of $u$ in \eqref{eqn.secondorder} is $0$. \Cref{cor.second} goes further: the two sides already meet at the next term, both carrying $u\log\log u/\log u$, so the exponent is now determined to its constant and what remains undetermined is only the factor in front of it, which \cref{rmk.prefactor} confines to $[1/\sqrt{2\pi},1]$ in units of $u^{-1/2}$. The rate in \eqref{eqn.secondorder} is therefore a property of the class of \eqref{eqn.budget}, and the constant, here $0$, is a property of that class as well: imposing further structure on the class can only change it, which is why it is stated here for the class and not as a universal number.
+		The value is not a universal number and should not be expected to be one, because it is a property of the class of models admitted and not of the inequality alone. In the predictable case the corresponding sharp constant is known and equals $p^{-p}$ \cite{GS21}; here the class itself is different, and the constant moves with it. The dependence is easy to see and is not merely a matter of constants in the proofs. The construction behind \eqref{eqn.lower2} uses costs of size $a=1$ while $K=\mu=1/(t_H-1)$, so its individual costs exceed the accumulated mean budget by the factor $t_H-1=\log u+\log\log u+O(1)$; any additional hypothesis tying the size of a single cost to the budget, for instance $\xi_k\le K$ for all $k$, which holds whenever each individual cost is small compared with the total admissible mean, excludes that construction and weakens the lower side. That class is understood exactly: if $\xi_k\le cK$ for all $k$, then $-\log\sup_\mathcal{C}\PP(Z_n>u)=H\big(u(1+c)\big)/c+O_c(\log u)$ with $H(z)=z\log z-z+1$, the upper bound from the exponential supermartingale at truncation level $cK$ and the lower one from costs in $\{0,cK\}$; at $c=1$ the coefficient of $u\log u$ is $2$ rather than $1$. Enlarging the class has the opposite effect. By \cref{thm.refined} the exponent carries no term of order $u$ at all, and by \eqref{eqn.lower2} neither does the construction, so the coefficient of $u$ in \eqref{eqn.secondorder} is $0$. \Cref{cor.second} goes further: the two sides already meet at the next term, both carrying $u\log\log u/\log u$, so the exponent is now determined to its constant and what remains undetermined is only the factor in front of it, which \cref{rmk.prefactor} confines to $[1/\sqrt{2\pi},1]$ in units of $u^{-1/2}$. The rate in \eqref{eqn.secondorder} is therefore a property of the class of \eqref{eqn.budget}, and the constant, here $0$, is a property of that class as well: imposing further structure on the class can only change it, which is why it is stated here for the class and not as a universal number.
 	\end{remark}
 
 	\medskip
