@@ -25,8 +25,20 @@ D.~L. Burkholder, B.~J. Davis, and R.~F. Gundy.
 
 \bibitem[BDG21]{butkovsky2021approximation}
 Oleg Butkovsky, Konstantinos Dareiotis, and M{\'a}t{\'e} Gerencs{\'e}r.
-\newblock Approximation of sdes: a stochastic sewing approach.
-\newblock {\em Probability Theory and Related Fields}, pages 1--60, 2021.
+\newblock Approximation of {SDEs}: a stochastic sewing approach.
+\newblock {\em Probab. Theory Related Fields}, 181(4):975--1034, 2021.
+
+\bibitem[BFM16]{BFM16}
+Boris Buchmann, Yuguang Fan, and Ross~A. Maller.
+\newblock Distributional representations and dominance of a {L}{\'e}vy process
+  over its maximal jump processes.
+\newblock {\em Bernoulli}, 22(4):2325--2371, 2016.
+
+\bibitem[BT08]{BT08}
+Bernard Bercu and Abderrahmen Touati.
+\newblock Exponential inequalities for self-normalized martingales with
+  applications.
+\newblock {\em Ann. Appl. Probab.}, 18(5):1848--1869, 2008.
 
 \bibitem[Bur73]{MR365692}
 D.~L. Burkholder.
@@ -35,7 +47,7 @@ D.~L. Burkholder.
 
 \bibitem[Dav70]{davis1970intergrability}
 Burgess Davis.
-\newblock On the intergrability of the martingale square function.
+\newblock On the integrability of the martingale square function.
 \newblock {\em Israel Journal of Mathematics}, 8(2):187--190, 1970.
 
 \bibitem[DGL23]{dareiotis2021quantifying}
@@ -67,10 +79,15 @@ J.~L. Doob.
 \newblock John Wiley \& Sons, Inc., New York; Chapman \& Hall, Limited, London,
   1953.
 
-\bibitem[FHL21]{FHL21}
+\bibitem[FGL15]{FGL15}
+Xiequan Fan, Ion Grama, and Quansheng Liu.
+\newblock Exponential inequalities for martingales with applications.
+\newblock {\em Electron. J. Probab.}, 20:Paper No. 1, 22 p., 2015.
+
+\bibitem[FHL26]{FHL21}
 Peter Friz, Antoine Hocquet, and Khoa L{\^e}.
 \newblock Rough stochastic differential equations.
-\newblock {\em arXiv preprint arXiv:2106.10340}, 2021.
+\newblock {\em arXiv preprint arXiv:2106.10340v7}, 2026.
 
 \bibitem[Fre75]{Fre75}
 David~A. Freedman.
@@ -93,6 +110,7 @@ Stefan Geiss.
 \newblock Weighted {BMO} and discrete time hedging within the {B}lack-{S}choles
   model.
 \newblock {\em Probab. Theory Related Fields}, 132(1):13--38, 2005.
+
 \bibitem[GS21]{GS21}
 S.~Geiss and M.~Scheutzow.
 \newblock Sharpness of {L}englart's domination inequality and a sharp monotone version.
@@ -130,23 +148,6 @@ Franziska K{\"u}hn and Ren{\'e}~L Schilling.
 \newblock Maximal inequalities and some applications.
 \newblock {\em Probab. Surv.}, 20:382--485, 2023.
 
-\bibitem[BFM16]{BFM16}
-Boris Buchmann, Yuguang Fan, and Ross~A. Maller.
-\newblock Distributional representations and dominance of a {L}{\'e}vy process
-  over its maximal jump processes.
-\newblock {\em Bernoulli}, 22(4):2325--2371, 2016.
-
-\bibitem[BT08]{BT08}
-Bernard Bercu and Abderrahmen Touati.
-\newblock Exponential inequalities for self-normalized martingales with
-  applications.
-\newblock {\em Ann. Appl. Probab.}, 18(5):1848--1869, 2008.
-
-\bibitem[FGL15]{FGL15}
-Xiequan Fan, Ion Grama, and Quansheng Liu.
-\newblock Exponential inequalities for martingales with applications.
-\newblock {\em Electron. J. Probab.}, 20:Paper No. 1, 22 p., 2015.
-
 \bibitem[LLP80]{LLP80}
 {\'E}rik Lenglart, Dominique L{\'e}pingle, and Maurizio Pratelli.
 \newblock Pr{\'e}sentation unifi{\'e}e de certaines in{\'e}galit{\'e}s de la
@@ -164,6 +165,7 @@ Khoa L{\^e}.
 \newblock Quantitative {John--Nirenberg} inequality for stochastic processes of
   bounded mean oscillation.
 \newblock {\em arXiv preprint arXiv:2210.15736}, 2022.
+
 \bibitem[Len77]{MR0471069}
 {\'E}rik Lenglart.
 \newblock Relation de domination entre deux processus.
@@ -196,6 +198,7 @@ Daniel Revuz and Marc Yor.
   {\em Grundlehren der Mathematischen Wissenschaften [Fundamental Principles of
   Mathematical Sciences]}.
 \newblock Springer-Verlag, Berlin, third edition, 1999.
+
 \bibitem[ST94]{MR1280932}
 Gennady~Samorodnitsky and Murad~S. Taqqu.
 \newblock {\em Stable Non-{G}aussian Random Processes: Stochastic Models with Infinite Variance}.
